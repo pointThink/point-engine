@@ -1,8 +1,9 @@
 #pragma once
 
+#include "Core.h"
 #include <string>
 
-class Logger
+class ENGINE_API Logger
 {
 	public:
 	Logger(std::string log_file);

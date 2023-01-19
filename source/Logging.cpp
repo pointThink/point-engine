@@ -18,12 +18,12 @@ void Logger::LogError(std::string string)
 
 void Logger::LogWarning(std::string string)
 {
-	LogGeneric("[ERROR] " + string);
+	LogGeneric("[WARNING] " + string);
 }
 
 void Logger::LogInfo(std::string string)
 {
-	LogGeneric("[ERROR] " + string);
+	LogGeneric("[INFO] " + string);
 }
 
 void Logger::LogGeneric(std::string string)
