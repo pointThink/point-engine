@@ -1,5 +1,9 @@
 #pragma once
 
+// this is required otherwise the linker throws an error
+// no touchy
+#define SDL_MAIN_HANDLED
+
 #include "Game.h"
 #include "Logging.h"
-#include "Rendering/Window.h"
+#include "Window.h"

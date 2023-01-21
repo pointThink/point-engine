@@ -1,20 +1,31 @@
 #pragma once
 
+#include <string>
+
 #include "Core.h"
-#include "Logging.h"
 #include "Window.h"
 
-class ENGINE_API Game
+namespace PE
 {
-	public:
-	Logger * logger;
+	class ENGINE_API Game
+	{
+		public:
+		virtual void Run() final;
 
-	virtual void Run() final;
-	
-	virtual void Update() final;
-	virtual void Draw() final;
+		virtual void SetGameName(std::string name) final;
+		virtual void SetGameVersion(std::string version) final;
 
-	private:
-	std::string game_name;
-	std::string game_version;
+		virtual void QuitApplication() final;
+
+		private:
+		bool should_quit = false;
+
+		std::string game_name;
+		std::string game_version;
+
+		void Update();
+		void Draw();
+
+		PE::Rendering::Window * window = NULL;
+	};
 };
