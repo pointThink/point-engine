@@ -25,11 +25,13 @@ namespace PE
 			Window(std::string title, int width, int heigh, bool fullscreen);
 			~Window();
 
-
 			// Getters setters and stuff
 			int GetWidth();
 			int GetHeight();
 			bool IsFullscreen();
+
+			SDL_Window * GetSDLWindow();
+			SDL_Renderer * GetSDLRenderer();
 
 			void SetSize(int x, int y);
 			void SetFullscreen(bool fullscreen);

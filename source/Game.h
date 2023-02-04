@@ -4,6 +4,7 @@
 
 #include "Core.h"
 #include "Window.h"
+#include "Sprite.h"
 
 namespace PE
 {
@@ -12,20 +13,23 @@ namespace PE
 		public:
 		virtual void Run() final;
 
-		virtual void SetGameName(std::string name) final;
-		virtual void SetGameVersion(std::string version) final;
+		void SetGameName(std::string name);
+		void SetGameVersion(std::string version);
+		void SetContentPath(std::string path);
 
-		virtual void QuitApplication() final;
+		void QuitApplication();
 
 		private:
 		bool should_quit = false;
 
 		std::string game_name;
 		std::string game_version;
+		std::string game_content_path;
 
 		void Update();
 		void Draw();
 
 		PE::Rendering::Window * window = NULL;
+		PE::Rendering::SpriteManager * sprite_manager = NULL;
 	};
 };
