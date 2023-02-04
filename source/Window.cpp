@@ -6,7 +6,7 @@
 
 PE::Rendering::Window::Window(std::string title, int width, int height, bool fullscreen)
 {
-	// Initialize SDL2
+	// Initialize SDL2 - PT
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
 		PE::LogError("Error initializing SDL2: " + std::string(SDL_GetError()));
@@ -15,7 +15,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 
 	PE::LogInfo("SDL Initialized");
 
-	// Initialize window
+	// Initialize window - PT
 	PE::LogInfo("Initializing window");
 	PE::LogInfo("Window size is " + std::to_string(width) + " " + std::to_string(height));
 
@@ -34,7 +34,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 
 	PE::LogInfo("Initialized Window");
 
-	// Set the window to fullscreen
+	// Set the window to fullscreen - PT
 	if (fullscreen)
 	{
 	    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
@@ -57,7 +57,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	PE::LogInfo("Set renderer color");
 
-	// Initialize the SDL_Image library
+	// Initialize the SDL_Image library - PT
 	if (!(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)))
 	{
 		PE::LogError("Error initializing the SDL Image library " + std::string(IMG_GetError()));

@@ -11,10 +11,10 @@ namespace PE
 {
 	namespace Rendering
 	{
-		class SpriteManager
+		class ENGINE_API SpriteManager
 		{
 			private:
-			std::unordered_map<std::string, SDL_Surface*> * sprite_bank;
+			std::unordered_map<std::string, SDL_Texture*> sprite_bank;
 
 			Window * game_window;
 			std::string game_content_path;
@@ -28,12 +28,13 @@ namespace PE
 			void ClearBank();
 
 			void DrawSprite(std::string sprite_name, int x, int y);
+			void DrawTileSprite(std::string sprite_name, int orgin_x, int orgin_y, int tile_w, int tile_y, int tile_count_x, int tile_count_y);
 			void DrawSpritePlus(std::string sprite_name, int x, int y, int w, int h, int rotation);
 		};
 
 		class Animation
 		{
-			// todo: implement	
+			// todo: implement
 		};
 	};
 };

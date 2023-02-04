@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1674242759 source:c:\users\user\engine\game-engine\source\logging.cpp
+1675523296 source:c:\users\user\engine\game-engine\source\logging.cpp
 	"Logging.h"
 	<iostream>
 	<ctime>
@@ -11,12 +11,12 @@
 
 1674327172 c:\users\user\engine\game-engine\source\core.h
 
-1675508534 source:c:\users\user\engine\game-engine\source\window.cpp
+1675523358 source:c:\users\user\engine\game-engine\source\window.cpp
 	"Window.h"
 	<SDL2\SDL_image.h>
 	"Logging.h"
 
-1675196079 c:\users\user\engine\game-engine\source\window.h
+1675523363 c:\users\user\engine\game-engine\source\window.h
 	<string>
 	"SDL2\SDL.h"
 
@@ -415,26 +415,51 @@
 	"begin_code.h"
 	"close_code.h"
 
-1675509299 source:c:\users\user\engine\game-engine\source\game.cpp
+1675532156 source:c:\users\user\engine\game-engine\source\game.cpp
 	"Game.h"
 	"SDL2\SDL.h"
 	"Logging.h"
+	"Utils.h"
+	<iostream>
 
-1675196934 c:\users\user\engine\game-engine\source\game.h
+1675532782 c:\users\user\engine\game-engine\source\game.h
 	<string>
 	"Core.h"
 	"Window.h"
 	"Sprite.h"
+	"Entity.h"
+	"Utils.h"
 
-1675194124 c:\users\user\engine\game-engine\source\sprite.h
+1675528201 c:\users\user\engine\game-engine\source\sprite.h
 	<SDL2/SDL.h>
 	<string>
 	<unordered_map>
 	"Core.h"
 	"Window.h"
 
-1675510624 source:c:\users\user\engine\game-engine\source\sprite.cpp
+1675528232 source:c:\users\user\engine\game-engine\source\sprite.cpp
 	"Sprite.h"
 	<SDL2/SDL_image.h>
 	"Logging.h"
+
+1675526900 source:c:\users\user\engine\game-engine\source\entity.cpp
+	"Entity.h"
+	<algorithm>
+	"Logging.h"
+
+1675528335 c:\users\user\engine\game-engine\source\entity.h
+	<vector>
+	<string>
+	"Core.h"
+	"Vector.h"
+
+1675524419 c:\users\user\engine\game-engine\source\vector.h
+	"Core.h"
+
+1675532857 source:c:\users\user\engine\game-engine\source\utils.cpp
+	"Utils.h"
+
+1675533147 c:\users\user\engine\game-engine\source\utils.h
+	<chrono>
+	"Core.h"
 

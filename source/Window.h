@@ -15,7 +15,7 @@ namespace PE
 			SDL_Renderer * renderer = NULL;
 
 			// Window with and height is currently placeholder value
-			// These values should be set in the game settings or something
+			// These values should be set in the game settings or something - PT
 			int width;
 			int height;
 
@@ -25,7 +25,7 @@ namespace PE
 			Window(std::string title, int width, int heigh, bool fullscreen);
 			~Window();
 
-			// Getters setters and stuff
+			// Getters setters and stuff - PT
 			int GetWidth();
 			int GetHeight();
 			bool IsFullscreen();

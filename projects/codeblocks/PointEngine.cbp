@@ -6,22 +6,48 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
+			<Script file="lib_finder.script" />
 			<Target title="Debug">
-				<Option output="bin/Debug/PointEngine" prefix_auto="1" extension_auto="1" />
+				<Option output="../../build/bin/pointengine" imp_lib="../../build/lib/libpointengine.a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
-				<Option type="1" />
+				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
 				<Compiler>
+					<Add option="-m64" />
 					<Add option="-g" />
+					<Add option="-DWINDOWS64" />
+					<Add option="-DENGINE_BUILD" />
+					<Add directory="../../include" />
+					<Add directory="include" />
+					<Add directory="source" />
 				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+					<Add library="../../lib/libSDL2main.a" />
+					<Add library="../../lib/libSDL2.dll.a" />
+					<Add library="../../lib/libSDL2.a" />
+					<Add library="../../lib/libSDL2_image.dll.a" />
+					<Add library="../../lib/libSDL2_image.a" />
+				</Linker>
+				<ExtraCommands>
+					<Add before="cmd /c cd" />
+					<Add before="cmd /c copy /Y ..\..\source\*.h ..\..\build\include\PointEngine\" />
+					<Add before="cmd /c xcopy /Y ..\..\include\SDL2\ ..\..\build\include\SDL2\" />
+				</ExtraCommands>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/PointEngine" prefix_auto="1" extension_auto="1" />
+				<Option output="../../build/bin/pointengine" imp_lib="../../build/lib/libpointengine.a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
-				<Option type="1" />
+				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
+					<Add directory="source" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -31,6 +57,22 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../../include/Vector.h" />
+		<Unit filename="../../source/Core.h" />
+		<Unit filename="../../source/Entity.cpp" />
+		<Unit filename="../../source/Entity.h" />
+		<Unit filename="../../source/Game.cpp" />
+		<Unit filename="../../source/Game.h" />
+		<Unit filename="../../source/Logging.cpp" />
+		<Unit filename="../../source/Logging.h" />
+		<Unit filename="../../source/PointEngine.h" />
+		<Unit filename="../../source/Sprite.cpp" />
+		<Unit filename="../../source/Sprite.h" />
+		<Unit filename="../../source/Utils.cpp" />
+		<Unit filename="../../source/Utils.h" />
+		<Unit filename="../../source/Vector.h" />
+		<Unit filename="../../source/Window.cpp" />
+		<Unit filename="../../source/Window.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

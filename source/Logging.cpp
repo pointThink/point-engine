@@ -27,10 +27,10 @@ void PE::LogGeneric(std::string string)
 	time_t t;
 	time(&t);
 
-	// i hate strings in c++, i mean just look at this shit
+	// i hate strings in c++, i mean just look at this shit - PT
 	output_string = std::string("[") + std::string(strtok(ctime(&t), "\n")) + std::string("] ") + string + std::string("\n");
 
 	// for now no file output
-	// ill implement it later
+	// ill implement it later - PT
 	std::cout << output_string;
 }
