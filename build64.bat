@@ -5,7 +5,10 @@ mkdir build\bin
 mkdir build\lib
 mkdir build\include
 
-copy bin build
-copy source\*.h build\include
+xcopy include\SDL2 build\include\SDL2
 
-g++ source\*.cpp -m64 -DENGINE_BUILD -DWINDOWS64 -shared -o build\bin\pointengine.dll -Iinclude -Llib -lSDL2main -lSDL2 -Wl,--out-implib,build\lib\libpointengine.a
+xcopy bin build\bin
+xcopy source\*.h build\include\PointEngine
+xcopy source\Rendering\*.h build\include\PointEngine
+
+g++ source\*.cpp -m64 -DENGINE_BUILD -DWINDOWS64 -shared -o build\bin\pointengine.dll -Iinclude -Isource -Isource\Rendering -Llib -lSDL2main -lSDL2 -lSDL2_image -Wl,--out-implib,build\lib\libpointengine.a -w

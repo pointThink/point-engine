@@ -9,3 +9,5 @@
 #else
 	#error Only 64bit windows is supported for now
 #endif
+
+#define PE_VERSION "0.0.1"
