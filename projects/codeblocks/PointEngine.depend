@@ -9,12 +9,13 @@
 	"Core.h"
 	<string>
 
-1674327172 c:\users\user\engine\game-engine\source\core.h
+1675595093 c:\users\user\engine\game-engine\source\core.h
 
-1675523358 source:c:\users\user\engine\game-engine\source\window.cpp
+1675596243 source:c:\users\user\engine\game-engine\source\window.cpp
 	"Window.h"
 	<SDL2\SDL_image.h>
 	"Logging.h"
+	"Event.h"
 
 1675523363 c:\users\user\engine\game-engine\source\window.h
 	<string>
@@ -415,20 +416,22 @@
 	"begin_code.h"
 	"close_code.h"
 
-1675532156 source:c:\users\user\engine\game-engine\source\game.cpp
+1675596318 source:c:\users\user\engine\game-engine\source\game.cpp
 	"Game.h"
 	"SDL2\SDL.h"
 	"Logging.h"
 	"Utils.h"
+	"Event.h"
 	<iostream>
 
-1675532782 c:\users\user\engine\game-engine\source\game.h
+1675595329 c:\users\user\engine\game-engine\source\game.h
 	<string>
 	"Core.h"
 	"Window.h"
 	"Sprite.h"
 	"Entity.h"
 	"Utils.h"
+	"Event.h"
 
 1675528201 c:\users\user\engine\game-engine\source\sprite.h
 	<SDL2/SDL.h>
@@ -462,4 +465,11 @@
 1675533147 c:\users\user\engine\game-engine\source\utils.h
 	<chrono>
 	"Core.h"
+
+1675596282 source:c:\users\user\engine\game-engine\source\event.cpp
+	"Event.h"
+
+1675596528 c:\users\user\engine\game-engine\source\event.h
+	"Core.h"
+	"Vector.h"
 
