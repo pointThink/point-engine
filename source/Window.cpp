@@ -3,6 +3,7 @@
 #include <SDL2\SDL_image.h>
 
 #include "Logging.h"
+#include "Event.h"
 
 PE::Rendering::Window::Window(std::string title, int width, int height, bool fullscreen)
 {
@@ -10,6 +11,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 	if (SDL_Init(SDL_INIT_VIDEO))
 	{
 		PE::LogError("Error initializing SDL2: " + std::string(SDL_GetError()));
+		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 1, {0, 0}));
 		exit(1);
 	}
 
@@ -29,6 +31,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 	if (window == NULL)
 	{
 		PE::LogError("Error initializing window: " + std::string(SDL_GetError()));
+		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 2, {0, 0}));
 		exit(2);
 	}
 
@@ -51,6 +54,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 	if (renderer == NULL)
 	{
 		PE::LogError("Error initializing renderer: " + std::string(SDL_GetError()));
+		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 3, {0, 0}));
 		exit(3);
 	}
 
@@ -61,6 +65,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 	if (!(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG)))
 	{
 		PE::LogError("Error initializing the SDL Image library " + std::string(IMG_GetError()));
+		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 4, {0, 0}));
 		exit(4);
 	}
 

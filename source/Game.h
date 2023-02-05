@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "Entity.h"
 #include "Utils.h"
+#include "Event.h"
 
 namespace PE
 {
@@ -19,6 +20,7 @@ namespace PE
 		void SetGameName(std::string name);
 		void SetGameVersion(std::string version);
 		void SetContentPath(std::string path);
+		void SetEventHandler(void (*event_handler)(EventType, EventParameters));
 
 		float GetFrameTime();
 

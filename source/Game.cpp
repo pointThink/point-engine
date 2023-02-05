@@ -3,6 +3,7 @@
 #include "SDL2\SDL.h"
 #include "Logging.h"
 #include "Utils.h"
+#include "Event.h"
 
 #include <iostream>
 
@@ -16,6 +17,8 @@ namespace PE
 		window = new PE::Rendering::Window("Test", 800, 600, false);
 		sprite_manager = new PE::Rendering::SpriteManager(window, "./content");
 		entity_manager = new PE::Entity::EntityManager;
+
+		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, {0, 0}));
 	}
 
 	void Game::Run()
@@ -29,6 +32,7 @@ namespace PE
 			Draw();
 		}
 
+		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 0, {0, 0}));
         PE::LogInfo("Quitting");
 
 		delete window;
@@ -48,6 +52,8 @@ namespace PE
 		}
 
 		entity_manager->UpdateEntities();
+
+		PE::CallEventFunction(PE::GAME_UPDATE, PE::EventParameters(0, 0, {0, 0}));
 	}
 
 	void Game::Draw()
@@ -76,6 +82,11 @@ namespace PE
 	void Game::SetContentPath(std::string path)
 	{
 		game_content_path = path;
+	}
+
+	void Game::SetEventHandler(void (*event_handler)(EventType, EventParameters))
+	{
+		PE::event_handler = event_handler;
 	}
 
 	float Game::GetFrameTime()
