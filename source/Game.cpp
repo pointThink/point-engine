@@ -11,11 +11,13 @@ namespace PE
 {
 	void Game::Init()
 	{
+		PE::LogInit();
+
 		// Shameless plug - PT
 		LogInfo(game_name + " " + game_version + " running on PointEngine version " + PE_VERSION);
 
 		window = new PE::Rendering::Window("Test", 800, 600, false);
-		sprite_manager = new PE::Rendering::SpriteManager(window, "./content");
+		sprite_manager = new PE::Rendering::SpriteManager(window, "./content/");
 		entity_manager = new PE::Entity::EntityManager;
 
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, {0, 0}));
@@ -34,6 +36,8 @@ namespace PE
 
 		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 0, {0, 0}));
         PE::LogInfo("Quitting");
+
+        PE::LogDeInit();
 
 		delete window;
 	}
@@ -72,6 +76,7 @@ namespace PE
 	void Game::SetGameName(std::string name)
 	{
 		game_name = name;
+		SDL_SetWindowTitle(window->GetSDLWindow(), name.c_str());
 	}
 
 	void Game::SetGameVersion(std::string version)

@@ -24,6 +24,7 @@ namespace PE
 			~SpriteManager();
 
 			void LoadSprite(std::string sprite_path, std::string sprite_name);
+			void LoadSpritePack(std::string pack_file);
 			void RemoveSprite(std::string sprite_name);
 			void ClearBank();
 

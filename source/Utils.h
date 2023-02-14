@@ -3,6 +3,8 @@
 #pragma once
 
 #include <chrono>
+#include <string>
+#include <vector>
 
 #include "Core.h"
 
@@ -18,5 +20,7 @@ namespace PE
 			std::chrono::duration<float> GetTime();
 			void Reset();
 		};
+
+		std::vector<std::string> SplitString(std::string string, std::string delimiter);
 	}
 };

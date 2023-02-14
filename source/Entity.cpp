@@ -37,6 +37,8 @@ void EntityManager::AddEntity(EntityBase * entity)
 		}
 	}
 
+	entity->Init();
+
 	entities.push_back(entity);
 	used_ids.push_back(entity->GetUniqueID());
 }

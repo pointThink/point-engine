@@ -25,11 +25,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
-					<Add library="../../lib/libSDL2main.a" />
-					<Add library="../../lib/libSDL2.dll.a" />
-					<Add library="../../lib/libSDL2.a" />
-					<Add library="../../lib/libSDL2_image.dll.a" />
-					<Add library="../../lib/libSDL2_image.a" />
 				</Linker>
 				<ExtraCommands>
 					<Add before="cmd /c cd" />
@@ -56,11 +51,22 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-m64" />
 		</Compiler>
-		<Unit filename="../../include/Vector.h" />
+		<Linker>
+			<Add option="-m64" />
+			<Add library="../../lib/libSDL2.dll.a" />
+			<Add library="../../lib/libSDL2_image.dll.a" />
+			<Add library="../../lib/libSDL2_mixer.dll.a" />
+			<Add library="../../lib/libSDL2main.a" />
+		</Linker>
+		<Unit filename="../../source/Audio.cpp" />
+		<Unit filename="../../source/Audio.h" />
 		<Unit filename="../../source/Core.h" />
 		<Unit filename="../../source/Entity.cpp" />
 		<Unit filename="../../source/Entity.h" />
+		<Unit filename="../../source/Event.cpp" />
+		<Unit filename="../../source/Event.h" />
 		<Unit filename="../../source/Game.cpp" />
 		<Unit filename="../../source/Game.h" />
 		<Unit filename="../../source/Logging.cpp" />
