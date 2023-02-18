@@ -9,6 +9,7 @@
 #include "Utils.h"
 #include "Event.h"
 #include "Input.h"
+#include "Console.h"
 
 namespace PE
 {
@@ -33,6 +34,8 @@ namespace PE
 		PE::InputManager * input_manager = NULL;
 
 		private:
+		PE::Console console;
+
 		bool should_quit = false;
 		bool initialized = false;
 

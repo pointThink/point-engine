@@ -133,11 +133,13 @@ namespace PE
 	class ENGINE_API InputManager
 	{
 		std::unordered_map<std::string, Input> bindings;
-		bool key_states[91];
+		bool key_states[255];
 		bool button_states[10];
 		PE::Vector mouse_pos;
 
 		public:
+		void Init();
+
 		void SetMousePos(int x, int y);
 		void SetKeyState(int key, bool is_down);
 		void SetButtonState(int button, bool is_down);

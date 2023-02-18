@@ -73,13 +73,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\..\..\..\build\bin</OutDir>
     <TargetName>pointengine</TargetName>
-    <IncludePath>$(SolutionDir)\..\..\..\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\..\..\include\;$(SolutionDir)\..\..\..\source\;$(SolutionDir)\..\..\..\source\imgui\$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\..\lib\msvc;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\..\..\..\build\bin</OutDir>
     <TargetName>pointengine</TargetName>
-    <IncludePath>$(SolutionDir)\..\..\..\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\..\..\..\include\;$(SolutionDir)\..\..\..\source\;$(SolutionDir)\..\..\..\source\imgui\$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)..\..\..\lib\msvc;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -168,23 +168,45 @@ xcopy /Y /S $(SolutionDir)..\..\..\bin\msvc $(SolutionDir)..\..\..\build\bin</Co
     <ClCompile Include="..\..\..\..\source\Entity.cpp" />
     <ClCompile Include="..\..\..\..\source\Event.cpp" />
     <ClCompile Include="..\..\..\..\source\Game.cpp" />
+    <ClCompile Include="..\..\..\..\source\imgui\imgui.cpp" />
+    <ClCompile Include="..\..\..\..\source\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\..\source\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\..\source\imgui\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="..\..\..\..\source\imgui\imgui_impl_sdlrenderer.cpp" />
+    <ClCompile Include="..\..\..\..\source\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\..\..\..\source\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\..\..\source\Input.cpp" />
     <ClCompile Include="..\..\..\..\source\Logging.cpp" />
     <ClCompile Include="..\..\..\..\source\Sprite.cpp" />
     <ClCompile Include="..\..\..\..\source\Utils.cpp" />
     <ClCompile Include="..\..\..\..\source\Window.cpp" />
+    <ClCompile Include="ConVars.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\source\Core.h" />
     <ClInclude Include="..\..\..\..\source\Entity.h" />
     <ClInclude Include="..\..\..\..\source\Event.h" />
     <ClInclude Include="..\..\..\..\source\Game.h" />
+    <ClInclude Include="..\..\..\..\source\imgui\imconfig.h" />
+    <ClInclude Include="..\..\..\..\source\imgui\imgui.h" />
+    <ClInclude Include="..\..\..\..\source\imgui\imgui_impl_sdl2.h" />
+    <ClInclude Include="..\..\..\..\source\imgui\imgui_impl_sdlrenderer.h" />
+    <ClInclude Include="..\..\..\..\source\imgui\imgui_internal.h" />
+    <ClInclude Include="..\..\..\..\source\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\..\..\source\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\..\..\..\source\imgui\imstb_truetype.h" />
+    <ClInclude Include="..\..\..\..\source\Input.h" />
     <ClInclude Include="..\..\..\..\source\Logging.h" />
     <ClInclude Include="..\..\..\..\source\PointEngine.h" />
     <ClInclude Include="..\..\..\..\source\Sprite.h" />
     <ClInclude Include="..\..\..\..\source\Utils.h" />
     <ClInclude Include="..\..\..\..\source\Vector.h" />
     <ClInclude Include="..\..\..\..\source\Window.h" />
-    <ClInclude Include="Header.h" />
+    <ClInclude Include="Console.h" />
+    <ClInclude Include="ConVars.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\source\imgui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

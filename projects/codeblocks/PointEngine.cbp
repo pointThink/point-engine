@@ -57,7 +57,6 @@
 		<ExtraCommands>
 			<Add before="cmd /c prebuild.bat" />
 		</ExtraCommands>
-		<Unit filename="../../source/Audio.h" />
 		<Unit filename="../../source/Core.h" />
 		<Unit filename="../../source/Entity.cpp" />
 		<Unit filename="../../source/Entity.h" />
@@ -65,6 +64,7 @@
 		<Unit filename="../../source/Event.h" />
 		<Unit filename="../../source/Game.cpp" />
 		<Unit filename="../../source/Game.h" />
+		<Unit filename="../../source/Input.cpp" />
 		<Unit filename="../../source/Input.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

@@ -2,6 +2,20 @@
 
 #include "Logging.h"
 
+void PE::InputManager::Init()
+{
+	for (int i = 0; i <= 255; i++)
+	{
+		key_states[i] = false;
+	}
+
+	for (int i = 0; i <= 10; i++)
+	{
+		button_states[i] = false;
+	}
+
+}
+
 void PE::InputManager::SetKeyState(int key, bool is_down)
 {
 	key_states[key] = is_down;

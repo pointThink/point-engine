@@ -2,4 +2,5 @@ build
 projects/codeblocks/obj
 .vscode/settings.json
 projects/vs2022/PointEngine/PointEngine/x64
+projects/vs2022/PointEngine/x64
 projects/vs2022/PointEngine/.vs

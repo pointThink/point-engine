@@ -1,10 +1,14 @@
 #include "Game.h"
 
 #include "SDL2\SDL.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl2.h"
+#include "imgui/imgui_impl_sdlrenderer.h"
 #include "Logging.h"
 #include "Utils.h"
 #include "Event.h"
 #include "Input.h"
+#include "Console.h"
 
 #include <iostream>
 //using namespace PE;
@@ -22,6 +26,22 @@ namespace PE
 		sprite_manager = new PE::Rendering::SpriteManager(window, "./content/");
 		entity_manager = new PE::Entity::EntityManager;
 		input_manager = new PE::InputManager;
+		input_manager->Init();
+
+		// initialize the imgui library - PT
+		ImGui::CreateContext();
+		ImGuiIO & io = ImGui::GetIO(); (void) io;
+		ImGui::StyleColorsDark();
+		ImGui_ImplSDL2_InitForSDLRenderer(window->GetSDLWindow(), window->GetSDLRenderer());
+		ImGui_ImplSDLRenderer_Init(window->GetSDLRenderer());
+
+
+		// load a font that dosent suck as much as the default - PT
+		io.Fonts->AddFontFromFileTTF("C:/Windows/Fonts/CascadiaCode.ttf", 14);
+
+		ImGui::GetStyle().WindowRounding = 6;
+		ImGui::GetStyle().ChildRounding = 6;
+		ImGui::GetStyle().FrameRounding = 6;
 
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, {0, 0}));
 
@@ -63,30 +83,40 @@ namespace PE
 
 		while (SDL_PollEvent(&event) != 0)
 		{
+			ImGui_ImplSDL2_ProcessEvent(&event);
+
 			switch (event.type)
 			{
-			case SDL_QUIT:
-				should_quit = true;
-				break;
+				case SDL_QUIT:
+					should_quit = true;
+					break;
 
-			case SDL_KEYDOWN:
-				input_manager->SetKeyState(event.key.keysym.scancode, true);
-				break;
+				case SDL_KEYDOWN:
+					if (event.key.keysym.scancode == 53) // ~ key is reserved for opening the console - PT
+						console.is_open = !console.is_open;
 
-			case SDL_KEYUP:
-				input_manager->SetKeyState(event.key.keysym.scancode, false);
-				break;
+					if (!console.is_open)
+						input_manager->SetKeyState(event.key.keysym.scancode, true);
+					break;
 
-			case SDL_MOUSEBUTTONDOWN:
-				input_manager->SetButtonState(event.button.button, true);
-				break;
+				case SDL_KEYUP:
+					if (!console.is_open)
+						input_manager->SetKeyState(event.key.keysym.scancode, false);
+					break;
 
-			case SDL_MOUSEBUTTONUP:
-				input_manager->SetButtonState(event.button.button, false);
-				break;
+				case SDL_MOUSEBUTTONDOWN:
+					if (!console.is_open)
+						input_manager->SetButtonState(event.button.button, true);
+					break;
 
-			case SDL_MOUSEMOTION:
-				input_manager->SetMousePos(event.motion.x, event.motion.y);
+				case SDL_MOUSEBUTTONUP:
+					if (!console.is_open)
+						input_manager->SetButtonState(event.button.button, false);
+					break;
+
+				case SDL_MOUSEMOTION:
+					if (!console.is_open)
+						input_manager->SetMousePos(event.motion.x, event.motion.y);
 			}
 		}
 
@@ -97,10 +127,20 @@ namespace PE
 
 	void Game::Draw()
 	{
+		ImGui_ImplSDLRenderer_NewFrame();
+		ImGui_ImplSDL2_NewFrame();
+		ImGui::NewFrame();
+
 		SDL_RenderClear(window->GetSDLRenderer());
 
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
 		entity_manager->DrawEntities();
+
+		if (console.is_open)
+			console.Draw();
+
+		ImGui::Render();
+		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
 
 		SDL_RenderPresent(window->GetSDLRenderer());
 	}
