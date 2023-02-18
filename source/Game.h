@@ -8,6 +8,7 @@
 #include "Entity.h"
 #include "Utils.h"
 #include "Event.h"
+#include "Input.h"
 
 namespace PE
 {
@@ -29,6 +30,7 @@ namespace PE
 		PE::Rendering::Window * window = NULL;
 		PE::Rendering::SpriteManager * sprite_manager = NULL;
 		PE::Entity::EntityManager * entity_manager = NULL;
+		PE::InputManager * input_manager = NULL;
 
 		private:
 		bool should_quit = false;

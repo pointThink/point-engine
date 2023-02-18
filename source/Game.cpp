@@ -4,8 +4,10 @@
 #include "Logging.h"
 #include "Utils.h"
 #include "Event.h"
+#include "Input.h"
 
 #include <iostream>
+//using namespace PE;
 
 namespace PE
 {
@@ -19,6 +21,7 @@ namespace PE
 		window = new PE::Rendering::Window("Test", 800, 600, false);
 		sprite_manager = new PE::Rendering::SpriteManager(window, "./content/");
 		entity_manager = new PE::Entity::EntityManager;
+		input_manager = new PE::InputManager;
 
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, {0, 0}));
 
@@ -49,6 +52,8 @@ namespace PE
         PE::LogDeInit();
 
 		delete window;
+		delete entity_manager;
+		delete sprite_manager;
 	}
 
 	void Game::Update()
@@ -65,8 +70,23 @@ namespace PE
 				break;
 
 			case SDL_KEYDOWN:
-				std::cout << event.key.keysym.scancode << '\n';
+				input_manager->SetKeyState(event.key.keysym.scancode, true);
 				break;
+
+			case SDL_KEYUP:
+				input_manager->SetKeyState(event.key.keysym.scancode, false);
+				break;
+
+			case SDL_MOUSEBUTTONDOWN:
+				input_manager->SetButtonState(event.button.button, true);
+				break;
+
+			case SDL_MOUSEBUTTONUP:
+				input_manager->SetButtonState(event.button.button, false);
+				break;
+
+			case SDL_MOUSEMOTION:
+				input_manager->SetMousePos(event.motion.x, event.motion.y);
 			}
 		}
 

@@ -65,6 +65,9 @@
 		<Unit filename="../../source/Event.h" />
 		<Unit filename="../../source/Game.cpp" />
 		<Unit filename="../../source/Game.h" />
+		<Unit filename="../../source/Input.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="../../source/Logging.cpp" />
 		<Unit filename="../../source/Logging.h" />
 		<Unit filename="../../source/PointEngine.h" />

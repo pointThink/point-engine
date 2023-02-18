@@ -4,7 +4,6 @@
 #include <string>
 #include <fstream>
 
-
 namespace PE
 {
 	inline std::ofstream log_file;
