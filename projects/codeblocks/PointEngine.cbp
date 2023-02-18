@@ -46,7 +46,7 @@
 			<Add option="-m64" />
 			<Add directory="../../include" />
 			<Add directory="include" />
-			<Add directory="source" />
+			<Add directory="../../source" />
 		</Compiler>
 		<Linker>
 			<Add option="-m64" />
@@ -57,6 +57,10 @@
 		<ExtraCommands>
 			<Add before="cmd /c prebuild.bat" />
 		</ExtraCommands>
+		<Unit filename="../../source/ConVars.cpp" />
+		<Unit filename="../../source/ConVars.h" />
+		<Unit filename="../../source/Console.cpp" />
+		<Unit filename="../../source/Console.h" />
 		<Unit filename="../../source/Core.h" />
 		<Unit filename="../../source/Entity.cpp" />
 		<Unit filename="../../source/Entity.h" />
@@ -65,9 +69,7 @@
 		<Unit filename="../../source/Game.cpp" />
 		<Unit filename="../../source/Game.h" />
 		<Unit filename="../../source/Input.cpp" />
-		<Unit filename="../../source/Input.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="../../source/Input.h" />
 		<Unit filename="../../source/Logging.cpp" />
 		<Unit filename="../../source/Logging.h" />
 		<Unit filename="../../source/PointEngine.h" />
@@ -78,6 +80,22 @@
 		<Unit filename="../../source/Vector.h" />
 		<Unit filename="../../source/Window.cpp" />
 		<Unit filename="../../source/Window.h" />
+		<Unit filename="../../source/imgui/LICENSE.txt" />
+		<Unit filename="../../source/imgui/imconfig.h" />
+		<Unit filename="../../source/imgui/imgui.cpp" />
+		<Unit filename="../../source/imgui/imgui.h" />
+		<Unit filename="../../source/imgui/imgui_demo.cpp" />
+		<Unit filename="../../source/imgui/imgui_draw.cpp" />
+		<Unit filename="../../source/imgui/imgui_impl_sdl2.cpp" />
+		<Unit filename="../../source/imgui/imgui_impl_sdl2.h" />
+		<Unit filename="../../source/imgui/imgui_impl_sdlrenderer.cpp" />
+		<Unit filename="../../source/imgui/imgui_impl_sdlrenderer.h" />
+		<Unit filename="../../source/imgui/imgui_internal.h" />
+		<Unit filename="../../source/imgui/imgui_tables.cpp" />
+		<Unit filename="../../source/imgui/imgui_widgets.cpp" />
+		<Unit filename="../../source/imgui/imstb_rectpack.h" />
+		<Unit filename="../../source/imgui/imstb_textedit.h" />
+		<Unit filename="../../source/imgui/imstb_truetype.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

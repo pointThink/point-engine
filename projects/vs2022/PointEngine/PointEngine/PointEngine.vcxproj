@@ -165,6 +165,8 @@ xcopy /Y /S $(SolutionDir)..\..\..\bin\msvc $(SolutionDir)..\..\..\build\bin</Co
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\source\Console.cpp" />
+    <ClCompile Include="..\..\..\..\source\ConVars.cpp" />
     <ClCompile Include="..\..\..\..\source\Entity.cpp" />
     <ClCompile Include="..\..\..\..\source\Event.cpp" />
     <ClCompile Include="..\..\..\..\source\Game.cpp" />
@@ -180,9 +182,10 @@ xcopy /Y /S $(SolutionDir)..\..\..\bin\msvc $(SolutionDir)..\..\..\build\bin</Co
     <ClCompile Include="..\..\..\..\source\Sprite.cpp" />
     <ClCompile Include="..\..\..\..\source\Utils.cpp" />
     <ClCompile Include="..\..\..\..\source\Window.cpp" />
-    <ClCompile Include="ConVars.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\source\Console.h" />
+    <ClInclude Include="..\..\..\..\source\ConVars.h" />
     <ClInclude Include="..\..\..\..\source\Core.h" />
     <ClInclude Include="..\..\..\..\source\Entity.h" />
     <ClInclude Include="..\..\..\..\source\Event.h" />
@@ -202,8 +205,6 @@ xcopy /Y /S $(SolutionDir)..\..\..\bin\msvc $(SolutionDir)..\..\..\build\bin</Co
     <ClInclude Include="..\..\..\..\source\Utils.h" />
     <ClInclude Include="..\..\..\..\source\Vector.h" />
     <ClInclude Include="..\..\..\..\source\Window.h" />
-    <ClInclude Include="Console.h" />
-    <ClInclude Include="ConVars.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\..\source\imgui\LICENSE.txt" />

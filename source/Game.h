@@ -33,9 +33,9 @@ namespace PE
 		PE::Entity::EntityManager * entity_manager = NULL;
 		PE::InputManager * input_manager = NULL;
 
-		private:
 		PE::Console console;
 
+		private:
 		bool should_quit = false;
 		bool initialized = false;
 

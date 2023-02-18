@@ -417,7 +417,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1676745533 source:c:\users\user\engine\game-engine\source\game.cpp
+1676746358 source:c:\users\user\engine\game-engine\source\game.cpp
 	"Game.h"
 	"SDL2\SDL.h"
 	"imgui/imgui.h"
@@ -430,7 +430,7 @@
 	"Console.h"
 	<iostream>
 
-1676739297 c:\users\user\engine\game-engine\source\game.h
+1676750946 c:\users\user\engine\game-engine\source\game.h
 	<string>
 	"Core.h"
 	"Window.h"
@@ -472,10 +472,10 @@
 1675524419 c:\users\user\engine\game-engine\source\vector.h
 	"Core.h"
 
-1676214397 source:c:\users\user\engine\game-engine\source\utils.cpp
+1676748825 source:c:\users\user\engine\game-engine\source\utils.cpp
 	"Utils.h"
 
-1676214365 c:\users\user\engine\game-engine\source\utils.h
+1676749583 c:\users\user\engine\game-engine\source\utils.h
 	<chrono>
 	<string>
 	<vector>
@@ -641,19 +641,24 @@
 	<stdint.h>
 	"imstb_textedit.h"
 
-1676730351 source:c:\users\user\engine\game-engine\source\convars.cpp
+1676752830 source:c:\users\user\engine\game-engine\source\convars.cpp
 	"ConVars.h"
+	"Logging.h"
 
-1676734203 c:\users\user\engine\game-engine\source\convars.h
+1676753093 c:\users\user\engine\game-engine\source\convars.h
 	"Core.h"
 	<string>
 	<unordered_map>
 
-1676743381 c:\users\user\engine\game-engine\source\console.h
+1676749566 c:\users\user\engine\game-engine\source\console.h
 	<string>
+	"ConVars.h"
 
-1676744518 source:c:\users\user\engine\game-engine\source\console.cpp
+1676750532 source:c:\users\user\engine\game-engine\source\console.cpp
 	"Console.h"
 	"imgui/imgui.h"
+	"Utils.h"
+	"Logging.h"
 	<iostream>
+	<string>
 

@@ -21,6 +21,7 @@ namespace PE
 			void Reset();
 		};
 
-		std::vector<std::string> SplitString(std::string string, std::string delimiter);
+		std::vector<std::string> SplitString(std::string str, std::string delimiter);
+		bool StringToBool(std::string str);
 	}
 };

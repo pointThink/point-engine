@@ -28,3 +28,13 @@ std::vector<std::string> PE::Utils::SplitString(std::string string, std::string 
 
 	return finalized;
 }
+
+bool PE::Utils::StringToBool(std::string str)
+{
+	if (str == "true" || str == "1")
+		return true;
+	else if (str == "false" || str == "0")
+		return false;
+	else
+		return false;
+}
