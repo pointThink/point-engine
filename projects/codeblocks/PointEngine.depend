@@ -1,18 +1,18 @@
 # depslib dependency file v1.0
-1675616235 source:c:\users\user\engine\game-engine\source\logging.cpp
+1676670621 source:c:\users\user\engine\game-engine\source\logging.cpp
 	"Logging.h"
 	<iostream>
 	<ctime>
 	<cstring>
 
-1675616403 c:\users\user\engine\game-engine\source\logging.h
+1676670622 c:\users\user\engine\game-engine\source\logging.h
 	"Core.h"
 	<string>
 	<fstream>
 
 1675597772 c:\users\user\engine\game-engine\source\core.h
 
-1676215713 source:c:\users\user\engine\game-engine\source\window.cpp
+1676675011 source:c:\users\user\engine\game-engine\source\window.cpp
 	"Window.h"
 	<SDL2\SDL_image.h>
 	"Logging.h"
@@ -417,7 +417,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1676396629 source:c:\users\user\engine\game-engine\source\game.cpp
+1676674874 source:c:\users\user\engine\game-engine\source\game.cpp
 	"Game.h"
 	"SDL2\SDL.h"
 	"Logging.h"
@@ -425,7 +425,7 @@
 	"Event.h"
 	<iostream>
 
-1675597772 c:\users\user\engine\game-engine\source\game.h
+1676673935 c:\users\user\engine\game-engine\source\game.h
 	<string>
 	"Core.h"
 	"Window.h"
@@ -441,7 +441,7 @@
 	"Core.h"
 	"Window.h"
 
-1676394933 source:c:\users\user\engine\game-engine\source\sprite.cpp
+1676669467 source:c:\users\user\engine\game-engine\source\sprite.cpp
 	"Sprite.h"
 	<SDL2/SDL_image.h>
 	"Logging.h"

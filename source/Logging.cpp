@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS // god damnit msvc
+
 #include "Logging.h"
 
 #include <iostream>

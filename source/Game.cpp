@@ -21,10 +21,19 @@ namespace PE
 		entity_manager = new PE::Entity::EntityManager;
 
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, {0, 0}));
+
+		initialized = true;
 	}
 
 	void Game::Run()
 	{
+		if (!initialized)
+		{
+			LogError("Engine not initialized properly or not at all, cehck if Game::Init() was ran anywhere or if any errors occured during initialization");
+			PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 5, { 0, 0 }));
+			exit(5);
+		}
+
 		while (!should_quit)
 		{
 			delta_time = frame_timer.GetTime();
@@ -49,9 +58,15 @@ namespace PE
 
 		while (SDL_PollEvent(&event) != 0)
 		{
-			if (event.type == SDL_QUIT)
+			switch (event.type)
 			{
+			case SDL_QUIT:
 				should_quit = true;
+				break;
+
+			case SDL_KEYDOWN:
+				std::cout << event.key.keysym.scancode << '\n';
+				break;
 			}
 		}
 
@@ -64,7 +79,9 @@ namespace PE
 	{
 		SDL_RenderClear(window->GetSDLRenderer());
 
+		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
 		entity_manager->DrawEntities();
+
 		SDL_RenderPresent(window->GetSDLRenderer());
 	}
 

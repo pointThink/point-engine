@@ -32,6 +32,7 @@ namespace PE
 
 		private:
 		bool should_quit = false;
+		bool initialized = false;
 
 		std::string game_name;
 		std::string game_version;

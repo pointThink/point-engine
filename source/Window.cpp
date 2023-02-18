@@ -40,12 +40,12 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 	// Set the window to fullscreen - PT
 	if (fullscreen)
 	{
-	    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-	    PE::LogInfo("Window fullscreen");
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		PE::LogInfo("Window fullscreen");
 	}
 	else
-    {
-	    PE::LogInfo("Window not fullscreen");
+	{
+		PE::LogInfo("Window not fullscreen");
 	}
 
 
@@ -74,11 +74,11 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 
 PE::Rendering::Window::~Window()
 {
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
 
-	delete window;
-	delete renderer;
+	// note for the future
+	// remember to destroy the renderer before you destroy the window - PT
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 }
 
 int PE::Rendering::Window::GetHeight() {return height;}

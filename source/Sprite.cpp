@@ -45,6 +45,13 @@ void PE::Rendering::SpriteManager::LoadSpritePack(std::string pack_file)
 {
 	std::fstream stream(game_content_path + "/sprites/packs/" + pack_file, std::ios::in | std::ios::binary | std::ios::ate);
 
+	if (!stream.is_open())
+	{
+		PE::LogWarning("Could not open " + pack_file);
+		return;
+	}
+
+
 	int file_size = stream.tellg();
 
 	bool end_loop = false;
@@ -75,12 +82,13 @@ void PE::Rendering::SpriteManager::LoadSpritePack(std::string pack_file)
 		// after getting the segment length load the entire segment
 		stream.clear();
 		stream.seekg(current_position, std::ios::beg);
-		char segment[segment_length];
+		char * segment = new char[segment_length];
 		stream.read(segment, segment_length);
 
 		std::string name = "";
 		std::string format = "";
-		char data[data_length];
+
+		char * data = new char[data_length];
 
 		// read all the data
 		// name
@@ -109,7 +117,7 @@ void PE::Rendering::SpriteManager::LoadSpritePack(std::string pack_file)
 		//ws.close();
 
 		//SDL_RWops * io = SDL_RWFromFile("temp.bin", "r");
-		SDL_RWops * io = SDL_RWFromMem(&data, data_length);
+		SDL_RWops * io = SDL_RWFromMem(data, data_length);
 
 		if (io == NULL)
 		{
@@ -129,6 +137,9 @@ void PE::Rendering::SpriteManager::LoadSpritePack(std::string pack_file)
 		}
 
 		SDL_FreeRW(io);
+
+		delete segment;
+		delete data;
 
 		current_position = current_position + segment_length;
 
