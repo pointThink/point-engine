@@ -2,4 +2,4 @@
 * text=auto
 include/* linguist-vendored
 lib linguist-vendored
-source/imgui linguist-vendored
+source/imgui/ linguist-vendored
