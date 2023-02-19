@@ -10,17 +10,19 @@
 	<string>
 	<fstream>
 
-1675597772 c:\users\user\engine\game-engine\source\core.h
+1676809155 c:\users\user\engine\game-engine\source\core.h
 
-1676675011 source:c:\users\user\engine\game-engine\source\window.cpp
+1676840288 source:c:\users\user\engine\game-engine\source\window.cpp
 	"Window.h"
 	<SDL2\SDL_image.h>
 	"Logging.h"
 	"Event.h"
 
-1675615363 c:\users\user\engine\game-engine\source\window.h
+1676840731 c:\users\user\engine\game-engine\source\window.h
 	<string>
 	"SDL2\SDL.h"
+	"Vector.h"
+	"Utils.h"
 
 1675615359 c:\users\user\engine\game-engine\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -417,9 +419,9 @@
 	"begin_code.h"
 	"close_code.h"
 
-1676746358 source:c:\users\user\engine\game-engine\source\game.cpp
+1676838401 source:c:\users\user\engine\game-engine\source\game.cpp
 	"Game.h"
-	"SDL2\SDL.h"
+	"SDL2/SDL.h"
 	"imgui/imgui.h"
 	"imgui/imgui_impl_sdl2.h"
 	"imgui/imgui_impl_sdlrenderer.h"
@@ -430,7 +432,7 @@
 	"Console.h"
 	<iostream>
 
-1676750946 c:\users\user\engine\game-engine\source\game.h
+1676838365 c:\users\user\engine\game-engine\source\game.h
 	<string>
 	"Core.h"
 	"Window.h"
@@ -469,16 +471,17 @@
 	"Core.h"
 	"Vector.h"
 
-1675524419 c:\users\user\engine\game-engine\source\vector.h
+1676804708 c:\users\user\engine\game-engine\source\vector.h
 	"Core.h"
 
-1676748825 source:c:\users\user\engine\game-engine\source\utils.cpp
+1676840227 source:c:\users\user\engine\game-engine\source\utils.cpp
 	"Utils.h"
 
-1676749583 c:\users\user\engine\game-engine\source\utils.h
+1676840661 c:\users\user\engine\game-engine\source\utils.h
 	<chrono>
 	<string>
 	<vector>
+	<cstdint>
 	"Core.h"
 
 1675597772 source:c:\users\user\engine\game-engine\source\event.cpp
@@ -641,24 +644,38 @@
 	<stdint.h>
 	"imstb_textedit.h"
 
-1676752830 source:c:\users\user\engine\game-engine\source\convars.cpp
+1676763953 source:c:\users\user\engine\game-engine\source\convars.cpp
 	"ConVars.h"
 	"Logging.h"
+	<iostream>
 
-1676753093 c:\users\user\engine\game-engine\source\convars.h
+1676762151 c:\users\user\engine\game-engine\source\convars.h
 	"Core.h"
 	<string>
 	<unordered_map>
 
-1676749566 c:\users\user\engine\game-engine\source\console.h
+1676840543 c:\users\user\engine\game-engine\source\console.h
 	<string>
 	"ConVars.h"
 
-1676750532 source:c:\users\user\engine\game-engine\source\console.cpp
+1676762646 source:c:\users\user\engine\game-engine\source\console.cpp
 	"Console.h"
 	"imgui/imgui.h"
 	"Utils.h"
 	"Logging.h"
 	<iostream>
 	<string>
+	<cstring>
+
+1676807498 source:c:\users\user\engine\game-engine\source\collision.cpp
+	"Collision.h"
+	<iostream>
+
+1676806681 c:\users\user\engine\game-engine\source\collision.h
+	"Core.h"
+	"Vector.h"
+
+1676807634 source:c:\users\user\engine\game-engine\source\vector.cpp
+	"Vector.h"
+	<cmath>
 

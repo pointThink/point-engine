@@ -70,6 +70,8 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 	}
 
 	PE::LogInfo("SDL Image initialized");
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 
 PE::Rendering::Window::~Window()
@@ -99,4 +101,74 @@ void PE::Rendering::Window::SetFullscreen(bool fullscreen)
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 	else
 		SDL_SetWindowBordered(window, SDL_TRUE);
+}
+
+void PE::Rendering::Window::ClearBackground()
+{
+	SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
+	SDL_RenderClear(renderer);
+}
+
+void PE::Rendering::Window::PresentRenderer()
+{
+	SDL_RenderPresent(renderer);
+}
+
+void PE::Rendering::Window::DrawSquare(Vector pos, Vector size, Utils::Color color)
+{
+	SDL_Rect rect;
+
+	rect.x = pos.x;
+	rect.y = pos.y;
+	rect.w = size.x;
+	rect.h = size.y;
+
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderFillRect(renderer, &rect);
+	SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
+}
+
+
+void PE::Rendering::Window::DrawCircle(Vector pos, float radius, Utils::Color color)
+{
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+	// draw a fugnkin circle using the midpoint circle algorithm - PT
+	int x = radius - 1;
+	int y = 0;
+
+	int midpoint = 1 - radius;
+
+	while (x > y)
+	{
+		y++;
+
+		// check if midpoint is inside the perimiter - PT
+		if (midpoint <= 0)
+			midpoint = midpoint + 2*y + 1;
+		else
+		{
+			x--;
+			midpoint = midpoint + 2*y - 2*x + 1;
+		}
+
+		if (x > y) // if this condition is true that means that all points have been drawn - PT
+			break;
+
+		// Draw the generated points - PT
+		SDL_RenderDrawPoint(renderer, x + pos.x, y + pos.y);
+		SDL_RenderDrawPoint(renderer, -x + pos.x, y + pos.y);
+		SDL_RenderDrawPoint(renderer, x + pos.x, -y + pos.y);
+		SDL_RenderDrawPoint(renderer, -x + pos.x, -y + pos.y);
+
+		if (x != y)
+		{
+			SDL_RenderDrawPoint(renderer, y + pos.x, x + pos.y);
+			SDL_RenderDrawPoint(renderer, -y + pos.x, x + pos.y);
+			SDL_RenderDrawPoint(renderer, y + pos.x, -x + pos.y);
+			SDL_RenderDrawPoint(renderer, -y + pos.x, -x + pos.y);
+		}
+	}
+
+	SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
 }

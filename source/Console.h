@@ -6,7 +6,7 @@
 
 namespace PE
 {
-	class Console
+	class ENGINE_API Console
 	{
 		public:
 		Console();
@@ -14,7 +14,7 @@ namespace PE
 
 		std::string contents = "";
 		char command[255] = "";
-		bool is_open;
+		bool is_open = false;
 
 		ConVarManager * convar_manager;
 

@@ -3,12 +3,14 @@
 #include <string>
 
 #include "SDL2\SDL.h"
+#include "Vector.h"
+#include "Utils.h"
 
 namespace PE
 {
 	namespace Rendering
 	{
-		class Window
+		class ENGINE_API Window
 		{
 			private:
 			SDL_Window * window = NULL;
@@ -22,6 +24,8 @@ namespace PE
 			bool fullscreen = 0;
 
 			public:
+			Utils::Color bg_color;
+
 			Window(std::string title, int width, int heigh, bool fullscreen);
 			~Window();
 
@@ -35,6 +39,14 @@ namespace PE
 
 			void SetSize(int x, int y);
 			void SetFullscreen(bool fullscreen);
+
+			void ClearBackground();
+			void PresentRenderer();
+
+			void DrawSquare(Vector pos, Vector size, Utils::Color color);
+			void DrawCircle(Vector pos, float radius, Utils::Color color);
+			//void DrawSquareRound(Vector pos, Vector size, float roundness, Utils::Color color);
+			//void DrawTriangle(Vector pos1, Vector pos2, Vector pos3, Utils::Color color)
 		};
 	};
 };

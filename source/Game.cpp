@@ -131,7 +131,7 @@ namespace PE
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
 
-		SDL_RenderClear(window->GetSDLRenderer());
+		window->ClearBackground();
 
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
 		entity_manager->DrawEntities();
@@ -142,7 +142,7 @@ namespace PE
 		ImGui::Render();
 		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
 
-		SDL_RenderPresent(window->GetSDLRenderer());
+		window->PresentRenderer();
 	}
 
 	void Game::QuitApplication()

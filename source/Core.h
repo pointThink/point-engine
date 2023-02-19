@@ -10,4 +10,4 @@
 	#error Only 64bit windows is supported for now
 #endif
 
-#define PE_VERSION "alpha 0.2"
+#define PE_VERSION "alpha 0.3"
