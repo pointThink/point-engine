@@ -1,4 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 include/* linguist-vendored
-include/lib linguist-vendored
+lib linguist-vendored
+source/imgui linguist-vendored
