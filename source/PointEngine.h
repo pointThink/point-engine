@@ -11,3 +11,4 @@
 #include "Vector.h"
 #include "Entity.h"
 #include "Input.h"
+#include "Collision.h"

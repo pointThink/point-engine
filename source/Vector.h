@@ -8,6 +8,13 @@ namespace PE
 	{
 		public:
 		double x, y;
+
+		double GetDistanceTo(Vector vec);
+
+
+		// some vector maths - PT
+		Vector operator+(Vector vec);
+		Vector operator-(Vector vec);
 	};
 };
 
