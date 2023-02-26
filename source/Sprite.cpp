@@ -4,6 +4,7 @@
 
 #include "Logging.h"
 #include "Utils.h"
+#include "Vector.h"
 
 #include <fstream>
 #include <iostream>
@@ -166,7 +167,7 @@ void PE::Rendering::SpriteManager::ClearBank()
 	sprite_bank.clear();
 }
 
-void PE::Rendering::SpriteManager::DrawSprite(std::string sprite_name, int x, int y)
+void PE::Rendering::SpriteManager::DrawSprite(std::string sprite_name, Vector position)
 {
     if (!sprite_bank.count(sprite_name))
     {
@@ -184,8 +185,8 @@ void PE::Rendering::SpriteManager::DrawSprite(std::string sprite_name, int x, in
 	// Temporary rect to define position of drawn sprite - PT
 	SDL_Rect * temp_rect = new SDL_Rect();
 
-	temp_rect->x = x;
-	temp_rect->y = y;
+	temp_rect->x = position.x;
+	temp_rect->y = position.y;
 	temp_rect->w = w;
 	temp_rect->h = h;
 
@@ -200,12 +201,47 @@ void PE::Rendering::SpriteManager::DrawTileSprite(std::string sprite_name, int o
 	{
 		for (int i2 = 0; i2 < tile_count_y; i2++)
 		{
-			DrawSprite(sprite_name, orgin_x + tile_w * i, orgin_y + tile_h * i2);
+			DrawSprite(sprite_name, {orgin_x + tile_w * i, orgin_y + tile_h * i2});
 		}
 	}
 }
 
-void PE::Rendering::SpriteManager::DrawSpritePlus(std::string sprite_name, int x, int y, int w, int h, int rotation)
+void PE::Rendering::SpriteManager::DrawSpritePlus(std::string sprite_name, Vector position, Vector size, int rotation, bool flip_horizontal, bool flip_vertical)
 {
-    // todo: implement
+    if (!sprite_bank.count(sprite_name))
+    {
+        PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
+        return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
+    }
+
+    SDL_Texture * texture = sprite_bank.find(sprite_name)->second;
+
+	// this is stupid - PT
+	int w;
+	int h;
+
+	SDL_QueryTexture(texture, NULL, NULL, &w, &h);
+
+	// Temporary rect to define position of drawn sprite - PT
+	SDL_Rect * temp_rect = new SDL_Rect();
+
+	temp_rect->x = position.x;
+	temp_rect->y = position.y;
+	temp_rect->w = size.x;
+	temp_rect->h = size.y;
+
+	SDL_RendererFlip rf;
+
+	if (flip_horizontal)
+		rf = (SDL_RendererFlip) SDL_FLIP_HORIZONTAL;
+	else if (flip_vertical)
+		rf = (SDL_RendererFlip) SDL_FLIP_VERTICAL;
+	else if (flip_horizontal && flip_vertical)
+		rf = (SDL_RendererFlip) (SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
+	else
+		rf = SDL_FLIP_NONE;
+
+	SDL_RenderCopyEx(game_window->GetSDLRenderer(), texture, NULL, temp_rect, rotation, NULL, rf);
+
+	delete temp_rect;
 }

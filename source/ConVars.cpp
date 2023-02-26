@@ -7,15 +7,11 @@ PE::ConVar::ConVar(ConVarType type, void * data_pointer)
 {
 	this->type = type;
 	this->data_pointer = data_pointer;
-	this->on_change = nullptr;
 }
 
-
-PE::ConVar::ConVar(ConVarType type, void * data_pointer, void(*on_change)())
+PE::ConVarManager::ConVarManager(PE::Game * game)
 {
-	this->type = type;
-	this->data_pointer = data_pointer;
-	this->on_change = on_change;
+	this->game = game;
 }
 
 void PE::ConVarManager::RegisterConVar(std::string name, ConVar convar)
@@ -42,11 +38,6 @@ void PE::ConVarManager::SetConVar(std::string name, void * data)
 		*(float *)(cv.data_pointer) = *(float *)data;
 	else if (cv.type == CONVAR_STRING)
 		*(std::string *)(cv.data_pointer) = *(std::string *)data;
-
-	if (con_vars.find(name)->second.on_change != nullptr)
-	{
-		con_vars.find(name)->second.on_change();
-	}
 }
 
 PE::ConVar * PE::ConVarManager::FindConVar(std::string name)

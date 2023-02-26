@@ -44,6 +44,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-m64" />
+			<Add option="-std=c++20" />
 			<Add directory="../../include" />
 			<Add directory="include" />
 			<Add directory="../../source" />
@@ -57,6 +58,8 @@
 		<ExtraCommands>
 			<Add before="cmd /c prebuild.bat" />
 		</ExtraCommands>
+		<Unit filename="../../source/Collision.cpp" />
+		<Unit filename="../../source/Collision.h" />
 		<Unit filename="../../source/ConVars.cpp" />
 		<Unit filename="../../source/ConVars.h" />
 		<Unit filename="../../source/Console.cpp" />
@@ -75,8 +78,11 @@
 		<Unit filename="../../source/PointEngine.h" />
 		<Unit filename="../../source/Sprite.cpp" />
 		<Unit filename="../../source/Sprite.h" />
+		<Unit filename="../../source/UFP.cpp" />
+		<Unit filename="../../source/UFP.h" />
 		<Unit filename="../../source/Utils.cpp" />
 		<Unit filename="../../source/Utils.h" />
+		<Unit filename="../../source/Vector.cpp" />
 		<Unit filename="../../source/Vector.h" />
 		<Unit filename="../../source/Window.cpp" />
 		<Unit filename="../../source/Window.h" />

@@ -39,6 +39,7 @@ namespace PE
 
 			void SetSize(int x, int y);
 			void SetFullscreen(bool fullscreen);
+			void SetTitle(std::string title);
 
 			void ClearBackground();
 			void PresentRenderer();

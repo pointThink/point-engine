@@ -6,9 +6,11 @@
 #include <ctime>
 #include <cstring>
 
-void PE::LogInit()
+void PE::LogInit(PE::Console * a_console)
 {
 	log_file.open("log.txt");
+
+	console = a_console;
 }
 
 void PE::LogDeInit()
@@ -41,7 +43,7 @@ void PE::LogGeneric(std::string string)
 	// i hate strings in c++, i mean just look at this shit - PT
 	output_string = std::string("[") + std::string(strtok(ctime(&t), "\n")) + std::string("] ") + string + std::string("\n");
 
-	std::cout << output_string;
+	console->Print(output_string);
 
 	// write the line to the file
 	log_file << output_string;

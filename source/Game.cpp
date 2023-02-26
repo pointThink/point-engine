@@ -9,22 +9,27 @@
 #include "Event.h"
 #include "Input.h"
 #include "Console.h"
+#include "UFP.h"
 
 #include <iostream>
 //using namespace PE;
 
 namespace PE
 {
+	void UpdateGameName(Game * game);
+
 	void Game::Init()
 	{
-		PE::LogInit();
+		console = new PE::Console(this);
+		PE::LogInit(console);
 
 		// Shameless plug - PT
-		LogInfo(game_name + " " + game_version + " running on PointEngine version " + PE_VERSION);
+		LogInfo("Game version " + game_version + " running on PointEngine version " + PE_VERSION);
 
 		window = new PE::Rendering::Window("Test", 800, 600, false);
 		sprite_manager = new PE::Rendering::SpriteManager(window, "./content/");
 		entity_manager = new PE::Entity::EntityManager;
+
 		input_manager = new PE::InputManager;
 		input_manager->Init();
 
@@ -42,6 +47,15 @@ namespace PE
 		ImGui::GetStyle().WindowRounding = 6;
 		ImGui::GetStyle().ChildRounding = 6;
 		ImGui::GetStyle().FrameRounding = 6;
+
+		// define some engine convars
+		// console->convar_manager->RegisterConVar("g_title", ConVar(CONVAR_STRING, &game_name, MethodPointer<PE::Game>(this, &UpdateGameName)));
+		console->convar_manager->RegisterConVar("g_version", ConVar(CONVAR_STRING, &game_version));
+
+		console->convar_manager->RegisterConVar("r_bg_color_r", ConVar(CONVAR_INT, &window->bg_color.r));
+		console->convar_manager->RegisterConVar("r_bg_color_g", ConVar(CONVAR_INT, &window->bg_color.g));
+		console->convar_manager->RegisterConVar("r_bg_color_b", ConVar(CONVAR_INT, &window->bg_color.b));
+
 
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, {0, 0}));
 
@@ -93,29 +107,29 @@ namespace PE
 
 				case SDL_KEYDOWN:
 					if (event.key.keysym.scancode == 53) // ~ key is reserved for opening the console - PT
-						console.is_open = !console.is_open;
+						console->is_open = !console->is_open;
 
-					if (!console.is_open)
+					if (!console->is_open)
 						input_manager->SetKeyState(event.key.keysym.scancode, true);
 					break;
 
 				case SDL_KEYUP:
-					if (!console.is_open)
+					if (!console->is_open)
 						input_manager->SetKeyState(event.key.keysym.scancode, false);
 					break;
 
 				case SDL_MOUSEBUTTONDOWN:
-					if (!console.is_open)
+					if (!console->is_open)
 						input_manager->SetButtonState(event.button.button, true);
 					break;
 
 				case SDL_MOUSEBUTTONUP:
-					if (!console.is_open)
+					if (!console->is_open)
 						input_manager->SetButtonState(event.button.button, false);
 					break;
 
 				case SDL_MOUSEMOTION:
-					if (!console.is_open)
+					if (!console->is_open)
 						input_manager->SetMousePos(event.motion.x, event.motion.y);
 			}
 		}
@@ -136,8 +150,8 @@ namespace PE
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
 		entity_manager->DrawEntities();
 
-		if (console.is_open)
-			console.Draw();
+		if (console->is_open)
+			console->Draw();
 
 		ImGui::Render();
 		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
@@ -174,5 +188,10 @@ namespace PE
 	float Game::GetFrameTime()
 	{
 		return delta_time.count();
+	}
+
+	void Game::UpdateGameName()
+	{
+		window->SetTitle(game_name);
 	}
 }

@@ -13,6 +13,8 @@
 
 namespace PE
 {
+	class Console;
+
 	class ENGINE_API Game
 	{
 		public:
@@ -33,9 +35,11 @@ namespace PE
 		PE::Entity::EntityManager * entity_manager = NULL;
 		PE::InputManager * input_manager = NULL;
 
-		PE::Console console;
+		PE::Console * console;
 
 		private:
+		void UpdateGameName();
+
 		bool should_quit = false;
 		bool initialized = false;
 
@@ -49,4 +53,4 @@ namespace PE
 		void Update();
 		void Draw();
 	};
-};
+}

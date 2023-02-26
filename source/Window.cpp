@@ -50,6 +50,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
 	if (renderer == NULL)
 	{
@@ -114,6 +115,11 @@ void PE::Rendering::Window::PresentRenderer()
 	SDL_RenderPresent(renderer);
 }
 
+void PE::Rendering::Window::SetTitle(std::string title)
+{
+	SDL_SetWindowTitle(window, title.c_str());
+}
+
 void PE::Rendering::Window::DrawSquare(Vector pos, Vector size, Utils::Color color)
 {
 	SDL_Rect rect;
@@ -144,7 +150,7 @@ void PE::Rendering::Window::DrawCircle(Vector pos, float radius, Utils::Color co
 		y++;
 
 		// check if midpoint is inside the perimiter - PT
-		if (midpoint <= 0)
+		if (midpoint >= 0)
 			midpoint = midpoint + 2*y + 1;
 		else
 		{

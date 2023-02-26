@@ -1,12 +1,16 @@
 #pragma once
 
 #include "Core.h"
+#include "Game.h"
+#include "UFP.h"
 
 #include <string>
 #include <unordered_map>
 
 namespace PE
 {
+	class Game;
+
 	enum ConVarType
 	{
 		CONVAR_BOOL,
@@ -20,11 +24,11 @@ namespace PE
 		public:
 		ConVarType type;
 		void * data_pointer;
-		void (*on_change)();
 
 		ConVar() {}
 		ConVar(ConVarType type, void * data_pointer);
-		ConVar(ConVarType type, void * data_pointer, void (*on_change)());
+
+		void SetConVar(void * data);
 	};
 
 	class ENGINE_API ConVarManager
@@ -33,6 +37,10 @@ namespace PE
 		std::unordered_map<std::string, ConVar> con_vars;
 
 		public:
+		ConVarManager(PE::Game * game);
+
+		PE::Game * game;
+
 		void RegisterConVar(std::string name, ConVar convar);
 		void RemoveConVar(std::string name);
 		void SetConVar(std::string name, void * data);

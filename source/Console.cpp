@@ -10,9 +10,10 @@
 #include <string>
 #include <cstring>
 
-PE::Console::Console()
+PE::Console::Console(PE::Game * game)
 {
-	convar_manager = new PE::ConVarManager;
+	this->game = game;
+	convar_manager = new PE::ConVarManager(game);
 }
 
 PE::Console::~Console()
@@ -97,7 +98,7 @@ void PE::Console::Draw()
 
 
 	ImGui::PopItemWidth();
-	ImGui::BeginChild("eeee", {ImGui::GetWindowWidth() - 15, ImGui::GetWindowHeight() - 60}, 2, ImGuiWindowFlags_None);
+	ImGui::BeginChild("text", {ImGui::GetWindowWidth() - 15, ImGui::GetWindowHeight() - 60}, 2, ImGuiWindowFlags_None);
 
 	ImGui::Text(contents.c_str());
 
@@ -114,4 +115,9 @@ void PE::Console::Draw()
 void PE::Console::Clear()
 {
 	contents = "";
+}
+
+void PE::Console::Print(std::string str)
+{
+	contents = contents + str;
 }
