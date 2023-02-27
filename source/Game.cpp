@@ -9,15 +9,12 @@
 #include "Event.h"
 #include "Input.h"
 #include "Console.h"
-#include "UFP.h"
 
 #include <iostream>
 //using namespace PE;
 
 namespace PE
 {
-	void UpdateGameName(Game * game);
-
 	void Game::Init()
 	{
 		console = new PE::Console(this);
@@ -31,7 +28,6 @@ namespace PE
 		entity_manager = new PE::Entity::EntityManager;
 
 		input_manager = new PE::InputManager;
-		input_manager->Init();
 
 		// initialize the imgui library - PT
 		ImGui::CreateContext();
@@ -110,22 +106,22 @@ namespace PE
 						console->is_open = !console->is_open;
 
 					if (!console->is_open)
-						input_manager->SetKeyState(event.key.keysym.scancode, true);
+						input_manager->GetKeyState(event.key.keysym.scancode)->SetDown(true);
 					break;
 
 				case SDL_KEYUP:
 					if (!console->is_open)
-						input_manager->SetKeyState(event.key.keysym.scancode, false);
+						input_manager->GetKeyState(event.key.keysym.scancode)->SetDown(false);
 					break;
 
 				case SDL_MOUSEBUTTONDOWN:
 					if (!console->is_open)
-						input_manager->SetButtonState(event.button.button, true);
+						input_manager->GetButtonState(event.button.button)->SetDown(true);
 					break;
 
 				case SDL_MOUSEBUTTONUP:
 					if (!console->is_open)
-						input_manager->SetButtonState(event.button.button, false);
+						input_manager->GetButtonState(event.button.button)->SetDown(false);
 					break;
 
 				case SDL_MOUSEMOTION:
@@ -133,6 +129,8 @@ namespace PE
 						input_manager->SetMousePos(event.motion.x, event.motion.y);
 			}
 		}
+
+		input_manager->UpdateLastFrameStates();
 
 		entity_manager->UpdateEntities();
 

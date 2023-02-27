@@ -2,79 +2,37 @@
 
 #include "Logging.h"
 
-void PE::InputManager::Init()
+void PE::InputState::SetDown(bool down)
 {
-	for (int i = 0; i <= 255; i++)
-	{
-		key_states[i] = false;
-	}
+	this->down = down;
 
-	for (int i = 0; i <= 10; i++)
-	{
-		button_states[i] = false;
-	}
-
+	pressed_at = std::chrono::high_resolution_clock::now();
 }
 
-void PE::InputManager::SetKeyState(int key, bool is_down)
+void PE::InputState::UpdateLastFrameState()
 {
-	key_states[key] = is_down;
+	down_on_last_frame = down;
 }
 
-bool PE::InputManager::IsKeyDown(int key)
+bool PE::InputState::IsDown()
 {
-	return key_states[key];
+	return down;
 }
 
-void PE::InputManager::SetButtonState(int button, bool is_down)
+double PE::InputState::PressedFor()
 {
-	button_states[button] = is_down;
-}
-
-bool PE::InputManager::IsButtonDown(int button)
-{
-	return button_states[button];
-}
-
-void PE::InputManager::SetState(std::string name, bool is_down)
-{
-	Input input = bindings[name];
-
-	if (input.type == INPUT_MOUSE)
-	{
-		SetButtonState(input.code, is_down);
-		return;
-	}
-	else if (input.type == INPUT_KEYBOARD)
-	{
-		SetKeyState(input.code, is_down);
-		return;
-	}
-
-	PE::LogWarning("Could not find key in bindings: " + name);
-}
-
-bool PE::InputManager::IsDown(std::string name)
-{
-	PE::Input input = bindings[name];
-
-	if (input.type == PE::INPUT_MOUSE)
-		return IsButtonDown(input.code);
-	if (input.type == PE::INPUT_KEYBOARD)
-		return IsKeyDown(input.code);
-
-	PE::LogWarning("Could not find key in bindings: " + name);
-	return false;
+	auto pressed_for = std::chrono::high_resolution_clock::now() - pressed_at;
+	return pressed_for.count() * 100000;
 }
 
 void PE::InputManager::BindKey(std::string name, int key)
 {
-	bindings[name] = {key, PE::INPUT_KEYBOARD};
+	bindings[name] = {INPUT_KEYBOARD, key};
 }
 
 void PE::InputManager::BindButton(std::string name, int button)
 {
-	bindings[name] = {button, PE::INPUT_MOUSE};
+	bindings[name] = {PE::INPUT_MOUSE, button};
 }
 
 void PE::InputManager::SetMousePos(int x, int y)
@@ -86,4 +44,40 @@ void PE::InputManager::SetMousePos(int x, int y)
 PE::Vector PE::InputManager::GetMousePos()
 {
 	return mouse_pos;
+}
+
+PE::InputState * PE::InputManager::GetKeyState(int key)
+{
+	return &key_states[key];
+}
+
+PE::InputState * PE::InputManager::GetButtonState(int button)
+{
+	return &button_states[button];
+}
+
+PE::InputState * PE::InputManager::GetBindState(std::string name)
+{
+	InputState * state = nullptr;
+	Binding bind = bindings[name];
+
+	if (bind.type == INPUT_KEYBOARD)
+		state = GetKeyState(bind.code);
+	else if (bind.type == INPUT_MOUSE)
+		state = GetButtonState(bind.code);
+
+	return state;
+}
+
+void PE::InputManager::UpdateLastFrameStates()
+{
+	for (InputState &state : key_states)
+	{
+		state.UpdateLastFrameState();
+	}
+
+	for (InputState &state : button_states)
+	{
+		state.UpdateLastFrameState();
+	}
 }

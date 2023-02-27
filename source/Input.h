@@ -2,6 +2,8 @@
 
 #include <unordered_map>
 #include <string>
+#include <chrono>
+#include <ctime>
 
 #include "Core.h"
 #include "Vector.h"
@@ -123,35 +125,45 @@ namespace PE
 		INPUT_KEYBOARD
 	};
 
-	class Input
+	class ENGINE_API InputState
+	{
+		bool down = false;
+		bool down_on_last_frame = false;
+		std::chrono::high_resolution_clock::time_point pressed_at;
+
+		public:
+		void UpdateLastFrameState();
+		void SetDown(bool state);
+		bool IsDown();
+
+		double PressedFor();
+	};
+
+	class Binding
 	{
 		public:
-		int code;
 		InputType type;
+		int code;
 	};
 
 	class ENGINE_API InputManager
 	{
-		std::unordered_map<std::string, Input> bindings;
-		bool key_states[255];
-		bool button_states[10];
+		std::unordered_map<std::string, Binding> bindings;
+		InputState key_states[255];
+		InputState button_states[10];
 		PE::Vector mouse_pos;
 
 		public:
-		void Init();
-
 		void SetMousePos(int x, int y);
-		void SetKeyState(int key, bool is_down);
-		void SetButtonState(int button, bool is_down);
-		void SetState(std::string name, bool is_down);
-
-		bool IsKeyDown(int key);
-		bool IsButtonDown(int button);
-		bool IsDown(std::string name);
 		PE::Vector GetMousePos();
 
-		void BindMouseButton(std::string name, int button);
+		InputState * GetButtonState(int button);
+		InputState * GetKeyState(int key);
+		InputState * GetBindState(std::string bind);
+
 		void BindKey(std::string name, int key);
 		void BindButton(std::string name, int button);
+
+		void UpdateLastFrameStates();
 	};
 }

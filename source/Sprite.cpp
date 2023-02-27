@@ -195,13 +195,13 @@ void PE::Rendering::SpriteManager::DrawSprite(std::string sprite_name, Vector po
 	delete temp_rect;
 }
 
-void PE::Rendering::SpriteManager::DrawTileSprite(std::string sprite_name, int orgin_x, int orgin_y, int tile_w, int tile_h, int tile_count_x, int tile_count_y)
+void PE::Rendering::SpriteManager::DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, int tile_count_x, int tile_count_y)
 {
 	for (int i = 0; i < tile_count_x; i++)
 	{
 		for (int i2 = 0; i2 < tile_count_y; i2++)
 		{
-			DrawSprite(sprite_name, {orgin_x + tile_w * i, orgin_y + tile_h * i2});
+			DrawSprite(sprite_name, {orgin.x + size.x * i, orgin.y + size.y * i2});
 		}
 	}
 }

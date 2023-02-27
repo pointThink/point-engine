@@ -78,8 +78,6 @@
 		<Unit filename="../../source/PointEngine.h" />
 		<Unit filename="../../source/Sprite.cpp" />
 		<Unit filename="../../source/Sprite.h" />
-		<Unit filename="../../source/UFP.cpp" />
-		<Unit filename="../../source/UFP.h" />
 		<Unit filename="../../source/Utils.cpp" />
 		<Unit filename="../../source/Utils.h" />
 		<Unit filename="../../source/Vector.cpp" />

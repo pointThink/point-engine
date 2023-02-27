@@ -30,7 +30,7 @@ namespace PE
 			void ClearBank();
 
 			void DrawSprite(std::string sprite_name, Vector position);
-			void DrawTileSprite(std::string sprite_name, int orgin_x, int orgin_y, int tile_w, int tile_y, int tile_count_x, int tile_count_y);
+			void DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, int tile_count_x, int tile_count_y);
 			void DrawSpritePlus(std::string sprite_name, Vector position, Vector size, int rotation, bool flip_horizontal, bool flip_vertical);
 		};
 
