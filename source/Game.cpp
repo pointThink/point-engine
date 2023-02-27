@@ -25,7 +25,7 @@ namespace PE
 
 		window = new PE::Rendering::Window("Test", 800, 600, false);
 		sprite_manager = new PE::Rendering::SpriteManager(window, "./content/");
-		entity_manager = new PE::Entity::EntityManager;
+		entity_manager = new PE::Entity::EntityManager(this);
 
 		input_manager = new PE::InputManager;
 

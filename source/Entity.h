@@ -6,9 +6,10 @@
 #include "Core.h"
 #include "Vector.h"
 
-
 namespace PE
 {
+	class Game;
+
 	namespace Entity
 	{
 		/*
@@ -36,7 +37,9 @@ namespace PE
 
 		class ENGINE_API EntityBase
 		{
-			private:
+			protected:
+			Game * game;
+
 			std::string entity_name;
 			std::string unique_id; //this is optional, only used for searching entities - PT
 
@@ -54,6 +57,8 @@ namespace PE
 
 			std::string GetEntityName();
 			std::string GetUniqueID();
+
+			void SetGameInstance(Game * game);
 
 			bool GetShouldSave();
 			PE::Entity::EntitySaveData GetSaveData();
@@ -83,10 +88,14 @@ namespace PE
 		class ENGINE_API EntityManager
 		{
 			private:
+			Game * game;
+
 			std::vector<std::string> used_ids;
 			std::vector<PE::Entity::EntityBase *> entities;
 
 			public:
+			EntityManager(Game * game);
+
 			void AddEntity(EntityBase * entity);
 
 			void UpdateEntities();

@@ -14,6 +14,11 @@ void PE::Entity::EntityBase::Destroy()
 		PE::LogWarning("Cannot destroy entity because allow_extern_destruction is set to false");
 }
 
+void PE::Entity::EntityBase::SetGameInstance(Game * game)
+{
+	this->game = game;
+}
+
 std::string EntityBase::GetEntityName() {return entity_name;}
 std::string EntityBase::GetUniqueID() {return unique_id;}
 
@@ -24,6 +29,11 @@ bool EntityBase::GetSelfDestruct() {return self_destruct;}
 bool EntityBase::GetAllowExternDestruction() {return allow_extern_destruction;}
 
 // -----------------------------------------------------------
+
+EntityManager::EntityManager(Game * game)
+{
+	this->game = game;
+}
 
 void EntityManager::AddEntity(EntityBase * entity)
 {
@@ -37,6 +47,7 @@ void EntityManager::AddEntity(EntityBase * entity)
 		}
 	}
 
+	entity->SetGameInstance(game);
 	entity->Init();
 
 	entities.push_back(entity);
