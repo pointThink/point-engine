@@ -175,6 +175,6 @@ void PE::Rendering::Window::DrawCircle(Vector pos, float radius, Utils::Color co
 			SDL_RenderDrawPoint(renderer, -y + pos.x, -x + pos.y);
 		}
 	}
-
+	
 	SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
 }

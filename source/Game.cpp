@@ -26,8 +26,8 @@ namespace PE
 		window = new PE::Rendering::Window("Test", 800, 600, false);
 		sprite_manager = new PE::Rendering::SpriteManager(window, "./content/");
 		entity_manager = new PE::Entity::EntityManager(this);
-
 		input_manager = new PE::InputManager;
+		audio_manager = new PE::Audio::AudioManager(game_content_path);
 
 		// initialize the imgui library - PT
 		ImGui::CreateContext();

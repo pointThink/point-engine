@@ -75,7 +75,7 @@ void PE::Rendering::SpriteManager::LoadSpritePack(std::string pack_file)
 		uint32_t data_length = (uint32_t(bytes[2 + name_length + format_length]) << 24) |
 								(uint32_t(bytes[3 + name_length + format_length]) << 16) |
 								(uint32_t(bytes[4 + name_length + format_length]) << 8) |
-								(uint32_t(bytes[5 + name_length + format_length]) & 0xFF); // what the fuck
+								(uint32_t(bytes[5 + name_length + format_length]) & 0xFF); // what the fuck -PT
 
 
 		int segment_length = 6 + name_length + format_length + data_length;
