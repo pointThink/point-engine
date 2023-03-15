@@ -175,7 +175,10 @@ namespace PE
 
 	void Game::SetContentPath(std::string path)
 	{
+		path = "./" + path;
+
 		game_content_path = path;
+		Audio::content_path = path;
 	}
 
 	void Game::SetEventHandler(void (*event_handler)(EventType, EventParameters))

@@ -7,12 +7,13 @@
 #include "Vector.h"
 
 #include "AL/alc.h"
+#include "AL/al.h"
 
 namespace PE
 {
 	namespace Audio
 	{
-		static std::string content_path;
+		inline std::string content_path;
 
 		class ENGINE_API AudioResource
 		{
@@ -82,8 +83,6 @@ namespace PE
 
 			AudioListener * listener = NULL; // there can only ever be one audio listiner - PT
 			std::unordered_map<std::string, AudioSource *> sources;
-			
-			std::string ConvertALCErrorToString(ALCenum error);
 
 			public:
 			AudioManager(std::string content_path);

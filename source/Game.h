@@ -39,6 +39,8 @@ namespace PE
 
 		PE::Console * console;
 
+		std::string game_content_path;
+
 		private:
 		void UpdateGameName();
 
@@ -47,7 +49,6 @@ namespace PE
 
 		std::string game_name;
 		std::string game_version;
-		std::string game_content_path;
 
 		PE::Utils::Timer frame_timer;
 		std::chrono::duration<float> delta_time;

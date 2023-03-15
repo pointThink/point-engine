@@ -19,6 +19,11 @@ bool PE::InputState::IsDown()
 	return down;
 }
 
+bool PE::InputState::WasDown()
+{
+	return down_on_last_frame;
+}
+
 double PE::InputState::PressedFor()
 {
 	auto pressed_for = std::chrono::high_resolution_clock::now() - pressed_at;

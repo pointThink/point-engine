@@ -11,19 +11,21 @@
 #include <cstdint>
 #include <array>
 
-PE::Rendering::SpriteManager::SpriteManager(Window * game_window, std::string game_content_path)
+using namespace PE::Rendering;
+
+SpriteManager::SpriteManager(Window * game_window, std::string game_content_path)
 {
 	this->game_content_path = game_content_path;
 	this->game_window = game_window;
 }
 
-PE::Rendering::SpriteManager::~SpriteManager()
+SpriteManager::~SpriteManager()
 {
 	ClearBank();
 }
 
 
-void PE::Rendering::SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
+void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
 {
 	SDL_Surface * image_unoptimized = IMG_Load((game_content_path + "/sprites/images/" + file_path).c_str());
 
@@ -42,7 +44,7 @@ void PE::Rendering::SpriteManager::LoadSprite(std::string file_path, std::string
 	sprite_bank.insert({sprite_name, texture});
 }
 
-void PE::Rendering::SpriteManager::LoadSpritePack(std::string pack_file)
+void SpriteManager::LoadSpritePack(std::string pack_file)
 {
 	std::fstream stream(game_content_path + "/sprites/packs/" + pack_file, std::ios::in | std::ios::binary | std::ios::ate);
 
@@ -151,7 +153,7 @@ void PE::Rendering::SpriteManager::LoadSpritePack(std::string pack_file)
 	stream.close();
 }
 
-void PE::Rendering::SpriteManager::RemoveSprite(std::string sprite_name)
+void SpriteManager::RemoveSprite(std::string sprite_name)
 {
 	SDL_DestroyTexture(sprite_bank.find(sprite_name)->second);
 	sprite_bank.erase(sprite_bank.find(sprite_name));
@@ -244,4 +246,17 @@ void PE::Rendering::SpriteManager::DrawSpritePlus(std::string sprite_name, Vecto
 	SDL_RenderCopyEx(game_window->GetSDLRenderer(), texture, NULL, temp_rect, rotation, NULL, rf);
 
 	delete temp_rect;
+}
+
+// ANIMATION
+
+void Animation::SetAnimLength(int frames)
+{
+	sprites = new std::string[frames];
+	frame_count = frames;
+}
+
+int Animation::GetAnimLength()
+{
+	return frame_count;
 }

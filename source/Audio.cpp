@@ -1,12 +1,14 @@
 #include "Audio.h"
 
 #include "Logging.h"
+#include "Game.h"
 
-#include <AL/al.h> 
+#include <AL/al.h>
 #include <AL/alc.h>
 
 #include <cstdint>
 #include <string>
+#include <cstring>
 #include <iostream>
 #include <fstream>
 
@@ -65,37 +67,34 @@ char * LoadWAV(const char * fn, int & chan, int & samplerate, int & bps, int & s
 	return data;
 }
 
-std::string AudioManager::ConvertALCErrorToString(ALCenum error)
+std::string ConvertALCErrorToString(ALCenum error)
 {
 	// OpenAL dosent do error messages so this is the best youre getting - PT
 	std::string al_error;
 
-	switch (alcGetError(al_device))
+	switch (error)
 	{
-		case ALC_NO_ERROR:
-			al_error = "No error";
-			break;
+		case ALC_NO_ERROR: al_error = "No error"; break;
+		case ALC_OUT_OF_MEMORY: al_error = "Out of memory"; break;
+		case ALC_INVALID_CONTEXT: al_error = "Invalid context"; break;
+		case ALC_INVALID_DEVICE: al_error = "Invalid device"; break;
+		case ALC_INVALID_ENUM: al_error = "Invalid enum"; break;
+		case ALC_INVALID_VALUE: al_error = "Invalid value"; break;
+	}
 
-		case ALC_OUT_OF_MEMORY:
-			al_error = "Out of memory";
-			break;
+	return al_error;
+}
 
-		case ALC_INVALID_CONTEXT:
-			al_error = "Invalid context";
-			break;
+std::string ConvertALErrorToString(ALenum error)
+{
+	std::string al_error;
 
-		case ALC_INVALID_DEVICE:
-			al_error = "Invalid device";
-			break;
-
-		case ALC_INVALID_ENUM:
-			al_error = "Invalid enum";
-			break;
-
-		case ALC_INVALID_VALUE:
-			al_error = "Invalid value";
-			break;
-
+	switch (error)
+	{
+		case AL_NO_ERROR: al_error = "No error"; break;
+		case AL_OUT_OF_MEMORY: al_error = "Out of memory"; break;
+		case AL_INVALID_ENUM: al_error = "Invalid enum"; break;
+		case AL_INVALID_VALUE: al_error = "Invalid value"; break;
 	}
 
 	return al_error;
@@ -158,7 +157,7 @@ AudioSource * AudioManager::CreateSource(std::string name)
 AudioSource * AudioManager::GetSourceByName(std::string name)
 {
 	AudioSource * source = nullptr;
-	
+
 	if (sources.contains(name))
 		source = sources[name];
 	else
@@ -195,14 +194,22 @@ void AudioSource::SetPosition(Vector position)
 void AudioSource::SetMotion(Vector motion)
 {
 	alSource3f(al_source, AL_VELOCITY, motion.x, motion.y, 0);
-	this->motion = motion; 
+	this->motion = motion;
 }
 
 float AudioSource::GetVolume() { return volume; }
 Vector AudioSource::GetPosition() { return this->position; }
 Vector AudioSource::GetMotion() { return this->motion; }
 
-void AudioSource::Play() { alSourcePlay(al_source); }
+void AudioSource::Play()
+{ 
+	alSourcePlay(al_source);
+
+	ALenum error = alGetError();
+
+	if (error != AL_NO_ERROR)
+		PE::LogWarning("Could not play audio: " + ConvertALErrorToString(error));
+}
 void AudioSource::Stop() { alSourceStop(al_source); }
 
 void AudioSource::SetResource(AudioResource res)
@@ -275,4 +282,9 @@ void AudioResource::LoadFile(std::string path)
 
 
 	alBufferData(al_buffer, format, wave_data, sample_rate, size);
+
+	ALenum error = alGetError();
+
+	if (error != AL_NO_ERROR)
+		PE::LogWarning("Could not load wave: " + ConvertALErrorToString(error));
 }

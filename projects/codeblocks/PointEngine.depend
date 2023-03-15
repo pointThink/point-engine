@@ -11,9 +11,9 @@
 	<string>
 	<fstream>
 
-1676809155 c:\users\user\engine\game-engine\source\core.h
+1677613121 c:\users\user\engine\game-engine\source\core.h
 
-1677434645 source:c:\users\user\engine\game-engine\source\window.cpp
+1677617209 source:c:\users\user\engine\game-engine\source\window.cpp
 	"Window.h"
 	<SDL2\SDL_image.h>
 	"Logging.h"
@@ -420,7 +420,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1677508160 source:c:\users\user\engine\game-engine\source\game.cpp
+1677668425 source:c:\users\user\engine\game-engine\source\game.cpp
 	"Game.h"
 	"SDL2/SDL.h"
 	"imgui/imgui.h"
@@ -433,7 +433,7 @@
 	"Console.h"
 	<iostream>
 
-1677430797 c:\users\user\engine\game-engine\source\game.h
+1677668361 c:\users\user\engine\game-engine\source\game.h
 	<string>
 	"Core.h"
 	"Window.h"
@@ -443,6 +443,7 @@
 	"Event.h"
 	"Input.h"
 	"Console.h"
+	"Audio.h"
 
 1677505911 c:\users\user\engine\game-engine\source\sprite.h
 	<SDL2/SDL.h>
@@ -452,7 +453,7 @@
 	"Window.h"
 	"Vector.h"
 
-1677505911 source:c:\users\user\engine\game-engine\source\sprite.cpp
+1677664804 source:c:\users\user\engine\game-engine\source\sprite.cpp
 	"Sprite.h"
 	<SDL2/SDL_image.h>
 	"Logging.h"
@@ -494,9 +495,18 @@
 	"Core.h"
 	"Vector.h"
 
-1675959073 source:c:\users\user\engine\game-engine\source\audio.cpp
+1678012429 source:c:\users\user\engine\game-engine\source\audio.cpp
+	"Audio.h"
+	"Logging.h"
+	<AL/al.h>
+	<AL/alc.h>
+	<cstdint>
+	<string>
+	<cstring>
+	<iostream>
+	<fstream>
 
-1677505911 c:\users\user\engine\game-engine\source\input.h
+1678012556 c:\users\user\engine\game-engine\source\input.h
 	<unordered_map>
 	<string>
 	<chrono>
@@ -692,4 +702,15 @@
 
 1677430320 source:c:\users\user\engine\game-engine\source\ufp.cpp
 	"UFP.h"
+
+1677667778 c:\users\user\engine\game-engine\source\audio.h
+	<string>
+	<unordered_map>
+	"Core.h"
+	"Vector.h"
+	"AL/alc.h"
+
+1677567715 c:\users\user\engine\game-engine\include\al\alc.h
+
+1677567715 c:\users\user\engine\game-engine\include\al\al.h
 

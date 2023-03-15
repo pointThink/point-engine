@@ -135,6 +135,7 @@ namespace PE
 		void UpdateLastFrameState();
 		void SetDown(bool state);
 		bool IsDown();
+		bool WasDown();
 
 		double PressedFor();
 	};

@@ -7,6 +7,7 @@
 #include "Core.h"
 #include "Window.h"
 #include "Vector.h"
+#include "Utils.h"
 
 namespace PE
 {
@@ -34,9 +35,34 @@ namespace PE
 			void DrawSpritePlus(std::string sprite_name, Vector position, Vector size, int rotation, bool flip_horizontal, bool flip_vertical);
 		};
 
-		class Animation
+		class ENGINE_API Animation
 		{
-			// todo: implement
+			private:
+			// contains the sprite ids of every single frame in the animation
+			std::string * sprites = nullptr;
+
+			int frame_count;
+			float time_between_frames;
+			Utils::Timer frame_timer;
+
+			public:
+			void SetAnimLength(int frames);
+			int GetAnimLength();
+
+			void AddSprite();
+			void AddSprite(int index);
+
+			void RemoveSprite();
+			void RemoveSprite(int index);
+
+			std::string GetCurrentSprite();
+
+			void SetFramerate(int framerate);
+			int GetFramerate();
+
+			// should be called before every draw
+			// sets the right frame based on how much time has passed
+			void UpadateCurrentFrame();
 		};
 	};
 };

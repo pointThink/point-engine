@@ -54,10 +54,15 @@
 			<Add library="../../lib/libSDL2.dll.a" />
 			<Add library="../../lib/libSDL2_image.dll.a" />
 			<Add library="../../lib/libSDL2main.a" />
+			<Add library="../../lib/libcommon.a" />
+			<Add library="../../lib/libex-common.a" />
+			<Add library="../../lib/libOpenAL32.dll.a" />
 		</Linker>
 		<ExtraCommands>
 			<Add before="cmd /c prebuild.bat" />
 		</ExtraCommands>
+		<Unit filename="../../source/Audio.cpp" />
+		<Unit filename="../../source/Audio.h" />
 		<Unit filename="../../source/Collision.cpp" />
 		<Unit filename="../../source/Collision.h" />
 		<Unit filename="../../source/ConVars.cpp" />
