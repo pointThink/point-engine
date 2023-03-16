@@ -24,6 +24,8 @@ namespace PE
 			bool fullscreen = 0;
 
 			public:
+			Vector camera_offset = {0, 0};
+
 			Utils::Color bg_color;
 
 			Window(std::string title, int width, int heigh, bool fullscreen);
