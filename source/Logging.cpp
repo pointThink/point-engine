@@ -15,7 +15,7 @@ void PE::LogInit(PE::Console * a_console)
 
 void PE::LogDeInit()
 {
-	log_file.close();
+	//log_file.close();
 }
 
 void PE::LogError(std::string string)

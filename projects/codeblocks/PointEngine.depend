@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1677433317 source:c:\users\user\engine\game-engine\source\logging.cpp
+1678989653 source:c:\users\user\engine\game-engine\source\logging.cpp
 	"Logging.h"
 	<iostream>
 	<ctime>
@@ -420,7 +420,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1678985529 source:c:\users\user\engine\game-engine\source\game.cpp
+1678989282 source:c:\users\user\engine\game-engine\source\game.cpp
 	"Game.h"
 	"SDL2/SDL.h"
 	"imgui/imgui.h"
@@ -465,9 +465,10 @@
 	<cstdint>
 	<array>
 
-1678986811 source:c:\users\user\engine\game-engine\source\entity.cpp
+1678988374 source:c:\users\user\engine\game-engine\source\entity.cpp
 	"Entity.h"
 	<algorithm>
+	<iostream>
 	"Logging.h"
 
 1678987168 c:\users\user\engine\game-engine\source\entity.h

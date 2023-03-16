@@ -91,9 +91,14 @@ namespace PE
 
         PE::LogDeInit();
 
+        PE::LogInfo("Deinitializing window");
 		delete window;
+		PE::LogInfo("Deinitializing entity manager");
 		delete entity_manager;
+		PE::LogInfo("Deinitializing sprite manager");
 		delete sprite_manager;
+
+		PE::LogInfo("Deinitialized everything");
 	}
 
 	void Game::Update()
