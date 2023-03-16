@@ -68,10 +68,10 @@ namespace PE
 
 			void Destroy();
 
-			virtual void Init() = 0;
-			virtual void Update() = 0;
-			virtual void Draw() = 0;
-			virtual void Use(EntityBase * user, std::string tag) = 0;
+			virtual void Init() {}
+			virtual void Update() {}
+			virtual void Draw() {}
+			virtual void Use(EntityBase * user, std::string tag) {}
 
 			// crap for sorting - PT
 			bool operator < (const EntityBase& other)

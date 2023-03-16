@@ -19,6 +19,10 @@ namespace PE
 	class ENGINE_API Game
 	{
 		public:
+
+		// Get game singleton
+		static Game * GetInstance();
+
 		virtual void Init() final;
 		virtual void Run() final;
 
@@ -36,8 +40,7 @@ namespace PE
 		PE::Entity::EntityManager * entity_manager = NULL;
 		PE::InputManager * input_manager = NULL;
 		PE::Audio::AudioManager * audio_manager = NULL;
-
-		PE::Console * console;
+		PE::Console * console = NULL;
 
 		std::string game_content_path;
 
@@ -46,6 +49,8 @@ namespace PE
 
 		bool should_quit = false;
 		bool initialized = false;
+
+		static Game * instance;
 
 		std::string game_name;
 		std::string game_version;

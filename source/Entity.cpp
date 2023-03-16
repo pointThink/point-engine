@@ -1,6 +1,7 @@
 #include "Entity.h"
 
 #include <algorithm>
+#include <iostream>
 
 #include "Logging.h"
 
@@ -72,7 +73,14 @@ void EntityManager::UpdateEntities()
 		if (entity->GetSelfDestruct())
 			entities.erase(std::find(entities.begin(), entities.end(), entity));
 		else
+		{
+			entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
+			entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
+
+			//std::cout << entity->position.x << " " << entity->position.y << '\n';
+
 			entity->Update();
+		}
 	}
 }
 

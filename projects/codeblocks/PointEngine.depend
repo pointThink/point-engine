@@ -420,7 +420,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1677668425 source:c:\users\user\engine\game-engine\source\game.cpp
+1678985529 source:c:\users\user\engine\game-engine\source\game.cpp
 	"Game.h"
 	"SDL2/SDL.h"
 	"imgui/imgui.h"
@@ -433,7 +433,7 @@
 	"Console.h"
 	<iostream>
 
-1677668361 c:\users\user\engine\game-engine\source\game.h
+1678913647 c:\users\user\engine\game-engine\source\game.h
 	<string>
 	"Core.h"
 	"Window.h"
@@ -445,15 +445,16 @@
 	"Console.h"
 	"Audio.h"
 
-1677505911 c:\users\user\engine\game-engine\source\sprite.h
+1678737734 c:\users\user\engine\game-engine\source\sprite.h
 	<SDL2/SDL.h>
 	<string>
 	<unordered_map>
 	"Core.h"
 	"Window.h"
 	"Vector.h"
+	"Utils.h"
 
-1677664804 source:c:\users\user\engine\game-engine\source\sprite.cpp
+1678903636 source:c:\users\user\engine\game-engine\source\sprite.cpp
 	"Sprite.h"
 	<SDL2/SDL_image.h>
 	"Logging.h"
@@ -464,12 +465,12 @@
 	<cstdint>
 	<array>
 
-1677507969 source:c:\users\user\engine\game-engine\source\entity.cpp
+1678986811 source:c:\users\user\engine\game-engine\source\entity.cpp
 	"Entity.h"
 	<algorithm>
 	"Logging.h"
 
-1677509570 c:\users\user\engine\game-engine\source\entity.h
+1678987168 c:\users\user\engine\game-engine\source\entity.h
 	<vector>
 	<string>
 	"Core.h"
@@ -495,9 +496,10 @@
 	"Core.h"
 	"Vector.h"
 
-1678012429 source:c:\users\user\engine\game-engine\source\audio.cpp
+1678906264 source:c:\users\user\engine\game-engine\source\audio.cpp
 	"Audio.h"
 	"Logging.h"
+	"Game.h"
 	<AL/al.h>
 	<AL/alc.h>
 	<cstdint>
@@ -514,7 +516,7 @@
 	"Core.h"
 	"Vector.h"
 
-1677505911 source:c:\users\user\engine\game-engine\source\input.cpp
+1678012595 source:c:\users\user\engine\game-engine\source\input.cpp
 	"Input.h"
 	"Logging.h"
 
@@ -664,10 +666,9 @@
 	"Logging.h"
 	<iostream>
 
-1677433001 c:\users\user\engine\game-engine\source\convars.h
+1678647754 c:\users\user\engine\game-engine\source\convars.h
 	"Core.h"
 	"Game.h"
-	"UFP.h"
 	<string>
 	<unordered_map>
 
@@ -703,12 +704,13 @@
 1677430320 source:c:\users\user\engine\game-engine\source\ufp.cpp
 	"UFP.h"
 
-1677667778 c:\users\user\engine\game-engine\source\audio.h
+1678906216 c:\users\user\engine\game-engine\source\audio.h
 	<string>
 	<unordered_map>
 	"Core.h"
 	"Vector.h"
 	"AL/alc.h"
+	"AL/al.h"
 
 1677567715 c:\users\user\engine\game-engine\include\al\alc.h
 
