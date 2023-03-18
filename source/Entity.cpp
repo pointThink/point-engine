@@ -41,7 +41,7 @@ void EntityManager::AddEntity(EntityBase * entity)
 	// check if entity has an already used id - PT
 	for (std::string unique_id : used_ids)
 	{
-		if (entity->GetUniqueID() == unique_id)
+		if (entity->GetUniqueID() == unique_id && entity->GetUniqueID() != "")
 		{
 			PE::LogWarning("Could not create entity because entity with same id exists!");
 			return;
@@ -58,7 +58,7 @@ void EntityManager::AddEntity(EntityBase * entity)
 void EntityManager::DrawEntities()
 {
 	// sort entities by layer - PT
-	std::sort(entities.begin(), entities.end());
+	//std::sort(entities.begin(), entities.end(), );
 
 	for (EntityBase * entity : entities)
 	{
@@ -71,7 +71,10 @@ void EntityManager::UpdateEntities()
 	for (EntityBase * entity : entities)
 	{
 		if (entity->GetSelfDestruct())
+		{
+			delete entity;
 			entities.erase(std::find(entities.begin(), entities.end(), entity));
+		}
 		else
 		{
 			entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());

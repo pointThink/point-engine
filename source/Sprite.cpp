@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 
 #include "Logging.h"
 #include "Utils.h"

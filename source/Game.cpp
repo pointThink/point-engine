@@ -1,9 +1,9 @@
 #include "Game.h"
 
-#include "SDL2/SDL.h"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl2.h"
-#include "imgui/imgui_impl_sdlrenderer.h"
+#include "SDL.h"
+#include "imgui.h"
+#include "backends/imgui_impl_sdl2.h"
+#include "backends/imgui_impl_sdlrenderer.h"
 #include "Logging.h"
 #include "Utils.h"
 #include "Event.h"

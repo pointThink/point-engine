@@ -46,8 +46,8 @@ namespace PE
 			bool should_save;
 			PE::Entity::EntitySaveData save_data;
 
-			int self_destruct = false; // destroy this entity if set to true - PT
-			int allow_extern_destruction = true; // allow to destroy from outside the entity - PT
+			bool self_destruct = false; // destroy this entity if set to true - PT
+			bool allow_extern_destruction = true; // allow to destroy from outside the entity - PT
 
 			public:
 			int layer;
