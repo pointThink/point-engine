@@ -1,9 +1,9 @@
 #include "Game.h"
 
-#include "SDL2/SDL.h"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_sdl2.h"
-#include "imgui/imgui_impl_sdlrenderer.h"
+#include "SDL.h"
+#include "imgui.h"
+#include "backends/imgui_impl_sdl2.h"
+#include "backends/imgui_impl_sdlrenderer.h"
 #include "Logging.h"
 #include "Utils.h"
 #include "Event.h"
@@ -91,9 +91,14 @@ namespace PE
 
         PE::LogDeInit();
 
+        PE::LogInfo("Deinitializing window");
 		delete window;
+		PE::LogInfo("Deinitializing entity manager");
 		delete entity_manager;
+		PE::LogInfo("Deinitializing sprite manager");
 		delete sprite_manager;
+
+		PE::LogInfo("Deinitialized everything");
 	}
 
 	void Game::Update()

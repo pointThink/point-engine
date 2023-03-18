@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 
 #include "Logging.h"
 #include "Utils.h"
@@ -171,6 +171,11 @@ void PE::Rendering::SpriteManager::ClearBank()
 
 void PE::Rendering::SpriteManager::DrawSprite(std::string sprite_name, Vector position)
 {
+	PE::Game * game = PE::Game::GetInstance();
+
+	position.x = position.x + game->window->camera_offset.x;
+	position.y = position.y + game->window->camera_offset.y;
+
     if (!sprite_bank.count(sprite_name))
     {
         PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
