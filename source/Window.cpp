@@ -1,6 +1,6 @@
 #include "Window.h"
 
-#include <SDL2\SDL_image.h>
+#include <SDL_image.h>
 
 #include "Logging.h"
 #include "Event.h"
