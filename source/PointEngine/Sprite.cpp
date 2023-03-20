@@ -13,6 +13,21 @@
 
 using namespace PE::Rendering;
 
+Sprite::Sprite(SDL_Surface * surface)
+{
+	this->surface = surface;
+
+	// convert the surface into a tetxture
+	this->texture = SDL_CreateTextureFromSurface(Game::GetInstance()->window->GetSDLRenderer(), surface);
+}
+
+Sprite::~Sprite()
+{
+	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
+}
+
+// SpriteManager
 SpriteManager::SpriteManager(Window * game_window, std::string game_content_path)
 {
 	this->game_content_path = game_content_path;
@@ -38,10 +53,9 @@ void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
 	SDL_Surface * image = SDL_ConvertSurface(image_unoptimized, SDL_GetWindowSurface(game_window->GetSDLWindow())->format, 0);
 	SDL_FreeSurface(image_unoptimized);
 
-	SDL_Texture * texture = SDL_CreateTextureFromSurface(game_window->GetSDLRenderer(), image);
-	SDL_FreeSurface(image);
+	Sprite * sprite = new Sprite(image);
 
-	sprite_bank.insert({sprite_name, texture});
+	sprite_bank.insert({sprite_name, sprite});
 }
 
 void SpriteManager::LoadSpritePack(std::string pack_file)
@@ -127,22 +141,24 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 			PE::LogWarning("Failed to load sprite from memory: " + std::string(SDL_GetError()));
 		}
 
-		SDL_Texture * texture = IMG_LoadTextureTyped_RW(game_window->GetSDLRenderer(), io, 1, format.c_str());
+		SDL_Surface * surface = IMG_LoadTyped_RW(io, 1, format.c_str());
 
-		if (texture == NULL)
+		if (surface == NULL)
 		{
 			PE::LogWarning("Could not load sprite " + name + ": " + std::string(IMG_GetError()));
 		}
 		else
 		{
-			sprite_bank.insert({name, texture});
+			Sprite * sprite = new Sprite(surface);
+
+			sprite_bank.insert({ name, surface });
 			PE::LogInfo("Loaded sprite " + name);
 		}
 
 		SDL_FreeRW(io);
 
-		delete segment;
-		delete data;
+		delete[] segment;
+		delete[] data;
 
 		current_position = current_position + segment_length;
 
@@ -155,73 +171,30 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 
 void SpriteManager::RemoveSprite(std::string sprite_name)
 {
-	SDL_DestroyTexture(sprite_bank.find(sprite_name)->second);
+	delete (sprite_bank.find(sprite_name)->second);
 	sprite_bank.erase(sprite_bank.find(sprite_name));
 }
 
 
-void PE::Rendering::SpriteManager::ClearBank()
+void SpriteManager::ClearBank()
 {
 	for (auto const& [key, val] : sprite_bank)
 	{
-		SDL_DestroyTexture(val);
+		delete val;
 	}
 	sprite_bank.clear();
 }
 
-void PE::Rendering::SpriteManager::DrawSprite(std::string sprite_name, Vector position)
+void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector size, SpriteDrawInfo info)
 {
-	PE::Game * game = PE::Game::GetInstance();
-
-	position.x = position.x + game->window->camera_offset.x;
-	position.y = position.y + game->window->camera_offset.y;
-
-    if (!sprite_bank.count(sprite_name))
-    {
-        PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
-        return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
-    }
-    SDL_Texture * texture = sprite_bank.find(sprite_name)->second;
-
-	// this is stupid - PT
-	int w;
-	int h;
-
-	SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-
-	// Temporary rect to define position of drawn sprite - PT
-	SDL_Rect * temp_rect = new SDL_Rect();
-
-	temp_rect->x = position.x;
-	temp_rect->y = position.y;
-	temp_rect->w = w;
-	temp_rect->h = h;
-
-	SDL_RenderCopy(game_window->GetSDLRenderer(), texture, NULL, temp_rect);
-
-	delete temp_rect;
-}
-
-void PE::Rendering::SpriteManager::DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, int tile_count_x, int tile_count_y)
-{
-	for (int i = 0; i < tile_count_x; i++)
+	if (!sprite_bank.count(sprite_name))
 	{
-		for (int i2 = 0; i2 < tile_count_y; i2++)
-		{
-			DrawSprite(sprite_name, {orgin.x + size.x * i, orgin.y + size.y * i2});
-		}
+		PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
+		return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
 	}
-}
 
-void PE::Rendering::SpriteManager::DrawSpritePlus(std::string sprite_name, Vector position, Vector size, int rotation, bool flip_horizontal, bool flip_vertical)
-{
-    if (!sprite_bank.count(sprite_name))
-    {
-        PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
-        return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
-    }
-
-    SDL_Texture * texture = sprite_bank.find(sprite_name)->second;
+	Sprite * sprite = sprite_bank.find(sprite_name)->second;
+	SDL_Texture * texture = sprite->GetTexture();
 
 	// this is stupid - PT
 	int w;
@@ -239,19 +212,77 @@ void PE::Rendering::SpriteManager::DrawSpritePlus(std::string sprite_name, Vecto
 
 	SDL_RendererFlip rf;
 
-	if (flip_horizontal)
-		rf = (SDL_RendererFlip) SDL_FLIP_HORIZONTAL;
-	else if (flip_vertical)
-		rf = (SDL_RendererFlip) SDL_FLIP_VERTICAL;
-	else if (flip_horizontal && flip_vertical)
-		rf = (SDL_RendererFlip) (SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
+	if (info.flip_horizontally)
+		rf = (SDL_RendererFlip)SDL_FLIP_HORIZONTAL;
+	else if (info.flip_vertically)
+		rf = (SDL_RendererFlip)SDL_FLIP_VERTICAL;
+	else if (info.flip_horizontally && info.flip_vertically)
+		rf = (SDL_RendererFlip)(SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
 	else
 		rf = SDL_FLIP_NONE;
 
-	SDL_RenderCopyEx(game_window->GetSDLRenderer(), texture, NULL, temp_rect, rotation, NULL, rf);
+	SDL_RenderCopyEx(Game::GetInstance()->window->GetSDLRenderer(), texture, NULL, temp_rect, info.rotation, NULL, rf);
 
 	delete temp_rect;
 }
+
+
+void SpriteManager::DrawSprite(std::string sprite_name, Vector position)
+{
+	PE::Game * game = PE::Game::GetInstance();
+
+	position.x = position.x + game->window->camera_offset.x;
+	position.y = position.y + game->window->camera_offset.y;
+
+    if (!sprite_bank.count(sprite_name))
+    {
+        PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
+        return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
+    }
+    Sprite * sprite = sprite_bank.find(sprite_name)->second;
+	SDL_Texture * texture = sprite->GetTexture();
+
+	// this is stupid - PT
+	int w;
+	int h;
+
+	SDL_QueryTexture(texture , NULL, NULL, &w, &h);
+
+	// Temporary rect to define position of drawn sprite - PT
+	SDL_Rect * temp_rect = new SDL_Rect();
+
+	temp_rect->x = position.x;
+	temp_rect->y = position.y;
+	temp_rect->w = w;
+	temp_rect->h = h;
+
+	SDL_RenderCopy(game_window->GetSDLRenderer(), texture, NULL, temp_rect);
+
+	delete temp_rect;
+}
+
+void SpriteManager::DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count)
+{
+	for (int i = 0; i < tile_count.x; i++)
+	{
+		for (int i2 = 0; i2 < tile_count.y; i2++)
+		{
+			DrawSprite(sprite_name, {orgin.x + size.x * i, orgin.y + size.y * i2}, size, SpriteDrawInfo());
+		}
+	}
+}
+
+void SpriteManager::DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count, SpriteDrawInfo info)
+{
+	for (int i = 0; i < tile_count.x; i++)
+	{
+		for (int i2 = 0; i2 < tile_count.y; i2++)
+		{
+			DrawSprite(sprite_name, { orgin.x + size.x * i, orgin.y + size.y * i2 }, size, info);
+		}
+	}
+}
+
 
 // ANIMATION
 

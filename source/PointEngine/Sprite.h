@@ -13,10 +13,45 @@ namespace PE
 {
 	namespace Rendering
 	{
+		/* package all information relevant to drawing sprites
+		so that you dont have to specify everything as parameters
+		in one gigant function call
+		
+		Is far easier and cleaner to specify only what you need*/
+		class ENGINE_API SpriteDrawInfo
+		{
+			public:
+			Utils::Color tint = { 255, 255, 255, 255 };
+
+			float transparency = 255;
+			float rotation = 0;
+
+			Vector rotation_orgin = { 0, 0 };
+
+			bool flip_horizontally = false;
+			bool flip_vertically = false;
+		};
+		
+		class ENGINE_API Sprite
+		{
+			private:
+			/* These should be set at sprite creation because conversion from surface to texture
+			or viceversa takes too much time */
+			SDL_Texture * texture;
+			SDL_Surface * surface;
+
+			public:
+			Sprite(SDL_Surface * surface);
+			~Sprite();
+
+			SDL_Texture * GetTexture();
+			SDL_Surface * GetSurface();
+		};
+
 		class ENGINE_API SpriteManager
 		{
 			private:
-			std::unordered_map<std::string, SDL_Texture*> sprite_bank;
+			std::unordered_map<std::string, Sprite*> sprite_bank;
 
 			Window * game_window;
 			std::string game_content_path;
@@ -31,8 +66,9 @@ namespace PE
 			void ClearBank();
 
 			void DrawSprite(std::string sprite_name, Vector position);
-			void DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, int tile_count_x, int tile_count_y);
-			void DrawSpritePlus(std::string sprite_name, Vector position, Vector size, int rotation, bool flip_horizontal, bool flip_vertical);
+			void DrawSprite(std::string sprite_name, Vector position, Vector size, SpriteDrawInfo info);
+			void DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count);
+			void DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count, SpriteDrawInfo info);
 		};
 
 		class ENGINE_API Animation
