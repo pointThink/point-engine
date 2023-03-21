@@ -1,11 +1,15 @@
 #include "Utils.h"
 
-void PE::Utils::Timer::Reset()
+#include <cmath>
+
+using namespace PE::Utils;
+
+void Timer::Reset()
 {
 	begin_time = std::chrono::high_resolution_clock::now();
 }
 
-PE::Utils::Color::Color()
+Color::Color()
 {
 	this->r = 255;
 	this->g = 255;
@@ -14,7 +18,7 @@ PE::Utils::Color::Color()
 
 }
 
-PE::Utils::Color::Color(uint8_t r, uint8_t g, uint8_t b)
+Color::Color(uint8_t r, uint8_t g, uint8_t b)
 {
 	this->r = r;
 	this->g = g;
@@ -23,7 +27,7 @@ PE::Utils::Color::Color(uint8_t r, uint8_t g, uint8_t b)
 }
 
 
-PE::Utils::Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	this->r = r;
 	this->g = g;
@@ -31,9 +35,24 @@ PE::Utils::Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 	this->a = a;
 }
 
-std::chrono::duration<float> PE::Utils::Timer::GetTime()
+std::chrono::duration<float> Timer::GetTime()
 {
 	return (std::chrono::high_resolution_clock::now() - begin_time);
+}
+
+bool Timer::HasTimeElapsed(float time)
+{
+	if ( GetTime().count() >= time)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+int Timer::TimesTimeElapsed(float time)
+{
+	return std::floor(GetTime().count() / time);
 }
 
 std::vector<std::string> PE::Utils::SplitString(std::string string, std::string delimiter)

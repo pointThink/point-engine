@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <cstdint>
+#include <string>
 
 using namespace PE::Rendering;
 
@@ -281,13 +282,36 @@ void SpriteManager::DrawTileSprite(std::string sprite_name, Vector orgin, Vector
 
 // ANIMATION
 
-void Animation::SetAnimLength(int frames)
+void Animation::AddSprite(std::string sprite_id)
 {
-	sprites = new std::string[frames];
-	frame_count = frames;
+	frames.push_back(sprite_id);
 }
 
-int Animation::GetAnimLength()
+std::string Animation::GetCurrentSprite()
 {
-	return frame_count;
+	return frames[current_frame];
 }
+
+void Animation::UpdateCurrentFrame()
+{
+	if (frame_timer.HasTimeElapsed(1.0 / framerate))
+	{
+		frame_timer.Reset();
+
+		current_frame++;
+
+		if (current_frame >= this->frames.size())
+		{
+			//current_frame = current_frame - this->frames.size();
+			current_frame = 0;
+		}
+	}
+}
+
+void Animation::Reset()
+{
+	current_frame = 0;
+}
+
+void Animation::SetFramerate(int framerate) { this->framerate = framerate; }
+int Animation::GetFramerate() { return framerate; }

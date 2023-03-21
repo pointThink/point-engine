@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <string>
 #include <unordered_map>
+#include <vector>
+#include <array>
 
 #include "Core.h"
 #include "Window.h"
@@ -81,20 +83,16 @@ namespace PE
 			// contains the sprite ids of every single frame in the animation
 			std::string * sprites = nullptr;
 
-			int frame_count;
+			int framerate = 0;
+			int current_frame = 0;
+
 			float time_between_frames;
 			Utils::Timer frame_timer;
 
+			std::vector<std::string> frames;
+
 			public:
-			void SetAnimLength(int frames);
-			int GetAnimLength();
-
-			void AddSprite();
-			void AddSprite(int index);
-
-			void RemoveSprite();
-			void RemoveSprite(int index);
-
+			void AddSprite(std::string sprite_id);
 			std::string GetCurrentSprite();
 
 			void SetFramerate(int framerate);
@@ -102,7 +100,8 @@ namespace PE
 
 			// should be called before every draw
 			// sets the right frame based on how much time has passed
-			void UpadateCurrentFrame();
+			void UpdateCurrentFrame();
+			void Reset();
 		};
 	};
 };
