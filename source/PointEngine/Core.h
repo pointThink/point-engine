@@ -18,4 +18,4 @@
 	#define COMPILER "UNKNOWN"
 #endif
 
-#define PE_VERSION "alpha 0.3"
+#define PE_VERSION "alpha 0.7"
