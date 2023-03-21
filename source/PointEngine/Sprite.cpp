@@ -9,13 +9,15 @@
 #include <fstream>
 #include <iostream>
 #include <cstdint>
-#include <array>
 
 using namespace PE::Rendering;
 
 Sprite::Sprite(SDL_Surface * surface)
 {
 	this->surface = surface;
+
+	this->size.x = surface->w;
+	this->size.y = surface->h;
 
 	// convert the surface into a tetxture
 	this->texture = SDL_CreateTextureFromSurface(Game::GetInstance()->window->GetSDLRenderer(), surface);
@@ -26,6 +28,11 @@ Sprite::~Sprite()
 	SDL_FreeSurface(surface);
 	SDL_DestroyTexture(texture);
 }
+
+PE::Vector Sprite::GetSize() { return size; }
+
+SDL_Surface * Sprite::GetSurface() { return surface; }
+SDL_Texture * Sprite::GetTexture() { return texture; }
 
 // SpriteManager
 SpriteManager::SpriteManager(Window * game_window, std::string game_content_path)
@@ -151,7 +158,7 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 		{
 			Sprite * sprite = new Sprite(surface);
 
-			sprite_bank.insert({ name, surface });
+			sprite_bank.insert({ name, sprite });
 			PE::LogInfo("Loaded sprite " + name);
 		}
 
@@ -196,12 +203,6 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector 
 	Sprite * sprite = sprite_bank.find(sprite_name)->second;
 	SDL_Texture * texture = sprite->GetTexture();
 
-	// this is stupid - PT
-	int w;
-	int h;
-
-	SDL_QueryTexture(texture, NULL, NULL, &w, &h);
-
 	// Temporary rect to define position of drawn sprite - PT
 	SDL_Rect * temp_rect = new SDL_Rect();
 
@@ -242,19 +243,13 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position)
     Sprite * sprite = sprite_bank.find(sprite_name)->second;
 	SDL_Texture * texture = sprite->GetTexture();
 
-	// this is stupid - PT
-	int w;
-	int h;
-
-	SDL_QueryTexture(texture , NULL, NULL, &w, &h);
-
 	// Temporary rect to define position of drawn sprite - PT
 	SDL_Rect * temp_rect = new SDL_Rect();
 
 	temp_rect->x = position.x;
 	temp_rect->y = position.y;
-	temp_rect->w = w;
-	temp_rect->h = h;
+	temp_rect->w = sprite->GetSize().x;
+	temp_rect->h = sprite->GetSize().y;
 
 	SDL_RenderCopy(game_window->GetSDLRenderer(), texture, NULL, temp_rect);
 

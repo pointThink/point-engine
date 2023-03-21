@@ -39,10 +39,14 @@ namespace PE
 			or viceversa takes too much time */
 			SDL_Texture * texture;
 			SDL_Surface * surface;
+			
+			Vector size = { 0, 0 };
 
 			public:
 			Sprite(SDL_Surface * surface);
 			~Sprite();
+
+			Vector GetSize();
 
 			SDL_Texture * GetTexture();
 			SDL_Surface * GetSurface();
