@@ -7,15 +7,7 @@
 
 using namespace PE::Entity;
 
-void PE::Entity::EntityBase::Destroy()
-{
-	if (allow_extern_destruction)
-		self_destruct = true;
-	else
-		PE::LogWarning("Cannot destroy entity because allow_extern_destruction is set to false");
-}
-
-void PE::Entity::EntityBase::SetGameInstance(Game * game)
+void PE::Entity::EntityBase::SetGameInstance(Game* game)
 {
 	this->game = game;
 }
@@ -23,20 +15,14 @@ void PE::Entity::EntityBase::SetGameInstance(Game * game)
 std::string EntityBase::GetEntityName() {return entity_name;}
 std::string EntityBase::GetUniqueID() {return unique_id;}
 
-bool EntityBase::GetShouldSave() {return should_save;}
-EntitySaveData EntityBase::GetSaveData() {return save_data;}
-
-bool EntityBase::GetSelfDestruct() {return self_destruct;}
-bool EntityBase::GetAllowExternDestruction() {return allow_extern_destruction;}
-
 // -----------------------------------------------------------
 
-EntityManager::EntityManager(Game * game)
+EntityManager::EntityManager(Game* game)
 {
 	this->game = game;
 }
 
-void EntityManager::AddEntity(EntityBase * entity)
+void EntityManager::AddEntity(EntityBase* entity)
 {
 	// check if entity has an already used id - PT
 	for (std::string unique_id : used_ids)
@@ -55,12 +41,18 @@ void EntityManager::AddEntity(EntityBase * entity)
 	used_ids.push_back(entity->GetUniqueID());
 }
 
+void EntityManager::RemoveEntity(EntityBase* entity)
+{
+	entities.erase(std::find(entities.begin(), entities.end(), entity));
+	delete entity;
+}
+
 void EntityManager::DrawEntities()
 {
 	// sort entities by layer - PT
 	//std::sort(entities.begin(), entities.end(), );
 
-	for (EntityBase * entity : entities)
+	for (EntityBase* entity : entities)
 	{
 		entity->Draw();
 	}
@@ -68,22 +60,12 @@ void EntityManager::DrawEntities()
 
 void EntityManager::UpdateEntities()
 {
-	for (EntityBase * entity : entities)
+	for (EntityBase* entity : entities)
 	{
-		if (entity->GetSelfDestruct())
-		{
-			delete entity;
-			entities.erase(std::find(entities.begin(), entities.end(), entity));
-		}
-		else
-		{
-			entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
-			entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
+		entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
+		entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
 
-			//std::cout << entity->position.x << " " << entity->position.y << '\n';
-
-			entity->Update();
-		}
+		entity->Update();
 	}
 }
 

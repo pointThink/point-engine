@@ -32,22 +32,16 @@ namespace PE
 		*/
 		class ENGINE_API EntitySaveData
 		{
-			int testing;
+			
 		};
 
 		class ENGINE_API EntityBase
 		{
 			protected:
-			Game * game;
+			Game* game;
 
 			std::string entity_name;
-			std::string unique_id; //this is optional, only used for searching entities - PT
-
-			bool should_save;
-			PE::Entity::EntitySaveData save_data;
-
-			bool self_destruct = false; // destroy this entity if set to true - PT
-			bool allow_extern_destruction = true; // allow to destroy from outside the entity - PT
+			std::string unique_id; // this is optional, only used for searching entities - PT
 
 			public:
 			int layer;
@@ -58,15 +52,7 @@ namespace PE
 			std::string GetEntityName();
 			std::string GetUniqueID();
 
-			void SetGameInstance(Game * game);
-
-			bool GetShouldSave();
-			PE::Entity::EntitySaveData GetSaveData();
-
-			bool GetSelfDestruct();
-			bool GetAllowExternDestruction();
-
-			void Destroy();
+			void SetGameInstance(Game* game);
 
 			virtual void Init() {}
 			virtual void Update() {}
@@ -88,15 +74,16 @@ namespace PE
 		class ENGINE_API EntityManager
 		{
 			private:
-			Game * game;
+			Game* game;
 
 			std::vector<std::string> used_ids;
-			std::vector<PE::Entity::EntityBase *> entities;
+			std::vector<PE::Entity::EntityBase*> entities;
 
 			public:
-			EntityManager(Game * game);
+			EntityManager(Game* game);
 
-			void AddEntity(EntityBase * entity);
+			void AddEntity(EntityBase* entity);
+			void RemoveEntity(EntityBase* entity);
 
 			void UpdateEntities();
 			void DrawEntities();

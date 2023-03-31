@@ -81,7 +81,7 @@ void PE::Console::Draw()
 {
 	ImGui::Begin("Console", &is_open);
 
-	// ImGui::SetCursorScreenPos({0, ImGui::GetWindowSize().y - 20});
+	ImGui::SetCursorScreenPos({0, ImGui::GetWindowSize().y - 20});
 
 	bool scroll_down = false;
 
