@@ -3,13 +3,13 @@
 #include "Logging.h"
 #include <iostream>
 
-PE::ConVar::ConVar(ConVarType type, void * data_pointer)
+PE::ConVar::ConVar(ConVarType type, void* data_pointer)
 {
 	this->type = type;
 	this->data_pointer = data_pointer;
 }
 
-PE::ConVarManager::ConVarManager(PE::Game * game)
+PE::ConVarManager::ConVarManager(PE::Game* game)
 {
 	this->game = game;
 }
@@ -24,7 +24,7 @@ void PE::ConVarManager::RemoveConVar(std::string name)
 	con_vars.erase(con_vars.find(name));
 }
 
-void PE::ConVarManager::SetConVar(std::string name, void * data)
+void PE::ConVarManager::SetConVar(std::string name, void* data)
 {
 
 	ConVar cv = con_vars.find(name)->second;
@@ -40,7 +40,7 @@ void PE::ConVarManager::SetConVar(std::string name, void * data)
 		*(std::string *)(cv.data_pointer) = *(std::string *)data;
 }
 
-PE::ConVar * PE::ConVarManager::FindConVar(std::string name)
+PE::ConVar* PE::ConVarManager::FindConVar(std::string name)
 {
 	if (!con_vars.contains(name))
 	{

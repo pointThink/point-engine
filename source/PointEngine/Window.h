@@ -13,8 +13,8 @@ namespace PE
 		class ENGINE_API Window
 		{
 			private:
-			SDL_Window * window = NULL;
-			SDL_Renderer * renderer = NULL;
+			SDL_Window* window = NULL;
+			SDL_Renderer* renderer = NULL;
 
 			// Window with and height is currently placeholder value
 			// These values should be set in the game settings or something - PT
@@ -36,8 +36,8 @@ namespace PE
 			int GetHeight();
 			bool IsFullscreen();
 
-			SDL_Window * GetSDLWindow();
-			SDL_Renderer * GetSDLRenderer();
+			SDL_Window* GetSDLWindow();
+			SDL_Renderer* GetSDLRenderer();
 
 			void SetSize(int x, int y);
 			void SetFullscreen(bool fullscreen);

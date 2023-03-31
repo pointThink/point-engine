@@ -39,19 +39,19 @@ namespace PE
 			private:
 			/* These should be set at sprite creation because conversion from surface to texture
 			or viceversa takes too much time */
-			SDL_Texture * texture;
-			SDL_Surface * surface;
+			SDL_Texture* texture;
+			SDL_Surface* surface;
 			
 			Vector size = { 0, 0 };
 
 			public:
-			Sprite(SDL_Surface * surface);
+			Sprite(SDL_Surface* surface);
 			~Sprite();
 
 			Vector GetSize();
 
-			SDL_Texture * GetTexture();
-			SDL_Surface * GetSurface();
+			SDL_Texture* GetTexture();
+			SDL_Surface* GetSurface();
 		};
 
 		class ENGINE_API SpriteManager
@@ -59,11 +59,11 @@ namespace PE
 			private:
 			std::unordered_map<std::string, Sprite*> sprite_bank;
 
-			Window * game_window;
+			Window* game_window;
 			std::string game_content_path;
 
 			public:
-			SpriteManager(Window * game_window, std::string game_content_path);
+			SpriteManager(Window* game_window, std::string game_content_path);
 			~SpriteManager();
 
 			void LoadSprite(std::string sprite_path, std::string sprite_name);
@@ -81,7 +81,7 @@ namespace PE
 		{
 			private:
 			// contains the sprite ids of every single frame in the animation
-			std::string * sprites = nullptr;
+			std::string* sprites = nullptr;
 
 			int framerate = 0;
 			int current_frame = 0;

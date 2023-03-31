@@ -9,9 +9,9 @@
 namespace PE
 {
 	inline std::ofstream log_file;
-	inline PE::Console * console;
+	inline PE::Console* console;
 
-	void LogInit(PE::Console * a_console);
+	void LogInit(PE::Console* a_console);
 	void LogDeInit();
 	void ENGINE_API LogError(std::string string);
 	void ENGINE_API LogWarning(std::string string);

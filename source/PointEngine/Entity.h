@@ -57,7 +57,7 @@ namespace PE
 			virtual void Init() {}
 			virtual void Update() {}
 			virtual void Draw() {}
-			virtual void Use(EntityBase * user, std::string tag) {}
+			virtual void Use(EntityBase* user, std::string tag) {}
 
 			// crap for sorting - PT
 			bool operator < (const EntityBase& other)

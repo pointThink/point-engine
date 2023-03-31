@@ -69,9 +69,9 @@ void EntityManager::UpdateEntities()
 	}
 }
 
-EntityBase * EntityManager::GetEntityByID(std::string id)
+EntityBase* EntityManager::GetEntityByID(std::string id)
 {
-	for (EntityBase * entity : entities)
+	for (EntityBase* entity : entities)
 	{
 		if (entity->GetUniqueID() == id)
 		{

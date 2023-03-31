@@ -24,7 +24,7 @@ bool IsBigEndian()
 	return !((char *)&a)[0];
 }
 
-int ConvertToInt(char * buffer, int len)
+int ConvertToInt(char* buffer, int len)
 {
 	int a = 0;
 	if (!IsBigEndian())
@@ -36,7 +36,7 @@ int ConvertToInt(char * buffer, int len)
 	return a;
 }
 
-char * LoadWAV(const char * fn, int & chan, int & samplerate, int & bps, int & size)
+char* LoadWAV(const char* fn, int& chan, int& samplerate, int& bps, int& size)
 {
 	char buffer[4];
 	std::ifstream in(fn, std::ios::binary);
@@ -62,7 +62,7 @@ char * LoadWAV(const char * fn, int & chan, int & samplerate, int & bps, int & s
 	in.read(buffer, 4);      //data
 	in.read(buffer, 4);
 	size = ConvertToInt(buffer, 4);
-	char * data = new char[size];
+	char* data = new char[size];
 	in.read(data, size);
 	return data;
 }
@@ -107,7 +107,7 @@ AudioManager::AudioManager(std::string a_conetnt_path)
 	content_path = a_conetnt_path;
 
 	// get the name of the device
-	char * device_name = (char *) alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
+	char* device_name = (char*) alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
 
 	// initialize the device - PT
 	al_device = alcOpenDevice(device_name);
@@ -147,16 +147,16 @@ AudioManager::~AudioManager()
 	alcDestroyContext(al_context);
 }
 
-AudioSource * AudioManager::CreateSource(std::string name)
+AudioSource* AudioManager::CreateSource(std::string name)
 {
-	AudioSource * source = new AudioSource;
+	AudioSource* source = new AudioSource;
 	sources[name] = source;
 	return source;
 }
 
-AudioSource * AudioManager::GetSourceByName(std::string name)
+AudioSource* AudioManager::GetSourceByName(std::string name)
 {
-	AudioSource * source = nullptr;
+	AudioSource* source = nullptr;
 
 	if (sources.contains(name))
 		source = sources[name];
@@ -252,7 +252,7 @@ void AudioResource::LoadFile(std::string path)
 {
 	int channels, sample_rate, bps, size;
 
-	char * wave_data = LoadWAV((content_path + "/audio/" + path).c_str(), channels, sample_rate, bps, size);
+	char* wave_data = LoadWAV((content_path + "/audio/" + path).c_str(), channels, sample_rate, bps, size);
 
 	std::ofstream file("file.wav", std::ios::binary);
 

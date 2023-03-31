@@ -13,7 +13,7 @@
 
 using namespace PE::Rendering;
 
-Sprite::Sprite(SDL_Surface * surface)
+Sprite::Sprite(SDL_Surface* surface)
 {
 	this->surface = surface;
 
@@ -32,11 +32,11 @@ Sprite::~Sprite()
 
 PE::Vector Sprite::GetSize() { return size; }
 
-SDL_Surface * Sprite::GetSurface() { return surface; }
-SDL_Texture * Sprite::GetTexture() { return texture; }
+SDL_Surface* Sprite::GetSurface() { return surface; }
+SDL_Texture* Sprite::GetTexture() { return texture; }
 
 // SpriteManager
-SpriteManager::SpriteManager(Window * game_window, std::string game_content_path)
+SpriteManager::SpriteManager(Window* game_window, std::string game_content_path)
 {
 	this->game_content_path = game_content_path;
 	this->game_window = game_window;
@@ -50,7 +50,7 @@ SpriteManager::~SpriteManager()
 
 void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
 {
-	SDL_Surface * image_unoptimized = IMG_Load((game_content_path + "/sprites/images/" + file_path).c_str());
+	SDL_Surface* image_unoptimized = IMG_Load((game_content_path + "/sprites/images/" + file_path).c_str());
 
 	if (image_unoptimized == NULL)
     {
@@ -58,10 +58,10 @@ void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
         return;
     }
 
-	SDL_Surface * image = SDL_ConvertSurface(image_unoptimized, SDL_GetWindowSurface(game_window->GetSDLWindow())->format, 0);
+	SDL_Surface* image = SDL_ConvertSurface(image_unoptimized, SDL_GetWindowSurface(game_window->GetSDLWindow())->format, 0);
 	SDL_FreeSurface(image_unoptimized);
 
-	Sprite * sprite = new Sprite(image);
+	Sprite* sprite = new Sprite(image);
 
 	sprite_bank.insert({sprite_name, sprite});
 }
@@ -107,13 +107,13 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 		// after getting the segment length load the entire segment
 		stream.clear();
 		stream.seekg(current_position, std::ios::beg);
-		char * segment = new char[segment_length];
+		char* segment = new char[segment_length];
 		stream.read(segment, segment_length);
 
 		std::string name = "";
 		std::string format = "";
 
-		char * data = new char[data_length];
+		char* data = new char[data_length];
 
 		// read all the data
 		// name
@@ -142,14 +142,14 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 		//ws.close();
 
 		//SDL_RWops * io = SDL_RWFromFile("temp.bin", "r");
-		SDL_RWops * io = SDL_RWFromMem(data, data_length);
+		SDL_RWops* io = SDL_RWFromMem(data, data_length);
 
 		if (io == NULL)
 		{
 			PE::LogWarning("Failed to load sprite from memory: " + std::string(SDL_GetError()));
 		}
 
-		SDL_Surface * surface = IMG_LoadTyped_RW(io, 1, format.c_str());
+		SDL_Surface* surface = IMG_LoadTyped_RW(io, 1, format.c_str());
 
 		if (surface == NULL)
 		{
@@ -157,7 +157,7 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 		}
 		else
 		{
-			Sprite * sprite = new Sprite(surface);
+			Sprite* sprite = new Sprite(surface);
 
 			sprite_bank.insert({ name, sprite });
 			PE::LogInfo("Loaded sprite " + name);
@@ -201,11 +201,11 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector 
 		return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
 	}
 
-	Sprite * sprite = sprite_bank.find(sprite_name)->second;
-	SDL_Texture * texture = sprite->GetTexture();
+	Sprite* sprite = sprite_bank.find(sprite_name)->second;
+	SDL_Texture* texture = sprite->GetTexture();
 
 	// Temporary rect to define position of drawn sprite - PT
-	SDL_Rect * temp_rect = new SDL_Rect();
+	SDL_Rect* temp_rect = new SDL_Rect();
 
 	temp_rect->x = position.x;
 	temp_rect->y = position.y;
@@ -231,7 +231,7 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector 
 
 void SpriteManager::DrawSprite(std::string sprite_name, Vector position)
 {
-	PE::Game * game = PE::Game::GetInstance();
+	PE::Game* game = PE::Game::GetInstance();
 
 	position.x = position.x + game->window->camera_offset.x;
 	position.y = position.y + game->window->camera_offset.y;
@@ -241,11 +241,11 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position)
         PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
         return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
     }
-    Sprite * sprite = sprite_bank.find(sprite_name)->second;
-	SDL_Texture * texture = sprite->GetTexture();
+    Sprite* sprite = sprite_bank.find(sprite_name)->second;
+	SDL_Texture* texture = sprite->GetTexture();
 
 	// Temporary rect to define position of drawn sprite - PT
-	SDL_Rect * temp_rect = new SDL_Rect();
+	SDL_Rect* temp_rect = new SDL_Rect();
 
 	temp_rect->x = position.x;
 	temp_rect->y = position.y;

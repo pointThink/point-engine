@@ -78,18 +78,18 @@ namespace PE
 			private:
 			std::string content_path;
 
-			ALCdevice * al_device = NULL;
-			ALCcontext * al_context = NULL;
+			ALCdevice* al_device = NULL;
+			ALCcontext* al_context = NULL;
 
-			AudioListener * listener = NULL; // there can only ever be one audio listiner - PT
-			std::unordered_map<std::string, AudioSource *> sources;
+			AudioListener* listener = NULL; // there can only ever be one audio listiner - PT
+			std::unordered_map<std::string, AudioSource*> sources;
 
 			public:
 			AudioManager(std::string content_path);
 			~AudioManager();
 
-			AudioSource * CreateSource(std::string name);
-			AudioSource * GetSourceByName(std::string name);
+			AudioSource* CreateSource(std::string name);
+			AudioSource* GetSourceByName(std::string name);
 		};
 	}
 }

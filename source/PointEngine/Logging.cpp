@@ -6,7 +6,7 @@
 #include <ctime>
 #include <cstring>
 
-void PE::LogInit(PE::Console * a_console)
+void PE::LogInit(PE::Console* a_console)
 {
 	log_file.open("log.txt");
 

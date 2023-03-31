@@ -23,7 +23,7 @@ void HandleEvent(EventType et, EventParameters ep)
 
 int main()
 {
-	Game * game = Game::GetInstance();
+	Game* game = Game::GetInstance();
 
 	a.AddSprite("test");
 	a.AddSprite("test2");

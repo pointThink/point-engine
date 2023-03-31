@@ -158,9 +158,9 @@ namespace PE
 		void SetMousePos(int x, int y);
 		PE::Vector GetMousePos();
 
-		InputState * GetButtonState(int button);
-		InputState * GetKeyState(int key);
-		InputState * GetBindState(std::string bind);
+		InputState* GetButtonState(int button);
+		InputState* GetKeyState(int key);
+		InputState* GetBindState(std::string bind);
 
 		void BindKey(std::string name, int key);
 		void BindButton(std::string name, int button);

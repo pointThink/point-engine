@@ -15,9 +15,9 @@
 
 namespace PE
 {
-	Game * Game::instance = nullptr;
+	Game* Game::instance = nullptr;
 
-	Game * Game::GetInstance()
+	Game* Game::GetInstance()
 	{
 		if (instance == nullptr)
 			instance = new Game();

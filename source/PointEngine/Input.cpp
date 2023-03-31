@@ -51,17 +51,17 @@ PE::Vector PE::InputManager::GetMousePos()
 	return mouse_pos;
 }
 
-PE::InputState * PE::InputManager::GetKeyState(int key)
+PE::InputState* PE::InputManager::GetKeyState(int key)
 {
 	return &key_states[key];
 }
 
-PE::InputState * PE::InputManager::GetButtonState(int button)
+PE::InputState* PE::InputManager::GetButtonState(int button)
 {
 	return &button_states[button];
 }
 
-PE::InputState * PE::InputManager::GetBindState(std::string name)
+PE::InputState* PE::InputManager::GetBindState(std::string name)
 {
 	InputState * state = nullptr;
 	Binding bind = bindings[name];

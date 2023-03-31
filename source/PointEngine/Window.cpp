@@ -88,8 +88,8 @@ int PE::Rendering::Window::GetHeight() {return height;}
 int PE::Rendering::Window::GetWidth() {return width;}
 bool PE::Rendering::Window::IsFullscreen() {return fullscreen;}
 
-SDL_Window * PE::Rendering::Window::GetSDLWindow() {return window;}
-SDL_Renderer * PE::Rendering::Window::GetSDLRenderer() {return renderer;}
+SDL_Window* PE::Rendering::Window::GetSDLWindow() {return window;}
+SDL_Renderer* PE::Rendering::Window::GetSDLRenderer() {return renderer;}
 
 void PE::Rendering::Window::SetSize(int x, int y)
 {

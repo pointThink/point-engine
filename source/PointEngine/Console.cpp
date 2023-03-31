@@ -10,7 +10,7 @@
 #include <string>
 #include <cstring>
 
-PE::Console::Console(PE::Game * game)
+PE::Console::Console(PE::Game* game)
 {
 	this->game = game;
 	convar_manager = new PE::ConVarManager(game);
@@ -39,7 +39,7 @@ void PE::Console::RunCommand(std::string command)
 
 	std::vector<std::string> args = PE::Utils::SplitString(wip_string, "\n");
 
-	ConVar * convar = convar_manager->FindConVar(args[0]);
+	ConVar* convar = convar_manager->FindConVar(args[0]);
 
 	if (convar != NULL)
 	{
