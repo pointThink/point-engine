@@ -33,11 +33,10 @@ namespace PE
 		// Shameless plug - PT
 		LogInfo("Game version " + game_version + " running on PointEngine version " + PE_VERSION);
 
-		window = new PE::Rendering::Window("Test", 800, 600, false);
-		sprite_manager = new PE::Rendering::SpriteManager(window, "./content/");
+		window = new PE::Rendering::Window("PointEngine game", 800, 600, false);
+		sprite_manager = new PE::Rendering::SpriteManager(window);
 		entity_manager = new PE::Entity::EntityManager(this);
 		input_manager = new PE::InputManager;
-		audio_manager = new PE::Audio::AudioManager(game_content_path);
 		light_manager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
 
 		// initialize the imgui library - PT
@@ -62,7 +61,7 @@ namespace PE
 		console->convar_manager->RegisterConVar("r_bg_color_r", ConVar(CONVAR_INT, &window->bg_color.r));
 		console->convar_manager->RegisterConVar("r_bg_color_g", ConVar(CONVAR_INT, &window->bg_color.g));
 		console->convar_manager->RegisterConVar("r_bg_color_b", ConVar(CONVAR_INT, &window->bg_color.b));
-
+		console->convar_manager->RegisterConVar("r_lighting_enabled", ConVar(CONVAR_BOOL, &lighting_enabled));
 
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, { 0, 0 }));
 
@@ -218,7 +217,6 @@ namespace PE
 		path = "./" + path;
 
 		game_content_path = path;
-		Audio::content_path = path;
 	}
 
 	void Game::SetEventHandler(void (*event_handler)(EventType, EventParameters))

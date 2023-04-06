@@ -1,5 +1,7 @@
 #pragma once
 
+#define PE_GAME Game::GetInstance()
+
 #include <string>
 
 #include "Core.h"
@@ -10,7 +12,6 @@
 #include "Event.h"
 #include "Input.h"
 #include "Console.h"
-#include "Audio.h"
 #include "Lighting.h"
 
 namespace PE
@@ -41,7 +42,6 @@ namespace PE
 		PE::Rendering::SpriteManager* sprite_manager = NULL;
 		PE::Entity::EntityManager* entity_manager = NULL;
 		PE::InputManager* input_manager = NULL;
-		PE::Audio::AudioManager* audio_manager = NULL;
 		PE::Console* console = NULL;
 
 		std::string game_content_path;

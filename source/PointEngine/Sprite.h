@@ -60,10 +60,9 @@ namespace PE
 			std::unordered_map<std::string, Sprite*> sprite_bank;
 
 			Window* game_window;
-			std::string game_content_path;
 
 			public:
-			SpriteManager(Window* game_window, std::string game_content_path);
+			SpriteManager(Window* game_window);
 			~SpriteManager();
 
 			void LoadSprite(std::string sprite_path, std::string sprite_name);
