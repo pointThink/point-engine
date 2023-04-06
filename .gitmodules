@@ -8,3 +8,7 @@
 [submodule "vendor/SDL_image"]
 	path = vendor/SDL_image
 	url = https://github.com/libsdl-org/SDL_image
+[submodule "vendor/SDL_tff"]
+	path = vendor/SDL_tff
+	url = https://github.com/libsdl-org/SDL_ttf
+	branch = SDL2

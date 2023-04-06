@@ -93,6 +93,9 @@ SDL_Renderer* PE::Rendering::Window::GetSDLRenderer() {return renderer;}
 
 void PE::Rendering::Window::SetSize(int x, int y)
 {
+	width = x;
+	height = y;
+
 	SDL_SetWindowSize(window, x, y);
 }
 
@@ -122,15 +125,12 @@ void PE::Rendering::Window::SetTitle(std::string title)
 
 void PE::Rendering::Window::DrawSquare(Vector pos, Vector size, Utils::Color color)
 {
-	pos.x = pos.x + camera_offset.x;
-	pos.y = pos.y + camera_offset.y;
-
 	SDL_Rect rect;
 
-	rect.x = pos.x;
-	rect.y = pos.y;
-	rect.w = size.x;
-	rect.h = size.y;
+	rect.x = int(pos.x) + int(camera_offset.x);
+	rect.y = int(pos.y) + int(camera_offset.y);
+	rect.w = int(size.x);
+	rect.h = int(size.y);
 
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &rect);

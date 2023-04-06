@@ -10,7 +10,7 @@ class Player : public Entity::EntityBase
 {
 	void Init()
 	{
-		position = { 400, 300 };
+		position = { 0, 0 };
 		motion = { 0, 0 };
 	}
 
@@ -46,7 +46,9 @@ class Player : public Entity::EntityBase
 
 	void Draw()
 	{
-		game->window->DrawSquare(position, { 20, 20 }, { 255, 0, 255, 255 });
+		game->window->camera_offset.x = -position.x + game->window->GetWidth() / 2;
+		game->window->camera_offset.y = -position.y + game->window->GetHeight() / 2;
+		game->window->DrawSquare({ position.x, position.y }, { 20, 20 }, { 255, 0, 255, 255 });
 	}
 
 };
@@ -58,7 +60,7 @@ void HandleEvent(EventType et, EventParameters ep)
 	{
 		// a.UpdateCurrentFrame();
 
-		// Game::GetInstance()->sprite_manager->DrawSprite(a.GetCurrentSprite(), {20, 20});
+		Game::GetInstance()->window->DrawSquare({20, 20}, {20, 20}, {255, 0, 0, 255});
 	}
 	else if (et == GAME_UPDATE)
 	{
