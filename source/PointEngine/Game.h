@@ -1,6 +1,6 @@
 #pragma once
 
-#define PE_GAME Game::GetInstance()
+#define PE_GAME PE::Game::GetInstance()
 
 #include <string>
 
