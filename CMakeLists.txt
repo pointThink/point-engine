@@ -38,6 +38,8 @@ set_target_properties(SDL2_image PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../bin)
 
 target_include_directories(pointengine-core PRIVATE source)
 
+set(GENERATED_HEADER_DIR include)
+
 # add_custom_command(TARGET pointengine-core POST_BUILD COMMAND post_build.bat)
 
 # make the test game

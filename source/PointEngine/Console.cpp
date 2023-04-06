@@ -39,41 +39,48 @@ void PE::Console::RunCommand(std::string command)
 
 	std::vector<std::string> args = PE::Utils::SplitString(wip_string, "\n");
 
-	ConVar* convar = convar_manager->FindConVar(args[0]);
-
-	if (convar != NULL)
+	if (args[0] == "clear")
 	{
-		switch (convar->type)
-		{
-			case CONVAR_BOOL:
-			{
-				bool value = PE::Utils::StringToBool(args[1]); // the value needs to be set as a variable first otherwise it will throw an error - PT
-				convar_manager->SetConVar(args[0], &value);
-				break;
-			}
-
-			case CONVAR_INT:
-			{
-				int value = std::stoi(args[1]);
-				convar_manager->SetConVar(args[0], &value);
-				break;
-			}
-
-			case CONVAR_FLOAT:
-			{
-				float value = std::stof(args[1]);
-				convar_manager->SetConVar(args[0], &value);
-				break;
-			}
-
-			case CONVAR_STRING:
-				convar_manager->SetConVar(args[0], &args[1]);
-				break;
-		}
+		Clear();
 	}
 	else
 	{
-		PE::LogWarning("Could not change convar " + args[0] + " because it does not exist");
+		ConVar* convar = convar_manager->FindConVar(args[0]);
+
+		if (convar != NULL)
+		{
+			switch (convar->type)
+			{
+				case CONVAR_BOOL:
+				{
+					bool value = PE::Utils::StringToBool(args[1]); // the value needs to be set as a variable first otherwise it will throw an error - PT
+					convar_manager->SetConVar(args[0], &value);
+					break;
+				}
+
+				case CONVAR_INT:
+				{
+					int value = std::stoi(args[1]);
+					convar_manager->SetConVar(args[0], &value);
+					break;
+				}
+
+				case CONVAR_FLOAT:
+				{
+					float value = std::stof(args[1]);
+					convar_manager->SetConVar(args[0], &value);
+					break;
+				}
+
+				case CONVAR_STRING:
+					convar_manager->SetConVar(args[0], &args[1]);
+					break;
+			}
+		}
+		else
+		{
+			PE::LogWarning("Could not change convar " + args[0] + " because it does not exist");
+		}
 	}
 }
 
