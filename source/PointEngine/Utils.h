@@ -9,6 +9,9 @@
 
 #include "Core.h"
 
+#define PI 3.14159265358979323846
+#define ONE_RAD
+
 namespace PE
 {
 	namespace Utils
@@ -40,5 +43,7 @@ namespace PE
 
 		std::vector<std::string> SplitString(std::string str, std::string delimiter);
 		bool StringToBool(std::string str);
+
+		float DegToRads(float degrees);
 	}
 };

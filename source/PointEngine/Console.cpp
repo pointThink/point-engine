@@ -81,11 +81,11 @@ void PE::Console::Draw()
 {
 	ImGui::Begin("Console", &is_open);
 
-	ImGui::SetCursorScreenPos({0, ImGui::GetWindowSize().y - 20});
+	// ImGui::SetCursorScreenPos({0, ImGui::GetWindowSize().y - 20});
 
 	bool scroll_down = false;
 
-	ImGui::PushItemWidth(ImGui::GetWindowWidth() - 15);
+	//ImGui::PushItemWidth(ImGui::GetWindowWidth() - 15);
 	if (ImGui::InputText("Enter command", command, 255, ImGuiInputTextFlags_EnterReturnsTrue))
 	{
 		contents = contents + "> " + std::string(command) + '\n';
@@ -97,7 +97,7 @@ void PE::Console::Draw()
 	}
 
 
-	ImGui::PopItemWidth();
+	//ImGui::PopItemWidth();
 	ImGui::BeginChild("text", {ImGui::GetWindowWidth() - 15, ImGui::GetWindowHeight() - 60}, 2, ImGuiWindowFlags_None);
 
 	ImGui::Text(contents.c_str());

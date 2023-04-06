@@ -83,3 +83,8 @@ bool PE::Utils::StringToBool(std::string str)
 	else
 		return false;
 }
+
+float PE::Utils::DegToRads(float degrees)
+{
+	return degrees * 0.01745329251;
+}

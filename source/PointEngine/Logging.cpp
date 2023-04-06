@@ -43,6 +43,7 @@ void PE::LogGeneric(std::string string)
 	// i hate strings in c++, i mean just look at this shit - PT
 	output_string = std::string("[") + std::string(strtok(ctime(&t), "\n")) + std::string("] ") + string + std::string("\n");
 
+	std::cout << output_string << std::endl;
 	console->Print(output_string);
 
 	// write the line to the file

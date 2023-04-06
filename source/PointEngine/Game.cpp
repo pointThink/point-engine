@@ -38,10 +38,11 @@ namespace PE
 		entity_manager = new PE::Entity::EntityManager(this);
 		input_manager = new PE::InputManager;
 		audio_manager = new PE::Audio::AudioManager(game_content_path);
+		light_manager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
 
 		// initialize the imgui library - PT
 		ImGui::CreateContext();
-		ImGuiIO & io = ImGui::GetIO(); (void) io;
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		ImGui::StyleColorsDark();
 		ImGui_ImplSDL2_InitForSDLRenderer(window->GetSDLWindow(), window->GetSDLRenderer());
 		ImGui_ImplSDLRenderer_Init(window->GetSDLRenderer());
@@ -63,9 +64,20 @@ namespace PE
 		console->convar_manager->RegisterConVar("r_bg_color_b", ConVar(CONVAR_INT, &window->bg_color.b));
 
 
-		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, {0, 0}));
+		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, { 0, 0 }));
 
 		initialized = true;
+
+		light_manager->CreateCellArray({ double(window->GetWidth()), double(window->GetHeight()) }, 5);
+
+		if (lighting_enabled)
+		{
+			light_manager->CreateLightSource({ 400, 300 }, { 0, 255, 0, 255 }, 300);
+			light_manager->CreateLightSource({ 780, 590 }, { 0, 0, 255, 255 }, 300);
+			light_manager->CreateLightSource({ 20, 10 }, { 255, 0, 0, 255 }, 300);
+		}
+
+		LogInfo(std::to_string(double(window->GetWidth())) + std::to_string(double(window->GetHeight())));
 	}
 
 	void Game::Run()
@@ -154,6 +166,8 @@ namespace PE
 
 	void Game::Draw()
 	{
+		window->bg_color = { 255, 255, 255, 255 };
+
 		ImGui_ImplSDLRenderer_NewFrame();
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
@@ -162,6 +176,17 @@ namespace PE
 
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
 		entity_manager->DrawEntities();
+
+		// light_manager->CastLightRay({50, 50}, Utils::Color(255, 255, 255, 255), 1000, 100);
+
+		if (lighting_enabled)
+		{
+			SDL_Texture* light_map = light_manager->GenerateLightMap();
+			SDL_SetTextureBlendMode(light_map, SDL_BLENDMODE_MUL);
+
+			SDL_RenderCopy(window->GetSDLRenderer(), light_map, NULL, NULL);
+
+		}
 
 		if (console->is_open)
 			console->Draw();

@@ -11,6 +11,7 @@
 #include "Input.h"
 #include "Console.h"
 #include "Audio.h"
+#include "Lighting.h"
 
 namespace PE
 {
@@ -35,6 +36,7 @@ namespace PE
 
 		void QuitApplication();
 
+		PE::Lighting::LightingManager* light_manager = NULL;
 		PE::Rendering::Window* window = NULL;
 		PE::Rendering::SpriteManager* sprite_manager = NULL;
 		PE::Entity::EntityManager* entity_manager = NULL;
@@ -46,6 +48,8 @@ namespace PE
 
 		private:
 		void UpdateGameName();
+
+		bool lighting_enabled = false;
 
 		bool should_quit = false;
 		bool initialized = false;
