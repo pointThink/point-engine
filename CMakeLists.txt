@@ -36,15 +36,16 @@ include_directories(vendor/SDL_image)
 target_link_libraries(pointengine-core SDL2_image)
 set_target_properties(SDL2_image PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../bin)
 
+# SDL_ttf
 add_subdirectory(vendor/SDL_ttf)
 #add_dependencies(pointengine-core SDL_image)
-include_directories(vendor/SDL_ttf)
-target_link_libraries(pointengine-core SDL_ttf)
-set_target_properties(SDL_ttf PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../bin)
+include_directories(vendor/SDL2_ttf)
+target_link_libraries(pointengine-core SDL2_ttf)
+set_target_properties(SDL2_ttf PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../bin)
 
 target_include_directories(pointengine-core PRIVATE source)
 
-set(GENERATED_HEADER_DIR include)
+# set(GENERATED_HEADER_DIR include)
 
 # add_custom_command(TARGET pointengine-core POST_BUILD COMMAND post_build.bat)
 

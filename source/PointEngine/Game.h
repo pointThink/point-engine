@@ -13,6 +13,7 @@
 #include "Input.h"
 #include "Console.h"
 #include "Lighting.h"
+#include "Font.h"
 
 namespace PE
 {
@@ -43,6 +44,7 @@ namespace PE
 		PE::Entity::EntityManager* entity_manager = NULL;
 		PE::InputManager* input_manager = NULL;
 		PE::Console* console = NULL;
+		PE::Font::FontManager* font_manager = NULL;
 
 		std::string game_content_path;
 

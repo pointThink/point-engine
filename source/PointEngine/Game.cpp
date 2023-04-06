@@ -9,6 +9,7 @@
 #include "Event.h"
 #include "Input.h"
 #include "Console.h"
+#include "Font.h"
 
 #include <iostream>
 //using namespace PE;
@@ -38,6 +39,10 @@ namespace PE
 		entity_manager = new PE::Entity::EntityManager(this);
 		input_manager = new PE::InputManager;
 		light_manager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
+		font_manager = new PE::Font::FontManager;
+
+		// load the default font
+		font_manager->LoadExternalFont("default", "C:/Windows/Fonts/consola.ttf", 14);
 
 		// initialize the imgui library - PT
 		ImGui::CreateContext();
@@ -48,7 +53,7 @@ namespace PE
 
 
 		// load a font that dosent suck as much as the default - PT
-		io.Fonts->AddFontFromFileTTF("C:/Windows/Fonts/CascadiaCode.ttf", 14);
+		io.Fonts->AddFontFromFileTTF("C:/Windows/Fonts/consola.ttf", 14);
 
 		ImGui::GetStyle().WindowRounding = 6;
 		ImGui::GetStyle().ChildRounding = 6;
