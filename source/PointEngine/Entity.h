@@ -45,6 +45,7 @@ namespace PE
 			std::string unique_id; // this is optional, only used for searching entities - PT
 
 			public:
+			bool should_destroy = false;
 			bool colidable = false;
 			Collision::CollisionGroup collision_group;
 
@@ -94,6 +95,8 @@ namespace PE
 
 			void UpdateEntities();
 			void DrawEntities();
+
+			unsigned int GetEntityCount();
 
 			PE::Entity::EntityBase* GetEntityByID(std::string id);
 

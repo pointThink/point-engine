@@ -44,7 +44,10 @@ void EntityManager::AddEntity(EntityBase* entity)
 
 void EntityManager::RemoveEntity(EntityBase* entity)
 {
-	removal_queue.push_back(std::find(entities.begin(), entities.end(), entity));
+	std::vector<EntityBase*>::iterator it = std::find(entities.begin(), entities.end(), entity);
+	unsigned int index = std::distance(entities.begin(), it);
+	
+	entities.at(index)->should_destroy = true;;
 }
 
 void EntityManager::DrawEntities()
@@ -62,6 +65,11 @@ void EntityManager::UpdateEntities()
 {
 	for (EntityBase* entity : entities)
 	{
+		if (std::find(entities.begin(), entities.end(), entity) == entities.end())
+		{
+			break;
+		}
+
 		entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
 		entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
 		// check collisions
@@ -81,18 +89,10 @@ void EntityManager::UpdateEntities()
 				}
 		}
 		
-		entity->Update();
-	}
-
-	for (std::vector<EntityBase*>::iterator entity_iter : removal_queue)
-	{
-		if (entity_iter != entities.end())
-		{
-			delete entities.at(std::distance(entities.begin(), entity_iter));
-			entities.erase(entity_iter);
-
-			removal_queue.erase(std::find(removal_queue.begin(), removal_queue.end(), entity_iter));
-		}
+		if (!entity->should_destroy)
+			entity->Update();
+		else
+			entities.erase(std::find(entities.begin(), entities.end(), entity));
 	}
 }
 
@@ -108,4 +108,9 @@ EntityBase* EntityManager::GetEntityByID(std::string id)
 
 	PE::LogWarning("Could not find entity of id " + id);
 	return NULL;
+}
+
+unsigned int EntityManager::GetEntityCount()
+{
+	return entities.size();
 }
