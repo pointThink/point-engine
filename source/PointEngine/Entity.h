@@ -95,6 +95,23 @@ namespace PE
 			void DrawEntities();
 
 			PE::Entity::EntityBase* GetEntityByID(std::string id);
+
+			// why do i need to declare it in the header C++ why?
+			template<typename T>
+			std::vector<T*> GetEntitiesByType()
+			{
+				std::vector<T*> ret_entities;
+
+				for (EntityBase* entity : entities)
+				{
+					if (instanceof<T>(entity))
+					{
+						ret_entities.push_back((T*)entity);
+					}
+				}
+
+				return ret_entities;
+			};
 		};
 	};
 };

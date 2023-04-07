@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Logging.h"
+#include "Utils.h"
 
 using namespace PE::Entity;
 

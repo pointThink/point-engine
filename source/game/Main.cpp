@@ -11,6 +11,7 @@ class Player : public Entity::EntityBase
 	public:
 	void Init()
 	{
+		entity_name = "player";
 		colidable = true;
 
 		position = { 0, 0 };
@@ -106,6 +107,13 @@ void HandleEvent(EventType et, EventParameters ep)
 	}
 	else if (et == GAME_UPDATE)
 	{
+		std::vector<Player*> players = Game::GetInstance()->entity_manager->GetEntitiesByType<Player>();
+
+		for (Player* player : players)
+		{
+			PE::LogInfo(player->GetEntityName());
+		}
+
 		Game::GetInstance()->SetGameName(std::to_string(1 / Game::GetInstance()->GetFrameTime()));
 	}
 }
