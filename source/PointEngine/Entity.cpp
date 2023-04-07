@@ -65,6 +65,23 @@ void EntityManager::UpdateEntities()
 		entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
 		entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
 
+		// check collisions
+		for (EntityBase* entity2 : entities)
+		{
+			/*
+			// update collision objects of both entities
+			entity->collision_group.UpdatePos(entity->position);
+			entity2->collision_group.UpdatePos(entity->position);
+			*/
+
+			if ((entity->colidable && entity2->colidable) && (entity->position.GetDistanceTo(entity2->position) < entity->collision_group.max_check_distance && entity2->position.GetDistanceTo(entity->position) < entity2->collision_group.max_check_distance))
+				if (entity->collision_group.CollidesWithGroup(&(entity2->collision_group)) && entity != entity2)
+				{
+					entity->OnCollision(entity2);
+					entity2->OnCollision(entity);
+				}
+		}
+
 		entity->Update();
 	}
 }

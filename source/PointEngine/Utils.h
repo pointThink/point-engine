@@ -10,7 +10,12 @@
 #include "Core.h"
 
 #define PI 3.14159265358979323846
-#define ONE_RAD
+
+template<typename Base, typename T>
+ENGINE_API inline bool instanceof(const T* ptr)
+{
+	return dynamic_cast<const Base*>(ptr) != nullptr;
+}
 
 namespace PE
 {

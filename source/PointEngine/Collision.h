@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include <string>
+
 #include "Core.h"
 #include "Vector.h"
 
@@ -7,24 +10,44 @@ namespace PE
 {
 	namespace Collision
 	{
-		class ENGINE_API CollisionBox
+		class ENGINE_API CollisionObject
 		{
 			public:
-			// indidcates the top right position of circle
 			Vector pos;
-			Vector size;
+			std::string tag;
 
-			bool CollidesWith(CollisionBox box);
+			virtual bool CollidesWith(CollisionObject* object);
 		};
 
-		class ENGINE_API CollisionBall
+		class ENGINE_API CollisionBox : public CollisionObject
 		{
 			public:
-			// indicates center of circle
-			Vector pos;
-			float radius;
+			Vector size;
 
-			bool CollidesWith(CollisionBall ball);
+			bool CollidesWith(CollisionObject* object);
+		};
+
+		class ENGINE_API CollisionBall : public CollisionObject
+		{
+			public:
+			float radius;
+			bool CollidesWith(CollisionObject* object);
+		};
+
+		class ENGINE_API CollisionGroup
+		{
+			public:
+			unsigned int max_check_distance = 500; // value pulled out of my ass
+
+			std::vector<CollisionObject*> objects;
+
+			bool CollidesWithGroup(CollisionGroup* group);
+			bool CollidesWith(CollisionObject* object);
+
+			void AddObject(std::string tag, CollisionObject* object);
+			void Clear();
+
+			//void UpdatePos(Vector pos);
 		};
 	}
 }

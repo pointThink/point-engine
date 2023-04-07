@@ -8,10 +8,19 @@ Rendering::Animation a;
 
 class Player : public Entity::EntityBase
 {
+	public:
 	void Init()
 	{
+		colidable = true;
+
 		position = { 0, 0 };
 		motion = { 0, 0 };
+
+		Collision::CollisionBox* cb = new Collision::CollisionBox;
+		cb->pos = { 0, 0 };
+		cb->size = { 20, 20 };
+
+		collision_group.AddObject("square", cb);
 	}
 
 	void Update()
@@ -41,18 +50,49 @@ class Player : public Entity::EntityBase
 			motion.x = 100;
 		}
 
-		
+		for (Collision::CollisionObject* co : collision_group.objects)
+		{
+			if (co->tag == "square")
+			{
+				co->pos = position;
+			}
+		}
 	}
 
 	void Draw()
 	{
-		game->window->camera_offset.x = -position.x + game->window->GetWidth() / 2;
-		game->window->camera_offset.y = -position.y + game->window->GetHeight() / 2;
+		//game->window->camera_offset.x = -position.x + game->window->GetWidth() / 2;
+		//game->window->camera_offset.y = -position.y + game->window->GetHeight() / 2;
 		game->window->DrawSquare({ position.x, position.y }, { 20, 20 }, { 255, 0, 255, 255 });
 
 		game->font_manager->DrawString({ position.x + 20, position.y + 20 }, "default", "This is the player", Utils::Color(255, 0, 255, 255));
 	}
 
+	void OnCollision(Entity::EntityBase* entity)
+	{
+		PE::LogInfo("Collision");
+	}
+};
+
+class TestEntity : public Entity::EntityBase
+{
+	void Init()
+	{
+		colidable = true;
+
+		Collision::CollisionBox* box = new Collision::CollisionBox;
+		box->pos = { 20, 20 };
+		box->size = { 20, 20 };
+
+		collision_group.AddObject("box", box);
+	}
+
+	void Update() {}
+
+	void Draw()
+	{
+		Game::GetInstance()->window->DrawSquare({ 20, 20 }, { 20, 20 }, { 255, 0, 0, 255 });
+	}
 };
 
 void HandleEvent(EventType et, EventParameters ep)
@@ -62,7 +102,7 @@ void HandleEvent(EventType et, EventParameters ep)
 	{
 		// a.UpdateCurrentFrame();
 
-		Game::GetInstance()->window->DrawSquare({20, 20}, {20, 20}, {255, 0, 0, 255});
+		
 	}
 	else if (et == GAME_UPDATE)
 	{
@@ -85,6 +125,7 @@ int main()
 	// game->sprite_manager->LoadSprite("test.bmp", "test");
 	
 	game->entity_manager->AddEntity(new Player);
+	game->entity_manager->AddEntity(new TestEntity());
 
 	game->SetGameName("Test");
 	game->SetEventHandler(&HandleEvent);

@@ -5,6 +5,7 @@
 
 #include "Core.h"
 #include "Vector.h"
+#include "Collision.h"
 
 namespace PE
 {
@@ -44,6 +45,9 @@ namespace PE
 			std::string unique_id; // this is optional, only used for searching entities - PT
 
 			public:
+			bool colidable = false;
+			Collision::CollisionGroup collision_group;
+
 			int layer;
 
 			Vector position;
@@ -57,6 +61,8 @@ namespace PE
 			virtual void Init() {}
 			virtual void Update() {}
 			virtual void Draw() {}
+
+			virtual void OnCollision(EntityBase* other_entity) {}
 			virtual void Use(EntityBase* user, std::string tag) {}
 
 			// crap for sorting - PT
