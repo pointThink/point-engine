@@ -14,6 +14,7 @@
 #include "Console.h"
 #include "Lighting.h"
 #include "Font.h"
+#include "Performace.h"
 
 namespace PE
 {
@@ -45,6 +46,7 @@ namespace PE
 		PE::InputManager* input_manager = NULL;
 		PE::Console* console = NULL;
 		PE::Font::FontManager* font_manager = NULL;
+		PE::Performace::PerformanceProfiler* performance_profiler = NULL;
 
 		std::string game_content_path;
 

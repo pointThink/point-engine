@@ -10,6 +10,7 @@
 #include "Input.h"
 #include "Console.h"
 #include "Font.h"
+#include "Performace.h"
 
 #include <iostream>
 //using namespace PE;
@@ -40,6 +41,7 @@ namespace PE
 		input_manager = new PE::InputManager;
 		light_manager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
 		font_manager = new PE::Font::FontManager;
+		performance_profiler = new PE::Performace::PerformanceProfiler;
 
 		// load the default font
 		font_manager->LoadExternalFont("default", "C:/Windows/Fonts/consola.ttf", 14);
@@ -100,6 +102,8 @@ namespace PE
 
 			Update();
 			Draw();
+
+			performance_profiler->Clear();
 		}
 
 		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 0, {0, 0}));
@@ -122,6 +126,7 @@ namespace PE
 		// Handle some SDL events - PT
 		SDL_Event event;
 
+		performance_profiler->Begin("SDL_event_handling");
 		while (SDL_PollEvent(&event) != 0)
 		{
 			ImGui_ImplSDL2_ProcessEvent(&event);
@@ -161,9 +166,13 @@ namespace PE
 			}
 		}
 
+		performance_profiler->End();
+
 		input_manager->UpdateLastFrameStates();
 
+		performance_profiler->Begin("entity_update");
 		entity_manager->UpdateEntities();
+		performance_profiler->End();
 
 		PE::CallEventFunction(PE::GAME_UPDATE, PE::EventParameters(0, 0, {0, 0}));
 	}
@@ -179,21 +188,44 @@ namespace PE
 		window->ClearBackground();
 
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
+
+
+		performance_profiler->Begin("entity_drawing");
 		entity_manager->DrawEntities();
+		performance_profiler->End();
 
 		// light_manager->CastLightRay({50, 50}, Utils::Color(255, 255, 255, 255), 1000, 100);
 
 		if (lighting_enabled)
 		{
+			performance_profiler->Begin("lighting");
+
 			SDL_Texture* light_map = light_manager->GenerateLightMap();
 			SDL_SetTextureBlendMode(light_map, SDL_BLENDMODE_MUL);
 
 			SDL_RenderCopy(window->GetSDLRenderer(), light_map, NULL, NULL);
 
+			performance_profiler->End();
 		}
 
+		Vector old_cam_offset = window->camera_offset;
+		window->camera_offset = { 0, 0 };
+
 		if (console->is_open)
+		{
 			console->Draw();
+
+			std::map<double, std::string> timings = performance_profiler->GetTimings();
+
+			unsigned int iter = 1;
+			for (auto [key, val] : timings)
+			{
+				font_manager->DrawString({14, double(14 * iter + 3) }, "default", val + ": " + std::to_string(key), Utils::Color(255, 0, 0, 255));
+				iter++;
+			}
+		}
+
+		window->camera_offset = old_cam_offset;
 
 		ImGui::Render();
 		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());

@@ -64,7 +64,6 @@ void EntityManager::UpdateEntities()
 	{
 		entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
 		entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
-
 		// check collisions
 		for (EntityBase* entity2 : entities)
 		{
@@ -81,6 +80,7 @@ void EntityManager::UpdateEntities()
 					entity2->OnCollision(entity);
 				}
 		}
+		
 
 		entity->Update();
 	}

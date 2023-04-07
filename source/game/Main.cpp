@@ -61,8 +61,8 @@ class Player : public Entity::EntityBase
 
 	void Draw()
 	{
-		//game->window->camera_offset.x = -position.x + game->window->GetWidth() / 2;
-		//game->window->camera_offset.y = -position.y + game->window->GetHeight() / 2;
+		game->window->camera_offset.x = -position.x + game->window->GetWidth() / 2;
+		game->window->camera_offset.y = -position.y + game->window->GetHeight() / 2;
 		game->window->DrawSquare({ position.x, position.y }, { 20, 20 }, { 255, 0, 255, 255 });
 
 		game->font_manager->DrawString({ position.x + 20, position.y + 20 }, "default", "This is the player", Utils::Color(255, 0, 255, 255));
@@ -106,7 +106,7 @@ void HandleEvent(EventType et, EventParameters ep)
 	}
 	else if (et == GAME_UPDATE)
 	{
-		Game::GetInstance()->SetGameName(std::to_string(Game::GetInstance()->GetFrameTime()));
+		Game::GetInstance()->SetGameName(std::to_string(1 / Game::GetInstance()->GetFrameTime()));
 	}
 }
 
