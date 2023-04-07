@@ -48,6 +48,7 @@ namespace PE
 		PE::Font::FontManager* font_manager = NULL;
 		PE::Performace::PerformanceProfiler* performance_profiler = NULL;
 
+		int ticks_per_second = 60;
 		std::string game_content_path;
 
 		private:
@@ -64,9 +65,11 @@ namespace PE
 		std::string game_version;
 
 		PE::Utils::Timer frame_timer;
+		PE::Utils::Timer tick_timer;
 		std::chrono::duration<float> delta_time;
 
 		void Update();
 		void Draw();
+		void Tick();
 	};
 }

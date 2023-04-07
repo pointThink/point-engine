@@ -62,6 +62,7 @@ namespace PE
 			virtual void Init() {}
 			virtual void Update() {}
 			virtual void Draw() {}
+			virtual void Tick() {}
 
 			virtual void OnCollision(EntityBase* other_entity) {}
 			virtual void Use(EntityBase* user, std::string tag) {}
@@ -94,6 +95,7 @@ namespace PE
 			void RemoveEntity(EntityBase* entity);
 
 			void UpdateEntities();
+			void TickEntities();
 			void DrawEntities();
 
 			unsigned int GetEntityCount();

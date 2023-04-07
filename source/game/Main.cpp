@@ -11,6 +11,8 @@ class Player : public Entity::EntityBase
 	public:
 	void Init()
 	{
+		layer = 0;
+
 		entity_name = "player";
 		colidable = true;
 
@@ -74,6 +76,8 @@ class TestEntity : public Entity::EntityBase
 {
 	void Init()
 	{
+		layer = 1;
+
 		colidable = true;
 
 		Collision::CollisionBox* box = new Collision::CollisionBox;
@@ -127,8 +131,9 @@ int main()
 	// game->sprite_manager->LoadSprite("test2.bmp", "test2");
 	// game->sprite_manager->LoadSprite("test.bmp", "test");
 	
-	game->entity_manager->AddEntity(new Player);
 	game->entity_manager->AddEntity(new TestEntity());
+	game->entity_manager->AddEntity(new Player);
+	
 
 	game->SetGameName("Test");
 	game->SetEventHandler(&HandleEvent);

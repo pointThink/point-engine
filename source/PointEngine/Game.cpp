@@ -101,6 +101,16 @@ namespace PE
 			frame_timer.Reset();
 
 			Update();
+
+			performance_profiler->Begin("tick");
+			// check if should tick
+			if (tick_timer.HasTimeElapsed(1.0 / ticks_per_second))
+			{
+				Tick();
+				tick_timer.Reset();
+			}
+			performance_profiler->End();
+
 			Draw();
 
 			performance_profiler->Clear();
@@ -168,13 +178,20 @@ namespace PE
 
 		performance_profiler->End();
 
+		performance_profiler->Begin("input_last_frame_state_update");
 		input_manager->UpdateLastFrameStates();
+		performance_profiler->End();
 
 		performance_profiler->Begin("entity_update");
 		entity_manager->UpdateEntities();
 		performance_profiler->End();
 
 		PE::CallEventFunction(PE::GAME_UPDATE, PE::EventParameters(0, 0, {0, 0}));
+	}
+
+	void Game::Tick()
+	{
+		entity_manager->TickEntities();
 	}
 
 	void Game::Draw()

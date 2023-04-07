@@ -8,6 +8,15 @@
 
 using namespace PE::Entity;
 
+class LessThanKey
+{
+	public:
+	inline bool operator() (const EntityBase* struct1, const EntityBase* struct2)
+	{
+		return (struct1->layer < struct2->layer);
+	}
+};
+
 void PE::Entity::EntityBase::SetGameInstance(Game* game)
 {
 	this->game = game;
@@ -53,7 +62,7 @@ void EntityManager::RemoveEntity(EntityBase* entity)
 void EntityManager::DrawEntities()
 {
 	// sort entities by layer - PT
-	//std::sort(entities.begin(), entities.end(), );
+	std::sort(entities.begin(), entities.end(), LessThanKey());
 
 	for (EntityBase* entity : entities)
 	{
@@ -64,35 +73,53 @@ void EntityManager::DrawEntities()
 void EntityManager::UpdateEntities()
 {
 	for (EntityBase* entity : entities)
+	{		
+		if (!entity->should_destroy)
+		{
+			entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
+			entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
+
+			entity->Update();
+		}
+		else
+			entities.erase(std::find(entities.begin(), entities.end(), entity));
+	}
+}
+
+void EntityManager::TickEntities()
+{
+	for (EntityBase* entity : entities)
 	{
 		if (std::find(entities.begin(), entities.end(), entity) == entities.end())
 		{
 			break;
 		}
 
-		entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
-		entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
-		// check collisions
+		/*
+		check collisions
+		for now this code is disabled because it runs like shit
+		collision is left up to the game dev for now
+
 		for (EntityBase* entity2 : entities)
 		{
-			/*
 			// update collision objects of both entities
 			entity->collision_group.UpdatePos(entity->position);
 			entity2->collision_group.UpdatePos(entity->position);
-			*/
+			
 
-			if ((entity->colidable && entity2->colidable) && (entity->position.GetDistanceTo(entity2->position) < entity->collision_group.max_check_distance && entity2->position.GetDistanceTo(entity->position) < entity2->collision_group.max_check_distance))
-				if (entity->collision_group.CollidesWithGroup(&(entity2->collision_group)) && entity != entity2)
+			if ((entity->colidable && entity2->colidable))
+				if (entity->position.GetDistanceTo(entity2->position) < entity->collision_group.max_check_distance && entity2->position.GetDistanceTo(entity->position) < entity2->collision_group.max_check_distance)
 				{
-					entity->OnCollision(entity2);
-					entity2->OnCollision(entity);
+					if (entity->collision_group.CollidesWithGroup(&(entity2->collision_group)) && entity != entity2)
+					{
+						entity->OnCollision(entity2);
+						entity2->OnCollision(entity);
+					}
 				}
 		}
-		
-		if (!entity->should_destroy)
-			entity->Update();
-		else
-			entities.erase(std::find(entities.begin(), entities.end(), entity));
+	*/
+
+		entity->Tick();
 	}
 }
 
