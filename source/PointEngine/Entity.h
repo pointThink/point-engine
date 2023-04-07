@@ -84,6 +84,7 @@ namespace PE
 
 			std::vector<std::string> used_ids;
 			std::vector<PE::Entity::EntityBase*> entities;
+			std::vector<std::vector<EntityBase*>::iterator> removal_queue;
 
 			public:
 			EntityManager(Game* game);

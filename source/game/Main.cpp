@@ -68,11 +68,6 @@ class Player : public Entity::EntityBase
 
 		game->font_manager->DrawString({ position.x + 20, position.y + 20 }, "default", "This is the player", Utils::Color(255, 0, 255, 255));
 	}
-
-	void OnCollision(Entity::EntityBase* entity)
-	{
-		PE::LogInfo("Collision");
-	}
 };
 
 class TestEntity : public Entity::EntityBase
@@ -82,17 +77,24 @@ class TestEntity : public Entity::EntityBase
 		colidable = true;
 
 		Collision::CollisionBox* box = new Collision::CollisionBox;
-		box->pos = { 20, 20 };
+		box->pos = { 40, 40 };
 		box->size = { 20, 20 };
 
 		collision_group.AddObject("box", box);
 	}
 
-	void Update() {}
+	void Update(){}
 
 	void Draw()
 	{
-		Game::GetInstance()->window->DrawSquare({ 20, 20 }, { 20, 20 }, { 255, 0, 0, 255 });
+		Game::GetInstance()->window->DrawSquare({ 40, 40 }, { 20, 20 }, { 255, 0, 0, 255 });
+	}
+
+
+	void OnCollision(Entity::EntityBase* entity)
+	{
+		PE::LogInfo("Collision");
+		game->entity_manager->RemoveEntity(entity);
 	}
 };
 
@@ -107,13 +109,6 @@ void HandleEvent(EventType et, EventParameters ep)
 	}
 	else if (et == GAME_UPDATE)
 	{
-		std::vector<Player*> players = Game::GetInstance()->entity_manager->GetEntitiesByType<Player>();
-
-		for (Player* player : players)
-		{
-			PE::LogInfo(player->GetEntityName());
-		}
-
 		Game::GetInstance()->SetGameName(std::to_string(1 / Game::GetInstance()->GetFrameTime()));
 	}
 }

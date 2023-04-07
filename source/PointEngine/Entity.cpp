@@ -44,8 +44,7 @@ void EntityManager::AddEntity(EntityBase* entity)
 
 void EntityManager::RemoveEntity(EntityBase* entity)
 {
-	entities.erase(std::find(entities.begin(), entities.end(), entity));
-	delete entity;
+	removal_queue.push_back(std::find(entities.begin(), entities.end(), entity));
 }
 
 void EntityManager::DrawEntities()
@@ -82,8 +81,20 @@ void EntityManager::UpdateEntities()
 				}
 		}
 		
-
 		entity->Update();
+	}
+
+	for (std::vector<EntityBase*>::iterator entity_iter : removal_queue)
+	{
+		PE::LogInfo("Got here");
+
+		if (entity_iter != entities.end())
+		{
+			delete entities.at(std::distance(entities.begin(), entity_iter));
+			entities.erase(entity_iter);
+
+			removal_queue.erase(std::find(removal_queue.begin(), removal_queue.end(), entity_iter));
+		}
 	}
 }
 
