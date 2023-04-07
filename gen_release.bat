@@ -12,6 +12,7 @@ copy build\Release\pointengine-core.lib release\lib\
 copy source\PointEngine\*.h release\include\PointEngine\
 copy vendor\SDL\include\*.h release\include\SDL\
 copy vendor\SDL_image\*.h release\include\SDL\
+copy vendor\SDL_ttf\*.h release\include\SDL\
 copy vendor\imgui\*.h release\include\imgui\
 
 copy build\bin\Release\pointengine-core.dll release\bin\

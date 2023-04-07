@@ -86,8 +86,6 @@ void EntityManager::UpdateEntities()
 
 	for (std::vector<EntityBase*>::iterator entity_iter : removal_queue)
 	{
-		PE::LogInfo("Got here");
-
 		if (entity_iter != entities.end())
 		{
 			delete entities.at(std::distance(entities.begin(), entity_iter));

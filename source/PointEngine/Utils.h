@@ -12,7 +12,7 @@
 #define PI 3.14159265358979323846
 
 template<typename Base, typename T>
-ENGINE_API inline bool instanceof(const T* ptr)
+inline bool instanceof(const T* ptr)
 {
 	return dynamic_cast<const Base*>(ptr) != nullptr;
 }
@@ -46,9 +46,9 @@ namespace PE
 			uint8_t r, g, b, a;
 		};
 
-		std::vector<std::string> SplitString(std::string str, std::string delimiter);
-		bool StringToBool(std::string str);
+		ENGINE_API std::vector<std::string> SplitString(std::string str, std::string delimiter);
+		ENGINE_API bool StringToBool(std::string str);
 
-		float DegToRads(float degrees);
+		ENGINE_API float DegToRads(float degrees);
 	}
 };

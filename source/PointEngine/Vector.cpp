@@ -15,7 +15,13 @@ double PE::Vector::GetDistanceTo(Vector vec)
 
 double PE::Vector::GetRotationTo(Vector vec)
 {
-	return std::atan2(vec.y, vec.x) * (180 / PI);
+	Vector direction_vec = vec - *this;
+	direction_vec.x = -direction_vec.x;
+	direction_vec.y = -direction_vec.y;
+
+	double direction = atan2(direction_vec.y, direction_vec.x) * 57.2957795;
+
+	return direction;
 }
 
 PE::Vector PE::Vector::operator+(Vector vec2)
