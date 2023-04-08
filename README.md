@@ -1,4 +1,4 @@
-PointEngine is an engine for making games in C++.
+PointEngine is a general purpose library for making games in C++.
 Right now it only supports Windows, but Linux support is planned.
 
 # BUILDING THE ENGINE
