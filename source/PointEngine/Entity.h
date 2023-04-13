@@ -41,13 +41,13 @@ namespace PE
 			protected:
 			Game* game;
 
-			std::string entity_name;
-			std::string unique_id; // this is optional, only used for searching entities - PT
+			std::string entityName;
+			std::string uniqueId; // this is optional, only used for searching entities - PT
 
 			public:
-			bool should_destroy = false;
+			bool shouldDestroy = false;
 			bool colidable = false;
-			Collision::CollisionGroup collision_group;
+			Collision::CollisionGroup collisionGroup;
 
 			int layer = 0;
 
@@ -84,9 +84,8 @@ namespace PE
 			private:
 			Game* game = nullptr;
 
-			std::vector<std::string> used_ids;
+			std::vector<std::string> usedIds;
 			std::vector<PE::Entity::EntityBase*> entities;
-			std::vector<std::vector<EntityBase*>::iterator> removal_queue;
 
 			public:
 			EntityManager(Game* game);
@@ -106,17 +105,17 @@ namespace PE
 			template<typename T>
 			std::vector<T*> GetEntitiesByType()
 			{
-				std::vector<T*> ret_entities;
+				std::vector<T*> retEntities;
 
 				for (EntityBase* entity : entities)
 				{
 					if (instanceof<T>(entity))
 					{
-						ret_entities.push_back((T*)entity);
+						retEntities.push_back((T*)entity);
 					}
 				}
 
-				return ret_entities;
+				return retEntities;
 			};
 		};
 	};

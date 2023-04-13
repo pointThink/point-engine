@@ -2,18 +2,18 @@
 
 namespace PE
 {
-	void CallEventFunction(EventType event_type, EventParameters event_parameters)
+	void CallEventFunction(EventType eventType, EventParameters eventParameters)
 	{
-		if (event_handler != nullptr)
+		if (eventHandler != nullptr)
 		{
-			event_handler(event_type, event_parameters);
+			eventHandler(eventType, eventParameters);
 		}
 	}
 };
 
 PE::EventParameters::EventParameters(int ic, int ec, Vector mm)
 {
-	input_code = ic;
-	exit_code = ec;
-	mouse_movement = mm;
+	inputCode = ic;
+	exitCode = ec;
+	mouseMovement = mm;
 }

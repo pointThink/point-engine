@@ -13,31 +13,31 @@
 PE::Console::Console(PE::Game* game)
 {
 	this->game = game;
-	convar_manager = new PE::ConVarManager(game);
+	convarManager = new PE::ConVarManager(game);
 }
 
 PE::Console::~Console()
 {
-	delete convar_manager;
+	delete convarManager;
 }
 
 void PE::Console::RunCommand(std::string command)
 {
 	// split the command into arguments
-	bool in_quotes = false;
-	std::string wip_string = "";
+	bool inQuotes = false;
+	std::string wipString = "";
 
 	for (int i = 0; i <= command.size(); i++)
 	{
-		if (command.c_str()[i] == ' ' && !in_quotes)
-			wip_string = wip_string + "\n";
+		if (command.c_str()[i] == ' ' && !inQuotes)
+			wipString = wipString + "\n";
 		else if (command[i] == '"')
-			in_quotes = !in_quotes;
+			inQuotes = !inQuotes;
 		else
-			wip_string = wip_string + command[i];
+			wipString = wipString + command[i];
 	}
 
-	std::vector<std::string> args = PE::Utils::SplitString(wip_string, "\n");
+	std::vector<std::string> args = PE::Utils::SplitString(wipString, "\n");
 
 	if (args[0] == "clear")
 	{
@@ -45,7 +45,7 @@ void PE::Console::RunCommand(std::string command)
 	}
 	else
 	{
-		ConVar* convar = convar_manager->FindConVar(args[0]);
+		ConVar* convar = convarManager->FindConVar(args[0]);
 
 		if (convar != NULL)
 		{
@@ -54,26 +54,26 @@ void PE::Console::RunCommand(std::string command)
 				case CONVAR_BOOL:
 				{
 					bool value = PE::Utils::StringToBool(args[1]); // the value needs to be set as a variable first otherwise it will throw an error - PT
-					convar_manager->SetConVar(args[0], &value);
+					convarManager->SetConVar(args[0], &value);
 					break;
 				}
 
 				case CONVAR_INT:
 				{
 					int value = std::stoi(args[1]);
-					convar_manager->SetConVar(args[0], &value);
+					convarManager->SetConVar(args[0], &value);
 					break;
 				}
 
 				case CONVAR_FLOAT:
 				{
 					float value = std::stof(args[1]);
-					convar_manager->SetConVar(args[0], &value);
+					convarManager->SetConVar(args[0], &value);
 					break;
 				}
 
 				case CONVAR_STRING:
-					convar_manager->SetConVar(args[0], &args[1]);
+					convarManager->SetConVar(args[0], &args[1]);
 					break;
 			}
 		}
@@ -86,11 +86,11 @@ void PE::Console::RunCommand(std::string command)
 
 void PE::Console::Draw()
 {
-	ImGui::Begin("Console", &is_open);
+	ImGui::Begin("Console", &isOpen);
 
 	// ImGui::SetCursorScreenPos({0, ImGui::GetWindowSize().y - 20});
 
-	bool scroll_down = false;
+	bool scrollDown = false;
 
 	//ImGui::PushItemWidth(ImGui::GetWindowWidth() - 15);
 	if (ImGui::InputText("Enter command", command, 255, ImGuiInputTextFlags_EnterReturnsTrue))
@@ -100,7 +100,7 @@ void PE::Console::Draw()
 
 		strcpy(command, "");
 
-		scroll_down = true;
+		scrollDown = true;
 	}
 
 
@@ -109,7 +109,7 @@ void PE::Console::Draw()
 
 	ImGui::Text(contents.c_str());
 
-	if (scroll_down)
+	if (scrollDown)
 	{
 		ImGui::SetScrollY(ImGui::GetScrollMaxY());
 	}

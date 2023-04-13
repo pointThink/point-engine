@@ -22,7 +22,7 @@ namespace PE
 	{
 		public:
 		ConVarType type;
-		void* data_pointer = nullptr;
+		void* dataPointer = nullptr;
 
 		ConVar() {}
 		ConVar(ConVarType type, void* data_pointer);
@@ -33,7 +33,7 @@ namespace PE
 	class ENGINE_API ConVarManager
 	{
 		private:
-		std::unordered_map<std::string, ConVar> con_vars;
+		std::unordered_map<std::string, ConVar> conVars;
 
 		public:
 		ConVarManager(PE::Game* game);

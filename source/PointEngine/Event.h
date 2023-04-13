@@ -16,12 +16,12 @@ namespace PE
 		public:
 		EventParameters(int ic, int ec, Vector mm);
 
-		int input_code;
-		int exit_code;
-		Vector mouse_movement;
+		int inputCode;
+		int exitCode;
+		Vector mouseMovement;
 	};
 
-	void ENGINE_API CallEventFunction(EventType event_type, EventParameters event_parameters);
+	void ENGINE_API CallEventFunction(EventType eventType, EventParameters eventParameters);
 
-	inline void (*event_handler)(EventType, EventParameters) = nullptr;
+	inline void (*eventHandler)(EventType, EventParameters) = nullptr;
 };

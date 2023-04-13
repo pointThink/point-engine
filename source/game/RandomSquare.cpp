@@ -8,7 +8,7 @@
 
 void RandomSquare::Init()
 {
-	entity_name = "RandomSquare";
+	entityName = "RandomSquare";
 
 	position.x = rand() % 800;
 	position.y = rand() % 600;
@@ -19,14 +19,14 @@ void RandomSquare::Init()
 
 	colidable = false;
 
-	collision_group.max_check_distance = 50;
+	collisionGroup.maxCheckDistance = 50;
 
 	Collision::CollisionBox* cb = new Collision::CollisionBox;
 
 	cb->pos = position;
 	cb->size = { 20, 20 };
 
-	collision_group.AddObject("collider", cb);
+	collisionGroup.AddObject("collider", cb);
 }
 
 void RandomSquare::Draw()

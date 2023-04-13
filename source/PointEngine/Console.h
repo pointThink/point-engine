@@ -20,9 +20,9 @@ namespace PE
 
 		std::string contents = "";
 		char command[255] = "";
-		bool is_open = false;
+		bool isOpen = false;
 
-		ConVarManager* convar_manager;
+		ConVarManager* convarManager;
 
 		void RunCommand(std::string cmd);
 		void Draw();

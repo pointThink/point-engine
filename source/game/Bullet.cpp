@@ -8,20 +8,20 @@ void Bullet::Init()
 
 	colidable = false;
 
-	collision_group.max_check_distance = 50;
+	collisionGroup.maxCheckDistance = 50;
 
 	Collision::CollisionBox* cb = new Collision::CollisionBox;
 
 	cb->pos = position;
 	cb->size = { 5, 5 };
 
-	collision_group.AddObject("collider", cb);
+	collisionGroup.AddObject("collider", cb);
 
 }
 
 void Bullet::Update()
 {
-	for (Collision::CollisionObject* co : collision_group.objects)
+	for (Collision::CollisionObject* co : collisionGroup.objects)
 	{
 		if (co->tag == "collider")
 		{

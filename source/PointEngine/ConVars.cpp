@@ -6,7 +6,7 @@
 PE::ConVar::ConVar(ConVarType type, void* data_pointer)
 {
 	this->type = type;
-	this->data_pointer = data_pointer;
+	this->dataPointer = data_pointer;
 }
 
 PE::ConVarManager::ConVarManager(PE::Game* game)
@@ -16,37 +16,37 @@ PE::ConVarManager::ConVarManager(PE::Game* game)
 
 void PE::ConVarManager::RegisterConVar(std::string name, ConVar convar)
 {
-	con_vars.insert({name, convar});
+	conVars.insert({name, convar});
 }
 
 void PE::ConVarManager::RemoveConVar(std::string name)
 {
-	con_vars.erase(con_vars.find(name));
+	conVars.erase(conVars.find(name));
 }
 
 void PE::ConVarManager::SetConVar(std::string name, void* data)
 {
 
-	ConVar cv = con_vars.find(name)->second;
+	ConVar cv = conVars.find(name)->second;
 
 	// welcome to hell - PT
 	if (cv.type == CONVAR_BOOL)
-		*(bool *)(cv.data_pointer) = *(bool *)data;
+		*(bool *)(cv.dataPointer) = *(bool *)data;
 	else if (cv.type == CONVAR_INT)
-		*(int *)(cv.data_pointer) = *(int *)data;
+		*(int *)(cv.dataPointer) = *(int *)data;
 	else if (cv.type == CONVAR_FLOAT)
-		*(float *)(cv.data_pointer) = *(float *)data;
+		*(float *)(cv.dataPointer) = *(float *)data;
 	else if (cv.type == CONVAR_STRING)
-		*(std::string *)(cv.data_pointer) = *(std::string *)data;
+		*(std::string *)(cv.dataPointer) = *(std::string *)data;
 }
 
 PE::ConVar* PE::ConVarManager::FindConVar(std::string name)
 {
-	if (!con_vars.contains(name))
+	if (!conVars.contains(name))
 	{
 		PE::LogWarning("Could not find console variable");
 		return NULL;
 	}
 
-	return &con_vars.find(name)->second;
+	return &conVars.find(name)->second;
 }

@@ -11,10 +11,10 @@ namespace PE
 		class EntityGenericSprite : public EntityBase
 		{
 			private:
-			std::string sprite_name;
+			std::string spriteName;
 			Vector scale;
 
-			Rendering::SpriteDrawInfo draw_info;
+			Rendering::SpriteDrawInfo drawInfo;
 
 			public:
 			void Draw();

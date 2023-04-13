@@ -10,8 +10,8 @@ void Player::Init()
 {
 	position = {};
 
-	entity_name = "player";
-	unique_id = "player";
+	entityName = "player";
+	uniqueId = "player";
 }
 
 void Player::Draw()

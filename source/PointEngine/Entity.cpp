@@ -22,8 +22,8 @@ void PE::Entity::EntityBase::SetGameInstance(Game* game)
 	this->game = game;
 }
 
-std::string EntityBase::GetEntityName() {return entity_name;}
-std::string EntityBase::GetUniqueID() {return unique_id;}
+std::string EntityBase::GetEntityName() {return entityName;}
+std::string EntityBase::GetUniqueID() {return uniqueId;}
 
 // -----------------------------------------------------------
 
@@ -35,7 +35,7 @@ EntityManager::EntityManager(Game* game)
 void EntityManager::AddEntity(EntityBase* entity)
 {
 	// check if entity has an already used id - PT
-	for (std::string unique_id : used_ids)
+	for (std::string unique_id : usedIds)
 	{
 		if (entity->GetUniqueID() == unique_id && entity->GetUniqueID() != "")
 		{
@@ -48,7 +48,7 @@ void EntityManager::AddEntity(EntityBase* entity)
 	entity->Init();
 
 	entities.push_back(entity);
-	used_ids.push_back(entity->GetUniqueID());
+	usedIds.push_back(entity->GetUniqueID());
 }
 
 void EntityManager::RemoveEntity(EntityBase* entity)
@@ -56,7 +56,7 @@ void EntityManager::RemoveEntity(EntityBase* entity)
 	std::vector<EntityBase*>::iterator it = std::find(entities.begin(), entities.end(), entity);
 	unsigned int index = std::distance(entities.begin(), it);
 	
-	entities.at(index)->should_destroy = true;
+	entities.at(index)->shouldDestroy = true;
 }
 
 void EntityManager::DrawEntities()
@@ -76,7 +76,7 @@ void EntityManager::UpdateEntities()
 	{		
 		EntityBase* entity = entities[i];
 
-		if (!entity->should_destroy)
+		if (!entity->shouldDestroy)
 		{
 			entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
 			entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());

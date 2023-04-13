@@ -37,7 +37,7 @@ namespace PE
 		class ENGINE_API CollisionGroup
 		{
 			public:
-			unsigned int max_check_distance = 500; // value pulled out of my ass
+			unsigned int maxCheckDistance = 500; // value pulled out of my ass
 
 			std::vector<CollisionObject*> objects;
 

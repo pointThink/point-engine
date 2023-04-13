@@ -62,13 +62,13 @@ namespace PE
 		ImGui::GetStyle().FrameRounding = 6;
 
 		// define some engine convars
-		// console->convar_manager->RegisterConVar("g_title", ConVar(CONVAR_STRING, &gameName, MethodPointer<PE::Game>(this, &UpdateGameName)));
-		console->convar_manager->RegisterConVar("g_version", ConVar(CONVAR_STRING, &gameVersion));
+		// console->convarManager->RegisterConVar("g_title", ConVar(CONVAR_STRING, &gameName, MethodPointer<PE::Game>(this, &UpdateGameName)));
+		console->convarManager->RegisterConVar("g_version", ConVar(CONVAR_STRING, &gameVersion));
 
-		console->convar_manager->RegisterConVar("r_bg_color_r", ConVar(CONVAR_INT, &window->bg_color.r));
-		console->convar_manager->RegisterConVar("r_bg_color_g", ConVar(CONVAR_INT, &window->bg_color.g));
-		console->convar_manager->RegisterConVar("r_bg_color_b", ConVar(CONVAR_INT, &window->bg_color.b));
-		console->convar_manager->RegisterConVar("r_lightingEnabled", ConVar(CONVAR_BOOL, &lightingEnabled));
+		console->convarManager->RegisterConVar("r_bg_color_r", ConVar(CONVAR_INT, &window->bg_color.r));
+		console->convarManager->RegisterConVar("r_bg_color_g", ConVar(CONVAR_INT, &window->bg_color.g));
+		console->convarManager->RegisterConVar("r_bg_color_b", ConVar(CONVAR_INT, &window->bg_color.b));
+		console->convarManager->RegisterConVar("r_lightingEnabled", ConVar(CONVAR_BOOL, &lightingEnabled));
 
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, { 0, 0 }));
 
@@ -149,29 +149,29 @@ namespace PE
 
 				case SDL_KEYDOWN:
 					if (event.key.keysym.scancode == 53) // ~ key is reserved for opening the console - PT
-						console->is_open = !console->is_open;
+						console->isOpen = !console->isOpen;
 
-					if (!console->is_open)
+					if (!console->isOpen)
 						inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(true);
 					break;
 
 				case SDL_KEYUP:
-					if (!console->is_open)
+					if (!console->isOpen)
 						inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(false);
 					break;
 
 				case SDL_MOUSEBUTTONDOWN:
-					if (!console->is_open)
+					if (!console->isOpen)
 						inputManager->GetButtonState(event.button.button)->SetDown(true);
 					break;
 
 				case SDL_MOUSEBUTTONUP:
-					if (!console->is_open)
+					if (!console->isOpen)
 						inputManager->GetButtonState(event.button.button)->SetDown(false);
 					break;
 
 				case SDL_MOUSEMOTION:
-					if (!console->is_open)
+					if (!console->isOpen)
 						inputManager->SetMousePos(event.motion.x, event.motion.y);
 			}
 		}
@@ -228,7 +228,7 @@ namespace PE
 		Vector old_cam_offset = window->camera_offset;
 		window->camera_offset = { 0, 0 };
 
-		if (console->is_open)
+		if (console->isOpen)
 		{
 			console->Draw();
 
@@ -275,7 +275,7 @@ namespace PE
 
 	void Game::SetEventHandler(void (*event_handler)(EventType, EventParameters))
 	{
-		PE::event_handler = event_handler;
+		PE::eventHandler = event_handler;
 	}
 
 	float Game::GetFrameTime()
