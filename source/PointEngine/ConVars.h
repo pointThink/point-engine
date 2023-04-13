@@ -22,7 +22,7 @@ namespace PE
 	{
 		public:
 		ConVarType type;
-		void* data_pointer;
+		void* data_pointer = nullptr;
 
 		ConVar() {}
 		ConVar(ConVarType type, void* data_pointer);

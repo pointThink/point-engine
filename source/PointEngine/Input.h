@@ -25,7 +25,6 @@
 #define PE_KEY_INSERT 73
 #define PE_KEY_DELETE 76
 #define PE_KEY_BACKSPACE 42
-#define PE_KEY_ENTER 40
 
 #define PE_KEY_1 30
 #define PE_KEY_2 31

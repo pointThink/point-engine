@@ -66,7 +66,7 @@ namespace PE
 
 		PE::Utils::Timer frame_timer;
 		PE::Utils::Timer tick_timer;
-		std::chrono::duration<float> delta_time;
+		std::chrono::duration<float> delta_time = std::chrono::milliseconds(1);
 
 		void Update();
 		void Draw();

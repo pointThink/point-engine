@@ -13,8 +13,8 @@ namespace PE
 		class ENGINE_API CollisionObject
 		{
 			public:
-			Vector pos;
-			std::string tag;
+			Vector pos = { 0, 0 };
+			std::string tag = "NULL";
 
 			virtual bool CollidesWith(CollisionObject* object);
 		};
@@ -22,7 +22,7 @@ namespace PE
 		class ENGINE_API CollisionBox : public CollisionObject
 		{
 			public:
-			Vector size;
+			Vector size = { 0, 0 };
 
 			bool CollidesWith(CollisionObject* object);
 		};
@@ -30,7 +30,7 @@ namespace PE
 		class ENGINE_API CollisionBall : public CollisionObject
 		{
 			public:
-			float radius;
+			float radius = 0;
 			bool CollidesWith(CollisionObject* object);
 		};
 

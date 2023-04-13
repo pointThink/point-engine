@@ -21,7 +21,7 @@ PE::Rendering::Window::Window(std::string title, int width, int height, bool ful
 	PE::LogInfo("Initializing window");
 	PE::LogInfo("Window size is " + std::to_string(width) + " " + std::to_string(height));
 
-	window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_ALLOW_HIGHDPI);
+	window = SDL_CreateWindow(title.c_str(), 30, 50, width, height, SDL_WINDOW_ALLOW_HIGHDPI);
 
 	this->fullscreen = fullscreen;
 

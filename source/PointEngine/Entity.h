@@ -49,10 +49,10 @@ namespace PE
 			bool colidable = false;
 			Collision::CollisionGroup collision_group;
 
-			int layer;
+			int layer = 0;
 
-			Vector position;
-			Vector motion;
+			Vector position = { 0, 0 };
+			Vector motion = { 0, 0 };
 
 			std::string GetEntityName();
 			std::string GetUniqueID();
@@ -82,7 +82,7 @@ namespace PE
 		class ENGINE_API EntityManager
 		{
 			private:
-			Game* game;
+			Game* game = nullptr;
 
 			std::vector<std::string> used_ids;
 			std::vector<PE::Entity::EntityBase*> entities;
