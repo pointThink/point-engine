@@ -30,16 +30,16 @@ void Bullet::Update()
 	}
 
 	// check if is out of bounds
-	
+	/*
 	if (position.x > PE_GAME->window->GetWidth() + PE_GAME->window->camera_offset.x || position.x + PE_GAME->window->camera_offset.x < 0)
 		if (position.y > PE_GAME->window->GetHeight() + PE_GAME->window->camera_offset.y || position.y + PE_GAME->window->camera_offset.y < 0)
-			PE_GAME->entity_manager->RemoveEntity(this);
-	
+			PE_GAME->entityManager->RemoveEntity(this);
+	*/
 }
 
 void Bullet::Tick()
 {
-	motion.y += 1000 / PE_GAME->ticks_per_second;
+	motion.y += 1000 / PE_GAME->ticksPerSecond;
 }
 
 void Bullet::Draw()
@@ -60,5 +60,5 @@ void CreateBullet(Vector pos, double speed, double direction)
 	
 	bullet->motion = motion;
 
-	PE_GAME->entity_manager->AddEntity(bullet);
+	PE_GAME->entityManager->AddEntity(bullet);
 }

@@ -42,5 +42,5 @@ void RandomSquare::Update()
 void RandomSquare::OnCollision(Entity::EntityBase* entity)
 {
 	if (instanceof<Bullet>(entity))
-		PE_GAME->entity_manager->RemoveEntity(this);
+		PE_GAME->entityManager->RemoveEntity(this);
 }

@@ -33,40 +33,40 @@ namespace PE
 		void SetGameName(std::string name);
 		void SetGameVersion(std::string version);
 		void SetContentPath(std::string path);
-		void SetEventHandler(void (*event_handler)(EventType, EventParameters));
+		void SetEventHandler(void (*eventHandler)(EventType, EventParameters));
 
 		float GetFrameTime();
 
 		void QuitApplication();
 
-		PE::Lighting::LightingManager* light_manager = NULL;
+		PE::Lighting::LightingManager* lightManager = NULL;
 		PE::Rendering::Window* window = NULL;
-		PE::Rendering::SpriteManager* sprite_manager = NULL;
-		PE::Entity::EntityManager* entity_manager = NULL;
-		PE::InputManager* input_manager = NULL;
+		PE::Rendering::SpriteManager* spriteManager = NULL;
+		PE::Entity::EntityManager* entityManager = NULL;
+		PE::InputManager* inputManager = NULL;
 		PE::Console* console = NULL;
-		PE::Font::FontManager* font_manager = NULL;
-		PE::Performace::PerformanceProfiler* performance_profiler = NULL;
+		PE::Font::FontManager* fontManager = NULL;
+		PE::Performace::PerformanceProfiler* performanceProfiler = NULL;
 
-		int ticks_per_second = 60;
-		std::string game_content_path;
+		int ticksPerSecond = 60;
+		std::string gameContentPath;
 
 		private:
 		void UpdateGameName();
 
-		bool lighting_enabled = false;
+		bool lightingEnabled = false;
 
-		bool should_quit = false;
+		bool shouldQuit = false;
 		bool initialized = false;
 
 		static Game* instance;
 
-		std::string game_name;
-		std::string game_version;
+		std::string gameName;
+		std::string gameVersion;
 
-		PE::Utils::Timer frame_timer;
-		PE::Utils::Timer tick_timer;
-		std::chrono::duration<float> delta_time = std::chrono::milliseconds(1);
+		PE::Utils::Timer frameTimer;
+		PE::Utils::Timer tickTimer;
+		std::chrono::duration<float> deltaTime = std::chrono::milliseconds(1);
 
 		void Update();
 		void Draw();

@@ -22,23 +22,23 @@ int main()
 
 	PE_GAME->Init();
 
-	PE_GAME->ticks_per_second = 60;
+	PE_GAME->ticksPerSecond = 60;
 
 	PE_GAME->window->SetSize(1366, 768);
 
 	for (unsigned int i = 0; i < 20; i++)
 	{
-		PE_GAME->entity_manager->AddEntity(new RandomSquare());
+		PE_GAME->entityManager->AddEntity(new RandomSquare());
 	}
 
-	PE_GAME->entity_manager->AddEntity(new Player());
+	PE_GAME->entityManager->AddEntity(new Player());
 
-	PE_GAME->input_manager->BindKey("move_sprint", PE_KEY_LSHIFT);
-	PE_GAME->input_manager->BindKey("move_up", PE_KEY_W);
-	PE_GAME->input_manager->BindKey("move_down", PE_KEY_S);
-	PE_GAME->input_manager->BindKey("move_left", PE_KEY_A);
-	PE_GAME->input_manager->BindKey("move_right", PE_KEY_D);
-	PE_GAME->input_manager->BindButton("shoot", PE_MOUSE_LEFT);
+	PE_GAME->inputManager->BindKey("move_sprint", PE_KEY_LSHIFT);
+	PE_GAME->inputManager->BindKey("move_up", PE_KEY_W);
+	PE_GAME->inputManager->BindKey("move_down", PE_KEY_S);
+	PE_GAME->inputManager->BindKey("move_left", PE_KEY_A);
+	PE_GAME->inputManager->BindKey("move_right", PE_KEY_D);
+	PE_GAME->inputManager->BindButton("shoot", PE_MOUSE_LEFT);
 
 	PE_GAME->SetEventHandler(&EventHandler);
 

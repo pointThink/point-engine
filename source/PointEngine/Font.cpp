@@ -32,7 +32,7 @@ void FontManager::LoadExternalFont(std::string name, std::string file, int size)
 
 void FontManager::LoadFont(std::string name, std::string file, int size)
 {
-	LoadExternalFont(name, Game::GetInstance()->game_content_path + "/fonts/" + file, size);
+	LoadExternalFont(name, Game::GetInstance()->gameContentPath + "/fonts/" + file, size);
 }
 
 void FontManager::UnloadFont(std::string name)

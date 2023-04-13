@@ -33,18 +33,18 @@ namespace PE
 		PE::LogInit(console);
 
 		// Shameless plug - PT
-		LogInfo("Game version " + game_version + " running on PointEngine version " + PE_VERSION);
+		LogInfo("Game version " + gameVersion + " running on PointEngine version " + PE_VERSION);
 
 		window = new PE::Rendering::Window("PointEngine game", 800, 600, false);
-		sprite_manager = new PE::Rendering::SpriteManager(window);
-		entity_manager = new PE::Entity::EntityManager(this);
-		input_manager = new PE::InputManager;
-		light_manager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
-		font_manager = new PE::Font::FontManager;
-		performance_profiler = new PE::Performace::PerformanceProfiler;
+		spriteManager = new PE::Rendering::SpriteManager(window);
+		entityManager = new PE::Entity::EntityManager(this);
+		inputManager = new PE::InputManager;
+		lightManager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
+		fontManager = new PE::Font::FontManager;
+		performanceProfiler = new PE::Performace::PerformanceProfiler;
 
 		// load the default font
-		font_manager->LoadExternalFont("default", "C:/Windows/Fonts/consola.ttf", 14);
+		fontManager->LoadExternalFont("default", "C:/Windows/Fonts/consola.ttf", 14);
 
 		// initialize the imgui library - PT
 		ImGui::CreateContext();
@@ -62,25 +62,25 @@ namespace PE
 		ImGui::GetStyle().FrameRounding = 6;
 
 		// define some engine convars
-		// console->convar_manager->RegisterConVar("g_title", ConVar(CONVAR_STRING, &game_name, MethodPointer<PE::Game>(this, &UpdateGameName)));
-		console->convar_manager->RegisterConVar("g_version", ConVar(CONVAR_STRING, &game_version));
+		// console->convar_manager->RegisterConVar("g_title", ConVar(CONVAR_STRING, &gameName, MethodPointer<PE::Game>(this, &UpdateGameName)));
+		console->convar_manager->RegisterConVar("g_version", ConVar(CONVAR_STRING, &gameVersion));
 
 		console->convar_manager->RegisterConVar("r_bg_color_r", ConVar(CONVAR_INT, &window->bg_color.r));
 		console->convar_manager->RegisterConVar("r_bg_color_g", ConVar(CONVAR_INT, &window->bg_color.g));
 		console->convar_manager->RegisterConVar("r_bg_color_b", ConVar(CONVAR_INT, &window->bg_color.b));
-		console->convar_manager->RegisterConVar("r_lighting_enabled", ConVar(CONVAR_BOOL, &lighting_enabled));
+		console->convar_manager->RegisterConVar("r_lightingEnabled", ConVar(CONVAR_BOOL, &lightingEnabled));
 
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, { 0, 0 }));
 
 		initialized = true;
 
-		light_manager->CreateCellArray({ double(window->GetWidth()), double(window->GetHeight()) }, 5);
+		lightManager->CreateCellArray({ double(window->GetWidth()), double(window->GetHeight()) }, 5);
 
-		if (lighting_enabled)
+		if (lightingEnabled)
 		{
-			light_manager->CreateLightSource({ 400, 300 }, { 0, 255, 0, 255 }, 300);
-			light_manager->CreateLightSource({ 780, 590 }, { 0, 0, 255, 255 }, 300);
-			light_manager->CreateLightSource({ 20, 10 }, { 255, 0, 0, 255 }, 300);
+			lightManager->CreateLightSource({ 400, 300 }, { 0, 255, 0, 255 }, 300);
+			lightManager->CreateLightSource({ 780, 590 }, { 0, 0, 255, 255 }, 300);
+			lightManager->CreateLightSource({ 20, 10 }, { 255, 0, 0, 255 }, 300);
 		}
 
 		LogInfo(std::to_string(double(window->GetWidth())) + std::to_string(double(window->GetHeight())));
@@ -95,25 +95,25 @@ namespace PE
 			exit(5);
 		}
 
-		while (!should_quit)
+		while (!shouldQuit)
 		{
-			delta_time = frame_timer.GetTime();
-			frame_timer.Reset();
+			deltaTime = frameTimer.GetTime();
+			frameTimer.Reset();
 
 			Update();
 
-			performance_profiler->Begin("tick");
+			performanceProfiler->Begin("tick");
 			// check if should tick
-			if (tick_timer.HasTimeElapsed(1.0 / ticks_per_second))
+			if (tickTimer.HasTimeElapsed(1.0 / ticksPerSecond))
 			{
 				Tick();
-				tick_timer.Reset();
+				tickTimer.Reset();
 			}
-			performance_profiler->End();
+			performanceProfiler->End();
 
 			Draw();
 
-			performance_profiler->Clear();
+			performanceProfiler->Clear();
 		}
 
 		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 0, {0, 0}));
@@ -124,9 +124,9 @@ namespace PE
         PE::LogInfo("Deinitializing window");
 		delete window;
 		PE::LogInfo("Deinitializing entity manager");
-		delete entity_manager;
+		delete entityManager;
 		PE::LogInfo("Deinitializing sprite manager");
-		delete sprite_manager;
+		delete spriteManager;
 
 		PE::LogInfo("Deinitialized everything");
 	}
@@ -136,7 +136,7 @@ namespace PE
 		// Handle some SDL events - PT
 		SDL_Event event;
 
-		performance_profiler->Begin("SDL_event_handling");
+		performanceProfiler->Begin("SDL_event_handling");
 		while (SDL_PollEvent(&event) != 0)
 		{
 			ImGui_ImplSDL2_ProcessEvent(&event);
@@ -144,7 +144,7 @@ namespace PE
 			switch (event.type)
 			{
 				case SDL_QUIT:
-					should_quit = true;
+					shouldQuit = true;
 					break;
 
 				case SDL_KEYDOWN:
@@ -152,46 +152,46 @@ namespace PE
 						console->is_open = !console->is_open;
 
 					if (!console->is_open)
-						input_manager->GetKeyState(event.key.keysym.scancode)->SetDown(true);
+						inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(true);
 					break;
 
 				case SDL_KEYUP:
 					if (!console->is_open)
-						input_manager->GetKeyState(event.key.keysym.scancode)->SetDown(false);
+						inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(false);
 					break;
 
 				case SDL_MOUSEBUTTONDOWN:
 					if (!console->is_open)
-						input_manager->GetButtonState(event.button.button)->SetDown(true);
+						inputManager->GetButtonState(event.button.button)->SetDown(true);
 					break;
 
 				case SDL_MOUSEBUTTONUP:
 					if (!console->is_open)
-						input_manager->GetButtonState(event.button.button)->SetDown(false);
+						inputManager->GetButtonState(event.button.button)->SetDown(false);
 					break;
 
 				case SDL_MOUSEMOTION:
 					if (!console->is_open)
-						input_manager->SetMousePos(event.motion.x, event.motion.y);
+						inputManager->SetMousePos(event.motion.x, event.motion.y);
 			}
 		}
 
-		performance_profiler->End();
+		performanceProfiler->End();
 
-		performance_profiler->Begin("input_last_frame_state_update");
-		input_manager->UpdateLastFrameStates();
-		performance_profiler->End();
+		performanceProfiler->Begin("input_last_frame_state_update");
+		inputManager->UpdateLastFrameStates();
+		performanceProfiler->End();
 
-		performance_profiler->Begin("entity_update");
-		entity_manager->UpdateEntities();
-		performance_profiler->End();
+		performanceProfiler->Begin("entity_update");
+		entityManager->UpdateEntities();
+		performanceProfiler->End();
 
 		PE::CallEventFunction(PE::GAME_UPDATE, PE::EventParameters(0, 0, {0, 0}));
 	}
 
 	void Game::Tick()
 	{
-		entity_manager->TickEntities();
+		entityManager->TickEntities();
 	}
 
 	void Game::Draw()
@@ -207,22 +207,22 @@ namespace PE
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
 
 
-		performance_profiler->Begin("entity_drawing");
-		entity_manager->DrawEntities();
-		performance_profiler->End();
+		performanceProfiler->Begin("entity_drawing");
+		entityManager->DrawEntities();
+		performanceProfiler->End();
 
-		// light_manager->CastLightRay({50, 50}, Utils::Color(255, 255, 255, 255), 1000, 100);
+		// lightManager->CastLightRay({50, 50}, Utils::Color(255, 255, 255, 255), 1000, 100);
 
-		if (lighting_enabled)
+		if (lightingEnabled)
 		{
-			performance_profiler->Begin("lighting");
+			performanceProfiler->Begin("lighting");
 
-			SDL_Texture* light_map = light_manager->GenerateLightMap();
+			SDL_Texture* light_map = lightManager->GenerateLightMap();
 			SDL_SetTextureBlendMode(light_map, SDL_BLENDMODE_MUL);
 
 			SDL_RenderCopy(window->GetSDLRenderer(), light_map, NULL, NULL);
 
-			performance_profiler->End();
+			performanceProfiler->End();
 		}
 
 		Vector old_cam_offset = window->camera_offset;
@@ -232,12 +232,12 @@ namespace PE
 		{
 			console->Draw();
 
-			std::map<double, std::string> timings = performance_profiler->GetTimings();
+			std::map<double, std::string> timings = performanceProfiler->GetTimings();
 
 			unsigned int iter = 1;
 			for (auto [key, val] : timings)
 			{
-				font_manager->DrawString({14, double(14 * iter + 3) }, "default", val + ": " + std::to_string(key), Utils::Color(255, 0, 0, 255));
+				fontManager->DrawString({14, double(14 * iter + 3) }, "default", val + ": " + std::to_string(key), Utils::Color(255, 0, 0, 255));
 				iter++;
 			}
 		}
@@ -252,25 +252,25 @@ namespace PE
 
 	void Game::QuitApplication()
 	{
-		should_quit = true;
+		shouldQuit = true;
 	}
 
 	void Game::SetGameName(std::string name)
 	{
-		game_name = name;
+		gameName = name;
 		SDL_SetWindowTitle(window->GetSDLWindow(), name.c_str());
 	}
 
 	void Game::SetGameVersion(std::string version)
 	{
-		game_version = version;
+		gameVersion = version;
 	}
 
 	void Game::SetContentPath(std::string path)
 	{
 		path = "./" + path;
 
-		game_content_path = path;
+		gameContentPath = path;
 	}
 
 	void Game::SetEventHandler(void (*event_handler)(EventType, EventParameters))
@@ -280,11 +280,11 @@ namespace PE
 
 	float Game::GetFrameTime()
 	{
-		return delta_time.count();
+		return deltaTime.count();
 	}
 
 	void Game::UpdateGameName()
 	{
-		window->SetTitle(game_name);
+		window->SetTitle(gameName);
 	}
 }

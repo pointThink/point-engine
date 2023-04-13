@@ -8,5 +8,5 @@ using namespace PE::Rendering;
 
 void EntityGenericSprite::Draw()
 {
-	PE_GAME->sprite_manager->DrawSprite(sprite_name, position, scale, draw_info);
+	PE_GAME->spriteManager->DrawSprite(sprite_name, position, scale, draw_info);
 }

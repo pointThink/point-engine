@@ -49,7 +49,7 @@ SpriteManager::~SpriteManager()
 
 void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
 {
-	SDL_Surface* image_unoptimized = IMG_Load((PE_GAME->game_content_path + "/sprites/images/" + file_path).c_str());
+	SDL_Surface* image_unoptimized = IMG_Load((PE_GAME->gameContentPath + "/sprites/images/" + file_path).c_str());
 
 	if (image_unoptimized == NULL)
     {
@@ -67,7 +67,7 @@ void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
 
 void SpriteManager::LoadSpritePack(std::string pack_file)
 {
-	std::fstream stream(PE_GAME->game_content_path + "/sprites/packs/" + pack_file, std::ios::in | std::ios::binary | std::ios::ate);
+	std::fstream stream(PE_GAME->gameContentPath + "/sprites/packs/" + pack_file, std::ios::in | std::ios::binary | std::ios::ate);
 
 	if (!stream.is_open())
 	{
