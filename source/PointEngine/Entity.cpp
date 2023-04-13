@@ -56,7 +56,7 @@ void EntityManager::RemoveEntity(EntityBase* entity)
 	std::vector<EntityBase*>::iterator it = std::find(entities.begin(), entities.end(), entity);
 	unsigned int index = std::distance(entities.begin(), it);
 	
-	entities.at(index)->should_destroy = true;;
+	entities.at(index)->should_destroy = true;
 }
 
 void EntityManager::DrawEntities()
@@ -72,40 +72,49 @@ void EntityManager::DrawEntities()
 
 void EntityManager::UpdateEntities()
 {
-	for (EntityBase* entity : entities)
+	for (unsigned int i = 0; i < entities.size();)
 	{		
+		EntityBase* entity = entities[i];
+
 		if (!entity->should_destroy)
 		{
 			entity->position.x = entity->position.x + (entity->motion.x * game->GetFrameTime());
 			entity->position.y = entity->position.y + (entity->motion.y * game->GetFrameTime());
 
 			entity->Update();
+			i++;
 		}
 		else
-			entities.erase(std::find(entities.begin(), entities.end(), entity));
+			entities.erase(entities.begin() + i);
 	}
 }
 
 void EntityManager::TickEntities()
 {
-	for (EntityBase* entity : entities)
+	for (unsigned int i = 0; i < entities.size();)
 	{
+		EntityBase* entity = entities[i];
+
+		/*
 		if (std::find(entities.begin(), entities.end(), entity) == entities.end())
 		{
 			break;
 		}
+		*/
 
 		/*
 		check collisions
 		for now this code is disabled because it runs like shit
 		collision is left up to the game dev for now
+		*/
 
+		/*
 		for (EntityBase* entity2 : entities)
 		{
+			
 			// update collision objects of both entities
 			entity->collision_group.UpdatePos(entity->position);
 			entity2->collision_group.UpdatePos(entity->position);
-			
 
 			if ((entity->colidable && entity2->colidable))
 				if (entity->position.GetDistanceTo(entity2->position) < entity->collision_group.max_check_distance && entity2->position.GetDistanceTo(entity->position) < entity2->collision_group.max_check_distance)
@@ -117,9 +126,10 @@ void EntityManager::TickEntities()
 					}
 				}
 		}
-	*/
+		*/
 
 		entity->Tick();
+		i++;
 	}
 }
 
