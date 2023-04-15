@@ -2,11 +2,12 @@
 
 #include <cmath>
 
+
 void Bullet::Init()
 {
 	layer = -1;
 
-	colidable = false;
+	colidable = true;
 
 	collisionGroup.maxCheckDistance = 50;
 

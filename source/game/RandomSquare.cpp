@@ -10,14 +10,14 @@ void RandomSquare::Init()
 {
 	entityName = "RandomSquare";
 
-	position.x = rand() % 800;
-	position.y = rand() % 600;
+	position.x = game->rng->RandomNumber(0, 800);
+	position.y = game->rng->RandomNumber(0, 600);
 
-	color.r = rand() % 255;
-	color.g = rand() % 255;
-	color.b = rand() % 255;
+	color.r = game->rng->RandomNumber(0, 255);
+	color.g = game->rng->RandomNumber(0, 255);
+	color.b = game->rng->RandomNumber(0, 255);
 
-	colidable = false;
+	colidable = true;
 
 	collisionGroup.maxCheckDistance = 50;
 

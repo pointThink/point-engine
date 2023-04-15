@@ -15,6 +15,7 @@
 #include "Lighting.h"
 #include "Font.h"
 #include "Performace.h"
+#include "RNG.h"
 
 namespace PE
 {
@@ -47,6 +48,7 @@ namespace PE
 		PE::Console* console = NULL;
 		PE::Font::FontManager* fontManager = NULL;
 		PE::Performace::PerformanceProfiler* performanceProfiler = NULL;
+		PE::Random::RNG* rng = NULL;
 
 		int ticksPerSecond = 60;
 		std::string gameContentPath;

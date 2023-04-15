@@ -42,6 +42,7 @@ namespace PE
 		lightManager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
 		fontManager = new PE::Font::FontManager;
 		performanceProfiler = new PE::Performace::PerformanceProfiler;
+		rng = new PE::Random::RNG;
 
 		// load the default font
 		fontManager->LoadExternalFont("default", "C:/Windows/Fonts/consola.ttf", 14);
