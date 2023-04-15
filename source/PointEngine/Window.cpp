@@ -132,9 +132,18 @@ void PE::Rendering::Window::DrawSquare(Vector pos, Vector size, Utils::Color col
 	rect.w = int(size.x);
 	rect.h = int(size.y);
 
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(renderer, &rect);
-	SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
+	// check if the square should be drawn
+	// check if square is within bounderies of the max draw
+	if (ShouldDraw(pos, size))
+	{
+		SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+		SDL_RenderFillRect(renderer, &rect);
+		SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
+	}
+	else
+	{
+		// PE::LogInfo("Square out of bounds");
+	}
 }
 
 
@@ -180,4 +189,23 @@ void PE::Rendering::Window::DrawCircle(Vector pos, float radius, Utils::Color co
 	}
 
 	SDL_SetRenderDrawColor(renderer, bg_color.r, bg_color.g, bg_color.b, bg_color.a);
+}
+
+bool PE::Rendering::Window::ShouldDraw(Vector pos, Vector size)
+{
+	Vector minDraw;
+	minDraw.x = 0 - (size.x * 2) - camera_offset.x;
+	minDraw.y = 0 - (size.y * 2) - camera_offset.y;
+
+	Vector maxDraw;
+	maxDraw.x = width + (size.x * 2);
+	maxDraw.y = height + (size.y * 2);
+
+	// check if object is located within minDraw and maxDraw
+	if ((pos.x >= minDraw.x && pos.x <= minDraw.x + maxDraw.x) && (pos.y >= minDraw.y && pos.y <= minDraw.y + maxDraw.y))
+	{
+		return true;
+	}
+
+	return false;
 }

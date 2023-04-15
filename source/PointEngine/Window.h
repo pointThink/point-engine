@@ -50,6 +50,9 @@ namespace PE
 			void DrawCircle(Vector pos, float radius, Utils::Color color);
 			//void DrawSquareRound(Vector pos, Vector size, float roundness, Utils::Color color);
 			//void DrawTriangle(Vector pos1, Vector pos2, Vector pos3, Utils::Color color)
+
+			// check if a an object is out of range and if it should be draw
+			bool ShouldDraw(Vector pos, Vector size);
 		};
 	};
 };

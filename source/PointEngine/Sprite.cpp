@@ -206,6 +206,14 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector 
 	// Temporary rect to define position of drawn sprite - PT
 	SDL_Rect* temp_rect = new SDL_Rect();
 
+	if (!PE_GAME->window->ShouldDraw(position, { double(sprite->GetSurface()->w), double(sprite->GetSurface()->h) }))
+	{
+		return;
+	}
+
+	position.x = position.x + PE_GAME->window->camera_offset.x;
+	position.y = position.y + PE_GAME->window->camera_offset.y;
+
 	temp_rect->x = position.x;
 	temp_rect->y = position.y;
 	temp_rect->w = size.x;
@@ -232,16 +240,22 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position)
 {
 	PE::Game* game = PE::Game::GetInstance();
 
-	position.x = position.x + game->window->camera_offset.x;
-	position.y = position.y + game->window->camera_offset.y;
-
     if (!sprite_bank.count(sprite_name))
     {
         PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
         return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
     }
+
     Sprite* sprite = sprite_bank.find(sprite_name)->second;
 	SDL_Texture* texture = sprite->GetTexture();
+
+	if (!game->window->ShouldDraw(position, { double(sprite->GetSurface()->w), double(sprite->GetSurface()->h) }))
+	{
+		return;
+	}
+
+	position.x = position.x + game->window->camera_offset.x;
+	position.y = position.y + game->window->camera_offset.y;
 
 	// Temporary rect to define position of drawn sprite - PT
 	SDL_Rect* temp_rect = new SDL_Rect();
