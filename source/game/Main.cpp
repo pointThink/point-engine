@@ -8,11 +8,17 @@
 
 using namespace PE; 
 
+Utils::Timer timer;
+
 void EventHandler(EventType et, EventParameters ep)
 {
 	if (et == GAME_UPDATE)
 	{
-		Game::GetInstance()->SetGameName(std::to_string(1 / Game::GetInstance()->GetFrameTime()));
+		if (timer.HasTimeElapsed(0.5))
+		{
+			Game::GetInstance()->SetGameName(std::to_string(1 / Game::GetInstance()->GetFrameTime()));
+			timer.Reset();
+		}
 	}
 }
 

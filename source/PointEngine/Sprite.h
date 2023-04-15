@@ -65,15 +65,15 @@ namespace PE
 			SpriteManager(Window* game_window);
 			~SpriteManager();
 
-			void LoadSprite(std::string sprite_path, std::string sprite_name);
-			void LoadSpritePack(std::string pack_file);
-			void RemoveSprite(std::string sprite_name);
+			void LoadSprite(std::string& sprite_path, std::string sprite_name);
+			void LoadSpritePack(std::string& pack_file);
+			void RemoveSprite(std::string& sprite_name);
 			void ClearBank();
 
-			void DrawSprite(std::string sprite_name, Vector position);
-			void DrawSprite(std::string sprite_name, Vector position, Vector size, SpriteDrawInfo info);
-			void DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count);
-			void DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count, SpriteDrawInfo info);
+			void DrawSprite(std::string& sprite_name, Vector position);
+			void DrawSprite(std::string& sprite_name, Vector position, Vector size, SpriteDrawInfo info);
+			void DrawTileSprite(std::string& sprite_name, Vector orgin, Vector size, Vector tile_count);
+			void DrawTileSprite(std::string& sprite_name, Vector orgin, Vector size, Vector tile_count, SpriteDrawInfo info);
 		};
 
 		class ENGINE_API Animation
