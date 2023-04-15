@@ -5,17 +5,17 @@
 #include <string>
 
 #include "Core.h"
-#include "Window.h"
-#include "Sprite.h"
-#include "Entity.h"
-#include "Utils.h"
+#include "Rendering/Window.h"
+#include "Rendering/Sprite.h"
+#include "Entity/Entity.h"
+#include "Utils/Utils.h"
 #include "Event.h"
 #include "Input.h"
-#include "Console.h"
+#include "Console/Console.h"
 #include "Lighting.h"
-#include "Font.h"
-#include "Performace.h"
-#include "RNG.h"
+#include "Rendering/Font.h"
+#include "Utils/Performace.h"
+#include "Utils/RNG.h"
 
 namespace PE
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "Console.h"
+#include "Console/Console.h"
 
 #include <string>
 #include <fstream>

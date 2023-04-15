@@ -1,5 +1,19 @@
 cmake_minimum_required(VERSION 3.20.0)
 
+macro(ADD_SUBDIR subdir)
+	file(GLOB NEW_SRC "source/${subdir}/*.cpp")
+	file(GLOB NEW_HEADER "source/${subdir}/*.h")
+
+	message(${subdir})
+	message(${NEW_SRC})
+	message(${NEW_HEADER})
+
+	message("source/PointEngine/${subdir}/*.cpp")
+
+	source_group("source/${subdir}" FILES ${NEW_SRC})
+	source_group("source/${subdir}" FILES ${NEW_HEADER})
+endmacro()
+
 project(PointEngine-Core)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -18,8 +32,14 @@ set(IMGUI_BACKEND vendor/imgui/backends/imgui_impl_sdl2.cpp vendor/imgui/backend
 source_group("imgui" FILES ${IMGUI_SOURCES} ${IMGUI_BACKEND})
 include_directories(vendor/imgui)
 
-source_group("source" FILES ${PE_SRC})
-source_group("source" FILES ${PE_HEADERS})
+ADD_SUBDIR(PointEngine)
+ADD_SUBDIR(PointEngine/Rendering)
+ADD_SUBDIR(PointEngine/Entity)
+ADD_SUBDIR(PointEngine/Console)
+ADD_SUBDIR(PointEngine/Utils)
+
+#source_group("source" FILES ${PE_SRC})
+#source_group("source" FILES ${PE_HEADERS})
 
 add_library(pointengine-core SHARED ${PE_SRC} ${PE_HEADERS} ${IMGUI_SOURCES} ${IMGUI_BACKEND})
 

@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 
 #include "Logging.h"
-#include "Utils.h"
+#include "Utils/Utils.h"
 #include "Vector.h"
 
 #include <fstream>

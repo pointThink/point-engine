@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Sprite.h"
+#include "Rendering/Sprite.h"
 #include "Entity.h"
 #include "Core.h"
 

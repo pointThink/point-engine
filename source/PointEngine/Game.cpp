@@ -5,14 +5,8 @@
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer.h"
 #include "Logging.h"
-#include "Utils.h"
 #include "Event.h"
 #include "Input.h"
-#include "Console.h"
-#include "Font.h"
-#include "Performace.h"
-
-#include <iostream>
 //using namespace PE;
 
 namespace PE

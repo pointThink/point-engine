@@ -7,8 +7,8 @@
 
 #include "Core.h"
 
-#include <Utils.h>
-#include <Vector.h>
+#include "Utils/Utils.h"
+#include "Vector.h"
 
 namespace PE
 {

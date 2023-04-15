@@ -1,7 +1,7 @@
 #include "BuiltInEntities.h"
 
 #include "Game.h"
-#include "Sprite.h"
+#include "Rendering/Sprite.h"
 
 using namespace PE::Entity;
 using namespace PE::Rendering;

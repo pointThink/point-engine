@@ -4,7 +4,7 @@
 
 #include "SDL.h"
 #include "Vector.h"
-#include "Utils.h"
+#include "Utils/Utils.h"
 
 namespace PE
 {
