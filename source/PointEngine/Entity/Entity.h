@@ -38,13 +38,13 @@ namespace PE
 
 		class ENGINE_API EntityBase
 		{
-			protected:
+		protected:
 			Game* game;
 
 			std::string entityName;
 			std::string uniqueId; // this is optional, only used for searching entities - PT
 
-			public:
+		public:
 			bool shouldDestroy = false;
 			bool colidable = false;
 			Collision::CollisionGroup collisionGroup;

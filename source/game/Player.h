@@ -7,6 +7,7 @@ class Player : public Entity::EntityBase
 {
 	int speed = 100;
 
+public:
 	void Init();
 
 	void Draw();

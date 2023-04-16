@@ -4,12 +4,6 @@ macro(ADD_SUBDIR subdir)
 	file(GLOB NEW_SRC "source/${subdir}/*.cpp")
 	file(GLOB NEW_HEADER "source/${subdir}/*.h")
 
-	message(${subdir})
-	message(${NEW_SRC})
-	message(${NEW_HEADER})
-
-	message("source/PointEngine/${subdir}/*.cpp")
-
 	source_group("source/${subdir}" FILES ${NEW_SRC})
 	source_group("source/${subdir}" FILES ${NEW_HEADER})
 endmacro()
@@ -37,6 +31,8 @@ ADD_SUBDIR(PointEngine/Rendering)
 ADD_SUBDIR(PointEngine/Entity)
 ADD_SUBDIR(PointEngine/Console)
 ADD_SUBDIR(PointEngine/Utils)
+ADD_SUBDIR(PointEngine/Scripting)
+ADD_SUBDIR(PointEngine/UI)
 
 #source_group("source" FILES ${PE_SRC})
 #source_group("source" FILES ${PE_HEADERS})

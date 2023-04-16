@@ -37,6 +37,7 @@ namespace PE
 		fontManager = new PE::Font::FontManager;
 		performanceProfiler = new PE::Performace::PerformanceProfiler;
 		rng = new PE::Random::RNG;
+		uiManager = new PE::UI::UIManager;
 
 		// load the default font
 		fontManager->LoadExternalFont("default", "C:/Windows/Fonts/consola.ttf", 14);
@@ -104,6 +105,7 @@ namespace PE
 				Tick();
 				tickTimer.Reset();
 			}
+
 			performanceProfiler->End();
 
 			Draw();
@@ -122,6 +124,16 @@ namespace PE
 		delete entityManager;
 		PE::LogInfo("Deinitializing sprite manager");
 		delete spriteManager;
+		PE::LogInfo("Deinitializing console");
+		delete console;
+		PE::LogInfo("Deinitializing input manager");
+		delete inputManager;
+		PE::LogInfo("Deinitializing font manager");
+		delete fontManager;
+		PE::LogInfo("Deinitializing rng");
+		delete rng;
+		PE::LogInfo("Deinitializing UI");
+		delete uiManager;
 
 		PE::LogInfo("Deinitialized everything");
 	}
@@ -157,7 +169,10 @@ namespace PE
 
 				case SDL_MOUSEBUTTONDOWN:
 					if (!console->isOpen)
+					{
 						inputManager->GetButtonState(event.button.button)->SetDown(true);
+						uiManager->HandleMouseClick(event.button.button, inputManager->GetMousePos());
+					}	
 					break;
 
 				case SDL_MOUSEBUTTONUP:
@@ -171,22 +186,29 @@ namespace PE
 			}
 		}
 
-		performanceProfiler->End();
+		if (!isPaused)
+		{
+			performanceProfiler->End();
 
-		performanceProfiler->Begin("input_last_frame_state_update");
-		inputManager->UpdateLastFrameStates();
-		performanceProfiler->End();
+			performanceProfiler->Begin("input_last_frame_state_update");
+			inputManager->UpdateLastFrameStates();
+			performanceProfiler->End();
 
-		performanceProfiler->Begin("entity_update");
-		entityManager->UpdateEntities();
-		performanceProfiler->End();
+			performanceProfiler->Begin("entity_update");
+			entityManager->UpdateEntities();
+			performanceProfiler->End();
+
+		}
 
 		PE::CallEventFunction(PE::GAME_UPDATE, PE::EventParameters(0, 0, {0, 0}));
 	}
 
 	void Game::Tick()
 	{
-		entityManager->TickEntities();
+		if (!isPaused)
+			entityManager->TickEntities();
+
+		uiManager->UpdateUI();
 	}
 
 	void Game::Draw()
@@ -222,6 +244,8 @@ namespace PE
 
 		Vector old_cam_offset = window->camera_offset;
 		window->camera_offset = { 0, 0 };
+
+		uiManager->DrawUI();
 
 		if (console->isOpen)
 		{

@@ -16,6 +16,7 @@
 #include "Rendering/Font.h"
 #include "Utils/Performace.h"
 #include "Utils/RNG.h"
+#include "UI/UIManager.h"
 
 namespace PE
 {
@@ -49,8 +50,11 @@ namespace PE
 		PE::Font::FontManager* fontManager = NULL;
 		PE::Performace::PerformanceProfiler* performanceProfiler = NULL;
 		PE::Random::RNG* rng = NULL;
+		PE::UI::UIManager* uiManager = NULL;
 
+		bool isPaused = false;
 		int ticksPerSecond = 60;
+		
 		std::string gameContentPath;
 
 		private:

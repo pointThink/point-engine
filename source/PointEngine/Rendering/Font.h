@@ -27,7 +27,9 @@ namespace PE
 			void UnloadFont(std::string name);
 
 			void DrawString(Vector pos, std::string font_name, std::string string, Utils::Color fg);
-			void GetStringLength(std::string font_name, std::string string);
+			int GetStringLength(std::string font_name, std::string string);
+			int GetStringHeight(std::string font_name, std::string string);
+
 
 			void Clear();
 		};

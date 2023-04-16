@@ -1,4 +1,5 @@
 #include <PointEngine.h>
+#include <UI/Widgets.h>
 
 #include "Player.h"
 #include "RandomSquare.h"
@@ -9,6 +10,7 @@
 using namespace PE; 
 
 Utils::Timer timer;
+Utils::Timer timer2;
 
 void EventHandler(EventType et, EventParameters ep)
 {
@@ -19,7 +21,19 @@ void EventHandler(EventType et, EventParameters ep)
 			Game::GetInstance()->SetGameName(std::to_string(1 / Game::GetInstance()->GetFrameTime()));
 			timer.Reset();
 		}
+
+		if (PE_GAME->inputManager->GetBindState("pause")->IsDown() && timer2.HasTimeElapsed(0.599))
+		{
+			LogInfo("Key pressed");
+			timer2.Reset();
+			PE_GAME->isPaused = !PE_GAME->isPaused;
+		}
 	}
+}
+
+void OnPress()
+{
+	LogInfo("PRessed");
 }
 
 int main()
@@ -45,8 +59,11 @@ int main()
 	PE_GAME->inputManager->BindKey("move_left", PE_KEY_A);
 	PE_GAME->inputManager->BindKey("move_right", PE_KEY_D);
 	PE_GAME->inputManager->BindButton("shoot", PE_MOUSE_LEFT);
+	PE_GAME->inputManager->BindKey("pause", PE_KEY_ESCAPE);
 
 	PE_GAME->SetEventHandler(&EventHandler);
+
+	PE_GAME->uiManager->AddWidget("button", new UI::Button("default", "test", { 20, 20 }, { 150, 50 }, &OnPress));
 
 	PE_GAME->Run();
 

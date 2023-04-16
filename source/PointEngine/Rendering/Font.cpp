@@ -78,8 +78,21 @@ void FontManager::DrawString(Vector pos, std::string font_name, std::string stri
 	SDL_DestroyTexture(text_texture);
 }
 
-void FontManager::GetStringLength(std::string font_name, std::string string) {}
+int FontManager::GetStringLength(std::string font_name, std::string string)
+{
+	int returnInt = 0;
+	TTF_SizeText(fonts.find(font_name)->second, string.c_str(), &returnInt, NULL);
 
+	return returnInt;
+}
+
+int FontManager::GetStringHeight(std::string font_name, std::string string)
+{
+	int returnInt = 0;
+	TTF_SizeText(fonts.find(font_name)->second, string.c_str(), NULL, &returnInt);
+
+	return returnInt;
+}
 void FontManager::Clear()
 {
 
