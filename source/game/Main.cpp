@@ -38,7 +38,7 @@ void OnPress()
 
 int main()
 {
-	srand(time(NULL));
+	//srand(time(NULL));
 
 	PE_GAME->Init();
 
@@ -64,6 +64,9 @@ int main()
 	PE_GAME->SetEventHandler(&EventHandler);
 
 	PE_GAME->uiManager->AddWidget("button", new UI::Button("default", "test", { 20, 20 }, { 150, 50 }, &OnPress));
+	PE_GAME->uiManager->AddWidget("checkbox", new UI::CheckBox("default", "test", { 200, 20 }, { 25, 25 }));
+	PE_GAME->uiManager->AddWidget("label", new UI::Label({ 255, 255 }, "default", "This is a label", { 0, 0, 0, 255 }));
+
 
 	PE_GAME->Run();
 
