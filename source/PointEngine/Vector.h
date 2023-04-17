@@ -6,7 +6,7 @@ namespace PE
 {
 	class ENGINE_API Vector
 	{
-		public:
+	public:
 		double x, y;
 
 		double GetDistanceTo(Vector vec);

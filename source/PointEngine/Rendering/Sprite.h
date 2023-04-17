@@ -22,7 +22,7 @@ namespace PE
 		Is far easier and cleaner to specify only what you need*/
 		class ENGINE_API SpriteDrawInfo
 		{
-			public:
+		public:
 			Utils::Color tint = { 255, 255, 255, 255 };
 
 			float transparency = 255;
@@ -36,7 +36,7 @@ namespace PE
 		
 		class ENGINE_API Sprite
 		{
-			private:
+		private:
 			/* These should be set at sprite creation because conversion from surface to texture
 			or viceversa takes too much time */
 			SDL_Texture* texture;
@@ -44,7 +44,7 @@ namespace PE
 			
 			Vector size = { 0, 0 };
 
-			public:
+		public:
 			Sprite(SDL_Surface* surface);
 			~Sprite();
 
@@ -56,12 +56,12 @@ namespace PE
 
 		class ENGINE_API SpriteManager
 		{
-			private:
+		private:
 			std::unordered_map<std::string, Sprite*> sprite_bank;
 
 			Window* game_window;
 
-			public:
+		public:
 			SpriteManager(Window* game_window);
 			~SpriteManager();
 
@@ -78,7 +78,7 @@ namespace PE
 
 		class ENGINE_API Animation
 		{
-			private:
+		private:
 			// contains the sprite ids of every single frame in the animation
 			std::string* sprites = nullptr;
 
@@ -90,7 +90,7 @@ namespace PE
 
 			std::vector<std::string> frames;
 
-			public:
+		public:
 			void AddSprite(std::string sprite_id);
 			std::string GetCurrentSprite();
 
@@ -102,5 +102,5 @@ namespace PE
 			void UpdateCurrentFrame();
 			void Reset();
 		};
-	};
-};
+	}
+}

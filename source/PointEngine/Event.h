@@ -13,7 +13,7 @@ namespace PE
 
 	class ENGINE_API EventParameters
 	{
-		public:
+	public:
 		EventParameters(int ic, int ec, Vector mm);
 
 		int inputCode;

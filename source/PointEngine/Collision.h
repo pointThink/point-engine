@@ -12,7 +12,7 @@ namespace PE
 	{
 		class ENGINE_API CollisionObject
 		{
-			public:
+		public:
 			Vector pos = { 0, 0 };
 			std::string tag = "NULL";
 
@@ -21,7 +21,7 @@ namespace PE
 
 		class ENGINE_API CollisionBox : public CollisionObject
 		{
-			public:
+		public:
 			Vector size = { 0, 0 };
 
 			bool CollidesWith(CollisionObject* object);
@@ -29,14 +29,14 @@ namespace PE
 
 		class ENGINE_API CollisionBall : public CollisionObject
 		{
-			public:
+		public:
 			float radius = 0;
 			bool CollidesWith(CollisionObject* object);
 		};
 
 		class ENGINE_API CollisionGroup
 		{
-			public:
+		public:
 			unsigned int maxCheckDistance = 500; // value pulled out of my ass
 
 			std::vector<CollisionObject*> objects;
