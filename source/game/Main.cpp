@@ -12,6 +12,9 @@ using namespace PE;
 Utils::Timer timer;
 Utils::Timer timer2;
 
+GameState::GameState* running;
+GameState::GameState* paused;
+
 void EventHandler(EventType et, EventParameters ep)
 {
 	if (et == GAME_UPDATE)
@@ -26,14 +29,18 @@ void EventHandler(EventType et, EventParameters ep)
 		{
 			LogInfo("Key pressed");
 			timer2.Reset();
-			PE_GAME->isPaused = !PE_GAME->isPaused;
+			
+			if (PE_GAME_STATE == running)
+				PE_GAME->SetCurrentGameState(paused, false);
+			else
+				PE_GAME->SetCurrentGameState(running, false);
 		}
 	}
 }
 
 void OnPress()
 {
-	LogInfo("PRessed");
+	PE_GAME->SetCurrentGameState(running, false);
 }
 
 int main()
@@ -46,12 +53,16 @@ int main()
 
 	PE_GAME->window->SetSize(1366, 768);
 
+	running = new GameState::GameState;
+	paused = new GameState::GameState;
+
 	for (unsigned int i = 0; i < 20; i++)
 	{
-		PE_GAME->entityManager->AddEntity(new RandomSquare());
+		running->entityManager->AddEntity(new RandomSquare());
 	}
 
-	PE_GAME->entityManager->AddEntity(new Player());
+	
+	running->entityManager->AddEntity(new Player());
 
 	PE_GAME->inputManager->BindKey("move_sprint", PE_KEY_LSHIFT);
 	PE_GAME->inputManager->BindKey("move_up", PE_KEY_W);
@@ -63,10 +74,10 @@ int main()
 
 	PE_GAME->SetEventHandler(&EventHandler);
 
-	PE_GAME->uiManager->AddWidget("button", new UI::Button("default", "test", { 20, 20 }, { 150, 50 }, &OnPress));
-	PE_GAME->uiManager->AddWidget("checkbox", new UI::CheckBox("default", "test", { 200, 20 }, { 25, 25 }));
-	PE_GAME->uiManager->AddWidget("label", new UI::Label({ 255, 255 }, "default", "This is a label", { 0, 0, 0, 255 }));
+	paused->uiManager->AddWidget("button", new UI::Button("default", "Back in the game", { 20, 20 }, { 150, 50 }, &OnPress));
 
+
+	PE_GAME->SetCurrentGameState(running, false);
 
 	PE_GAME->Run();
 

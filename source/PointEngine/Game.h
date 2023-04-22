@@ -1,6 +1,7 @@
 #pragma once
 
 #define PE_GAME PE::Game::GetInstance()
+#define PE_GAME_STATE PE::Game::GetInstance()->GetCurrentGameState()
 
 #include <string>
 
@@ -17,6 +18,7 @@
 #include "Utils/Performace.h"
 #include "Utils/RNG.h"
 #include "UI/UIManager.h"
+#include "Gamestate/Gamestate.h"
 
 namespace PE
 {
@@ -39,19 +41,22 @@ namespace PE
 
 		float GetFrameTime();
 
+		// GameState related stuff
+
+		void SetCurrentGameState(GameState::GameState* state, bool deleteOld);
+		GameState::GameState* GetCurrentGameState();
+
 		void QuitApplication();
 
 		PE::Lighting::LightingManager* lightManager = NULL;
 		PE::Rendering::Window* window = NULL;
 		PE::Rendering::SpriteManager* spriteManager = NULL;
-		PE::Entity::EntityManager* entityManager = NULL;
 		PE::InputManager* inputManager = NULL;
 		PE::Console* console = NULL;
 		PE::Font::FontManager* fontManager = NULL;
 		PE::Performace::PerformanceProfiler* performanceProfiler = NULL;
 		PE::Random::RNG* rng = NULL;
-		PE::UI::UIManager* uiManager = NULL;
-
+		
 		bool isPaused = false;
 		int ticksPerSecond = 60;
 		
@@ -73,6 +78,8 @@ namespace PE
 		PE::Utils::Timer frameTimer;
 		PE::Utils::Timer tickTimer;
 		std::chrono::duration<float> deltaTime = std::chrono::milliseconds(1);
+
+		GameState::GameState* currentGameState = nullptr;
 
 		void Update();
 		void Draw();

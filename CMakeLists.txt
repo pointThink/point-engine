@@ -33,6 +33,7 @@ ADD_SUBDIR(PointEngine/Console)
 ADD_SUBDIR(PointEngine/Utils)
 ADD_SUBDIR(PointEngine/Scripting)
 ADD_SUBDIR(PointEngine/UI)
+ADD_SUBDIR(PointEngine/Gamestate)
 
 #source_group("source" FILES ${PE_SRC})
 #source_group("source" FILES ${PE_HEADERS})

@@ -21,7 +21,7 @@ void Player::Draw()
 
 	PE_GAME->window->DrawSquare(position, {20, 20}, PE::Utils::Color(255, 0, 0, 255));
 
-	PE_GAME->fontManager->DrawString({ 5, 5 }, "default", std::to_string(PE_GAME->entityManager->GetEntityCount()), Utils::Color(255, 0, 0, 255));
+	PE_GAME->fontManager->DrawString({ 5, 5 }, "default", std::to_string(PE_GAME_STATE->entityManager->GetEntityCount()), Utils::Color(255, 0, 0, 255));
 
 }
 

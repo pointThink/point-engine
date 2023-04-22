@@ -2,8 +2,9 @@ build
 release
 debug
 projects/codeblocks/obj
-.vscode/settings.json
-.xmake
+.vscode/
+.xmake/
+.idea/
 projects/vs2022/PointEngine/PointEngine/x64
 projects/vs2022/PointEngine/x64
 projects/vs2022/PointEngine/.vs

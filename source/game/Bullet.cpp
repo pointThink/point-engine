@@ -61,5 +61,5 @@ void CreateBullet(Vector pos, double speed, double direction)
 	
 	bullet->motion = motion;
 
-	PE_GAME->entityManager->AddEntity(bullet);
+	PE_GAME_STATE->entityManager->AddEntity(bullet);
 }

@@ -31,13 +31,11 @@ namespace PE
 
 		window = new PE::Rendering::Window("PointEngine game", 800, 600, false);
 		spriteManager = new PE::Rendering::SpriteManager(window);
-		entityManager = new PE::Entity::EntityManager(this);
 		inputManager = new PE::InputManager;
 		lightManager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
 		fontManager = new PE::Font::FontManager;
 		performanceProfiler = new PE::Performace::PerformanceProfiler;
 		rng = new PE::Random::RNG;
-		uiManager = new PE::UI::UIManager;
 
 		// load the default font
 		fontManager->LoadExternalFont("default", "C:/Windows/Fonts/consola.ttf", 14);
@@ -48,7 +46,6 @@ namespace PE
 		ImGui::StyleColorsDark();
 		ImGui_ImplSDL2_InitForSDLRenderer(window->GetSDLWindow(), window->GetSDLRenderer());
 		ImGui_ImplSDLRenderer_Init(window->GetSDLRenderer());
-
 
 		// load a font that dosent suck as much as the default - PT
 		io.Fonts->AddFontFromFileTTF("C:/Windows/Fonts/consola.ttf", 14);
@@ -80,6 +77,8 @@ namespace PE
 		}
 
 		LogInfo(std::to_string(double(window->GetWidth())) + std::to_string(double(window->GetHeight())));
+
+		SetCurrentGameState(new PE::GameState::GameState, false);
 	}
 
 	void Game::Run()
@@ -116,26 +115,23 @@ namespace PE
 		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 0, {0, 0}));
         PE::LogInfo("Quitting");
 
-        PE::LogDeInit();
 
         PE::LogInfo("Deinitializing window");
 		delete window;
-		PE::LogInfo("Deinitializing entity manager");
-		delete entityManager;
 		PE::LogInfo("Deinitializing sprite manager");
 		delete spriteManager;
-		PE::LogInfo("Deinitializing console");
-		delete console;
 		PE::LogInfo("Deinitializing input manager");
 		delete inputManager;
 		PE::LogInfo("Deinitializing font manager");
 		delete fontManager;
 		PE::LogInfo("Deinitializing rng");
 		delete rng;
-		PE::LogInfo("Deinitializing UI");
-		delete uiManager;
-
+		
+		// delete currentGameState;
 		PE::LogInfo("Deinitialized everything");
+		PE::LogDeInit();
+
+		delete console;
 	}
 
 	void Game::Update()
@@ -171,7 +167,7 @@ namespace PE
 					if (!console->isOpen)
 					{
 						inputManager->GetButtonState(event.button.button)->SetDown(true);
-						uiManager->HandleMouseClick(event.button.button, inputManager->GetMousePos());
+						currentGameState->uiManager->HandleMouseClick(event.button.button, inputManager->GetMousePos());
 					}	
 					break;
 
@@ -195,7 +191,7 @@ namespace PE
 			performanceProfiler->End();
 
 			performanceProfiler->Begin("entity_update");
-			entityManager->UpdateEntities();
+			currentGameState->entityManager->UpdateEntities();
 			performanceProfiler->End();
 
 		}
@@ -206,9 +202,9 @@ namespace PE
 	void Game::Tick()
 	{
 		if (!isPaused)
-			entityManager->TickEntities();
+			currentGameState->entityManager->TickEntities();
 
-		uiManager->UpdateUI();
+		currentGameState->uiManager->UpdateUI();
 	}
 
 	void Game::Draw()
@@ -225,7 +221,7 @@ namespace PE
 
 
 		performanceProfiler->Begin("entity_drawing");
-		entityManager->DrawEntities();
+		currentGameState->entityManager->DrawEntities();
 		performanceProfiler->End();
 
 		// lightManager->CastLightRay({50, 50}, Utils::Color(255, 255, 255, 255), 1000, 100);
@@ -245,7 +241,7 @@ namespace PE
 		Vector old_cam_offset = window->camera_offset;
 		window->camera_offset = { 0, 0 };
 
-		uiManager->DrawUI();
+		currentGameState->uiManager->DrawUI();
 
 		if (console->isOpen)
 		{
@@ -268,6 +264,26 @@ namespace PE
 
 		window->PresentRenderer();
 	}
+
+
+	void Game::SetCurrentGameState(GameState::GameState* state, bool deleteOld)
+	{
+		// remove the old state
+		if (currentGameState != nullptr && deleteOld)
+		{
+			currentGameState->DeInit();
+			delete currentGameState;
+		}
+
+		currentGameState = state;
+		state->Init();
+	}
+
+	GameState::GameState* Game::GetCurrentGameState()
+	{
+		return currentGameState;
+	}
+
 
 	void Game::QuitApplication()
 	{
