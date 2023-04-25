@@ -32,7 +32,7 @@ namespace PE
 		window = new PE::Rendering::Window("PointEngine game", 800, 600, false);
 		spriteManager = new PE::Rendering::SpriteManager(window);
 		inputManager = new PE::InputManager;
-		lightManager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
+		// lightManager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
 		fontManager = new PE::Font::FontManager;
 		performanceProfiler = new PE::Performace::PerformanceProfiler;
 		rng = new PE::Random::RNG;
@@ -67,14 +67,16 @@ namespace PE
 
 		initialized = true;
 
-		lightManager->CreateCellArray({ double(window->GetWidth()), double(window->GetHeight()) }, 5);
+		// lightManager->CreateCellArray({ double(window->GetWidth()), double(window->GetHeight()) }, 5);
 
+		/*
 		if (lightingEnabled)
 		{
 			lightManager->CreateLightSource({ 400, 300 }, { 0, 255, 0, 255 }, 300);
 			lightManager->CreateLightSource({ 780, 590 }, { 0, 0, 255, 255 }, 300);
 			lightManager->CreateLightSource({ 20, 10 }, { 255, 0, 0, 255 }, 300);
 		}
+		*/
 
 		LogInfo(std::to_string(double(window->GetWidth())) + std::to_string(double(window->GetHeight())));
 
@@ -197,12 +199,16 @@ namespace PE
 		}
 
 		PE::CallEventFunction(PE::GAME_UPDATE, PE::EventParameters(0, 0, {0, 0}));
+
+		currentGameState->OnUpdate();
 	}
 
 	void Game::Tick()
 	{
 		if (!isPaused)
 			currentGameState->entityManager->TickEntities();
+
+		currentGameState->OnTick();
 
 		currentGameState->uiManager->UpdateUI();
 	}
@@ -240,6 +246,8 @@ namespace PE
 
 		Vector old_cam_offset = window->camera_offset;
 		window->camera_offset = { 0, 0 };
+
+		currentGameState->OnDraw();
 
 		currentGameState->uiManager->DrawUI();
 

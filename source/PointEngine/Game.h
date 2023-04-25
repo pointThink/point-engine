@@ -48,7 +48,7 @@ namespace PE
 
 		void QuitApplication();
 
-		PE::Lighting::LightingManager* lightManager = NULL;
+		// PE::Lighting::LightingManager* lightManager = NULL;
 		PE::Rendering::Window* window = NULL;
 		PE::Rendering::SpriteManager* spriteManager = NULL;
 		PE::InputManager* inputManager = NULL;
