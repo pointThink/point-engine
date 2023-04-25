@@ -85,8 +85,8 @@ set_target_properties (SDL2_ttf PROPERTIES FOLDER dependencies)
 
 
 # make the test game
-FILE(GLOB GAME_SOURCES_CPP source/game/*.cpp)
-FILE(GLOB GAME_HEADERS_CPP source/game/*.h)
+FILE(GLOB GAME_SOURCES_CPP source/TestGame/*.cpp)
+FILE(GLOB GAME_HEADERS_CPP source/TestGame/*.h)
 
 add_compile_definitions(WINDOWS64)
 set(CMAKE_CXX_STANDARD 20)
