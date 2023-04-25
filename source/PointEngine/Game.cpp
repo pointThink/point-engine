@@ -236,10 +236,10 @@ namespace PE
 		{
 			performanceProfiler->Begin("lighting");
 
-			SDL_Texture* light_map = lightManager->GenerateLightMap();
-			SDL_SetTextureBlendMode(light_map, SDL_BLENDMODE_MUL);
+			//SDL_Texture* light_map = lightManager->GenerateLightMap();
+			//SDL_SetTextureBlendMode(light_map, SDL_BLENDMODE_MUL);
 
-			SDL_RenderCopy(window->GetSDLRenderer(), light_map, NULL, NULL);
+			//SDL_RenderCopy(window->GetSDLRenderer(), light_map, NULL, NULL);
 
 			performanceProfiler->End();
 		}

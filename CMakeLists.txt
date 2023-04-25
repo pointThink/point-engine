@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20.0)
 
 macro(ADD_SUBDIR subdir)
+	FILE(GLOB children RELATIVE ${subdir} ${subdir}/*)
+
 	file(GLOB NEW_SRC "source/${subdir}/*.cpp")
 	file(GLOB NEW_HEADER "source/${subdir}/*.h")
 
@@ -10,7 +12,9 @@ endmacro()
 
 project(PointEngine-Core)
 
-if defined
+if (NOT DEFINED PE_OutputPath)
+	set(PE_OutputPath bin)
+endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -29,13 +33,12 @@ source_group("imgui" FILES ${IMGUI_SOURCES} ${IMGUI_BACKEND})
 include_directories(vendor/imgui)
 
 ADD_SUBDIR(PointEngine)
-ADD_SUBDIR(PointEngine/Rendering)
-ADD_SUBDIR(PointEngine/Entity)
-ADD_SUBDIR(PointEngine/Console)
-ADD_SUBDIR(PointEngine/Utils)
-ADD_SUBDIR(PointEngine/Scripting)
-ADD_SUBDIR(PointEngine/UI)
-ADD_SUBDIR(PointEngine/Gamestate)
+#ADD_SUBDIR(PointEngine/Rendering)
+#ADD_SUBDIR(PointEngine/Entity)
+#ADD_SUBDIR(PointEngine/Console)
+#ADD_SUBDIR(PointEngine/Utils)
+#ADD_SUBDIR(PointEngine/Scripting)
+#ADD_SUBDIR(PointEngine/UI)
 
 #source_group("source" FILES ${PE_SRC})
 #source_group("source" FILES ${PE_HEADERS})
@@ -43,7 +46,7 @@ ADD_SUBDIR(PointEngine/Gamestate)
 add_library(pointengine-core SHARED ${PE_SRC} ${PE_HEADERS} ${IMGUI_SOURCES} ${IMGUI_BACKEND})
 
 # set_target_properties(pointengine PROPERTIES LIBRARY_OUTPUT_DIRECTORY lib)
-set_target_properties(pointengine-core PROPERTIES RUNTIME_OUTPUT_DIRECTORY bin)
+set_target_properties(pointengine-core PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PE_OutputPath})
 
 # add required libraries
 # SDL2
@@ -52,7 +55,7 @@ add_subdirectory(vendor/SDL)
 include_directories(vendor/SDL/include)
 include_directories(vendor/SDL/include)
 target_link_libraries(pointengine-core SDL2)
-set_target_properties(SDL2 PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../bin)
+set_target_properties(SDL2 PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
 
 set_target_properties (SDL2 PROPERTIES FOLDER dependencies)
 set_target_properties (SDL2main PROPERTIES FOLDER dependencies)
@@ -67,7 +70,7 @@ add_subdirectory(vendor/SDL_image)
 #add_dependencies(pointengine-core SDL_image)
 include_directories(vendor/SDL_image)
 target_link_libraries(pointengine-core SDL2_image)
-set_target_properties(SDL2_image PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../bin)
+set_target_properties(SDL2_image PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
 
 set_target_properties (SDL2_image PROPERTIES FOLDER dependencies)
 
@@ -77,7 +80,7 @@ add_subdirectory(vendor/SDL_ttf)
 #add_dependencies(pointengine-core SDL_image)
 include_directories(vendor/SDL2_ttf)
 target_link_libraries(pointengine-core SDL2_ttf)
-set_target_properties(SDL2_ttf PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../bin)
+set_target_properties(SDL2_ttf PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
 
 set_target_properties (freetype PROPERTIES FOLDER dependencies)
 set_target_properties (SDL2_ttf PROPERTIES FOLDER dependencies)
@@ -85,14 +88,16 @@ set_target_properties (SDL2_ttf PROPERTIES FOLDER dependencies)
 
 
 # make the test game
-FILE(GLOB GAME_SOURCES_CPP source/TestGame/*.cpp)
-FILE(GLOB GAME_HEADERS_CPP source/TestGame/*.h)
+if (PE_MakeTestGame)
+	FILE(GLOB GAME_SOURCES_CPP source/TestGame/*.cpp)
+	FILE(GLOB GAME_HEADERS_CPP source/TestGame/*.h)
 
-add_compile_definitions(WINDOWS64)
-set(CMAKE_CXX_STANDARD 20)
+	add_compile_definitions(WINDOWS64)
+	set(CMAKE_CXX_STANDARD 20)
 
-add_executable(game ${GAME_SOURCES_CPP} ${GAME_HEADERS_CPP})
-target_link_libraries(game pointengine-core)
-include_directories(source/PointEngine/)
+	add_executable(game ${GAME_SOURCES_CPP} ${GAME_HEADERS_CPP})
+	target_link_libraries(game pointengine-core)
+	include_directories(source/PointEngine/)
 
-set_target_properties(game PROPERTIES RUNTIME_OUTPUT_DIRECTORY bin)
+	set_target_properties(game PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PE_OutputPath})
+endif()
