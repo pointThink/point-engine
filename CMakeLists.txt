@@ -26,6 +26,7 @@ FILE(GLOB_RECURSE PE_HEADERS source/PointEngine/*.h)
 add_compile_definitions(WINDOWS64 ENGINE_BUILD)
 
 # imgui
+
 FILE(GLOB IMGUI_SOURCES vendor/imgui/*.cpp)
 set(IMGUI_BACKEND vendor/imgui/backends/imgui_impl_sdl2.cpp vendor/imgui/backends/imgui_impl_sdlrenderer.cpp)
 
@@ -42,6 +43,8 @@ ADD_SUBDIR(PointEngine/UI)
 
 #source_group("source" FILES ${PE_SRC})
 #source_group("source" FILES ${PE_HEADERS})
+
+include_directories(source/PointEngine)
 
 add_library(pointengine-core SHARED ${PE_SRC} ${PE_HEADERS} ${IMGUI_SOURCES} ${IMGUI_BACKEND})
 
