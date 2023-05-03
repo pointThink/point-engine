@@ -97,9 +97,6 @@ int main()
 
 	LogInfo("GPU Name: " + gpuInfo.name);
 
-	int* nothing = nullptr;
-	std::cout << *nothing << std::endl;
-
 	PE_GAME->Run();
 
 	return 0;

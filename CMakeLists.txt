@@ -90,10 +90,6 @@ set_target_properties(SDL2_ttf PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_Ou
 set_target_properties (freetype PROPERTIES FOLDER dependencies)
 set_target_properties (SDL2_ttf PROPERTIES FOLDER dependencies)
 
-# backward cpp
-add_subdirectory(vendor/backward-cpp)
-add_backward(pointengine-core)
-
 # make the test game
 if (PE_MakeTestGame)
 	FILE(GLOB GAME_SOURCES_CPP source/TestGame/*.cpp)
