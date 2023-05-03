@@ -41,7 +41,9 @@ namespace PE
 
 		std::vector<std::string> args = Utils::SplitString(wipString, "\n");
 
-		if (args[0] == "clear")
+		std::cout << args[0] << std::endl;
+
+		if (strcmp(args[0].c_str(), "clear"))
 		{
 			Clear();
 		}
@@ -88,14 +90,36 @@ namespace PE
 
 	void Console::Draw()
 	{
-		ImGui::Begin("Console", &isOpen);
-
-		// ImGui::SetCursorScreenPos({0, ImGui::GetWindowSize().y - 20});
+		ImGui::Begin("Developer console", &isOpen);
 
 		bool scrollDown = false;
 
-		//ImGui::PushItemWidth(ImGui::GetWindowWidth() - 15);
-		if (ImGui::InputText("Enter command", command, 255, ImGuiInputTextFlags_EnterReturnsTrue))
+		ImGui::BeginChild("text", { ImGui::GetWindowWidth() - 15, ImGui::GetWindowHeight() - 60 }, 2, ImGuiWindowFlags_None);
+
+		for (std::string str : Utils::SplitString(contents, "\n"))
+		{
+			if (str.starts_with("[WARNING]"))
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 0, 255));
+			}
+			else if (str.starts_with("[ERROR]"))
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 0, 0, 255));
+			}
+			else
+			{
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(255, 255, 255, 255));
+			}
+
+			ImGui::Text(str.c_str());
+
+			ImGui::PopStyleColor();
+		}
+
+		ImGui::EndChild();
+
+		ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
+		if (ImGui::InputText(" ", command, 255, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
 			contents = contents + "> " + std::string(command) + '\n';
 			RunCommand(std::string(command));
@@ -105,19 +129,10 @@ namespace PE
 			scrollDown = true;
 		}
 
+		ImGui::PopItemWidth();
 
-		//ImGui::PopItemWidth();
-		ImGui::BeginChild("text", { ImGui::GetWindowWidth() - 15, ImGui::GetWindowHeight() - 60 }, 2, ImGuiWindowFlags_None);
+		ImGui::SetScrollY(ImGui::GetScrollMaxY());
 
-		ImGui::Text(contents.c_str());
-
-		if (scrollDown)
-		{
-			ImGui::SetScrollY(ImGui::GetScrollMaxY());
-		}
-
-
-		ImGui::EndChild();
 		ImGui::End();
 	}
 

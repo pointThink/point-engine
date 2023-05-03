@@ -55,6 +55,7 @@ namespace PE
 
 			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 			SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+			SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
 			if (renderer == NULL)
 			{
@@ -92,15 +93,24 @@ namespace PE
 		int Window::GetWidth() { return width; }
 		bool Window::IsFullscreen() { return fullscreen; }
 
+		Vector Window::GetMonitorRes()
+		{
+			SDL_DisplayMode mode;
+
+			SDL_GetCurrentDisplayMode(0, &mode);
+
+			return { double(mode.w), double(mode.h) };
+		}
+
 		SDL_Window* Window::GetSDLWindow() { return window; }
 		SDL_Renderer* Window::GetSDLRenderer() { return renderer; }
 
-		void Window::SetSize(int x, int y)
+		void Window::SetSize(Vector size)
 		{
-			width = x;
-			height = y;
+			width = size.x;
+			height = size.y;
 
-			SDL_SetWindowSize(window, x, y);
+			SDL_SetWindowSize(window, size.x, size.y);
 		}
 
 		void Window::SetFullscreen(bool fullscreen)

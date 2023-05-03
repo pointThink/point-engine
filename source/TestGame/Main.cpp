@@ -15,6 +15,11 @@ Utils::Timer timer2;
 GameState::GameState* running;
 GameState::GameState* paused;
 
+void Quit()
+{
+	exit(0);
+}
+
 void EventHandler(EventType et, EventParameters ep)
 {
 	if (et == GAME_UPDATE)
@@ -51,7 +56,7 @@ int main()
 
 	PE_GAME->ticksPerSecond = 60;
 
-	PE_GAME->window->SetSize(1366, 768);
+	PE_GAME->window->SetSize({1280, 720});
 
 	running = new GameState::GameState;
 	paused = new GameState::GameState;
@@ -74,10 +79,23 @@ int main()
 
 	PE_GAME->SetEventHandler(&EventHandler);
 
-	paused->uiManager->AddWidget("button", new UI::Button("default", "Back in the game", { 20, 20 }, { 150, 50 }, &OnPress));
+	paused->uiManager->AddWidget("button2", new UI::Button("default", "Back in the game", { 20, 20 }, { 150, 50 }, &OnPress));
+	paused->uiManager->AddWidget("button", new UI::Button("default", "Exit", { 20, 90 }, { 150, 50 }, &Quit));
 
+	//PE_GAME->window->SetFullscreen(true);
 
 	PE_GAME->SetCurrentGameState(running, false);
+
+	Hardware::CPUInfo cpuInfo;
+	cpuInfo = Hardware::GetCPUInfo();
+
+	LogInfo(cpuInfo.name);
+	LogInfo("Cores: " + std::to_string(cpuInfo.coreCount));
+	LogInfo("Threads: " + std::to_string(cpuInfo.threadCount) + "\n");
+
+	Hardware::GPUInfo gpuInfo = Hardware::GetGPUInfo();
+
+	LogInfo("GPU Name: " + gpuInfo.name);
 
 	PE_GAME->Run();
 

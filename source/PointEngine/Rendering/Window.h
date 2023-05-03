@@ -36,10 +36,12 @@ namespace PE
 			int GetHeight();
 			bool IsFullscreen();
 
+			Vector GetMonitorRes();
+
 			SDL_Window* GetSDLWindow();
 			SDL_Renderer* GetSDLRenderer();
 
-			void SetSize(int x, int y);
+			void SetSize(Vector size);
 			void SetFullscreen(bool fullscreen);
 			void SetTitle(std::string title);
 

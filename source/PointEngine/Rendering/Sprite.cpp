@@ -47,7 +47,7 @@ SpriteManager::~SpriteManager()
 }
 
 
-void SpriteManager::LoadSprite(std::string& file_path, std::string sprite_name)
+void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
 {
 	SDL_Surface* image_unoptimized = IMG_Load((PE_GAME->gameContentPath + "/sprites/images/" + file_path).c_str());
 
@@ -65,7 +65,7 @@ void SpriteManager::LoadSprite(std::string& file_path, std::string sprite_name)
 	sprite_bank.insert({sprite_name, sprite});
 }
 
-void SpriteManager::LoadSpritePack(std::string& pack_file)
+void SpriteManager::LoadSpritePack(std::string pack_file)
 {
 	std::fstream stream(PE_GAME->gameContentPath + "/sprites/packs/" + pack_file, std::ios::in | std::ios::binary | std::ios::ate);
 
@@ -98,7 +98,7 @@ void SpriteManager::LoadSpritePack(std::string& pack_file)
 		uint32_t data_length = (uint32_t(bytes[2 + name_length + format_length]) << 24) |
 								(uint32_t(bytes[3 + name_length + format_length]) << 16) |
 								(uint32_t(bytes[4 + name_length + format_length]) << 8) |
-								(uint32_t(bytes[5 + name_length + format_length]) & 0xFF); // what the fuck -PT
+								(uint32_t(bytes[5 + name_length + format_length]) && 0xFF); // what the fuck -PT
 
 
 		int segment_length = 6 + name_length + format_length + data_length;
@@ -176,7 +176,7 @@ void SpriteManager::LoadSpritePack(std::string& pack_file)
 	stream.close();
 }
 
-void SpriteManager::RemoveSprite(std::string& sprite_name)
+void SpriteManager::RemoveSprite(std::string sprite_name)
 {
 	delete (sprite_bank.find(sprite_name)->second);
 	sprite_bank.erase(sprite_bank.find(sprite_name));
@@ -185,14 +185,14 @@ void SpriteManager::RemoveSprite(std::string& sprite_name)
 
 void SpriteManager::ClearBank()
 {
-	for (auto const& [key, val] : sprite_bank)
+	for (auto const [key, val] : sprite_bank)
 	{
 		delete val;
 	}
 	sprite_bank.clear();
 }
 
-void SpriteManager::DrawSprite(std::string& sprite_name, Vector position, Vector size, SpriteDrawInfo info)
+void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector size, SpriteDrawInfo info)
 {
 	if (!sprite_bank.count(sprite_name))
 	{
@@ -236,7 +236,7 @@ void SpriteManager::DrawSprite(std::string& sprite_name, Vector position, Vector
 }
 
 
-void SpriteManager::DrawSprite(std::string& sprite_name, Vector position)
+void SpriteManager::DrawSprite(std::string sprite_name, Vector position)
 {
 	PE::Game* game = PE::Game::GetInstance();
 
@@ -270,7 +270,7 @@ void SpriteManager::DrawSprite(std::string& sprite_name, Vector position)
 	delete temp_rect;
 }
 
-void SpriteManager::DrawTileSprite(std::string& sprite_name, Vector orgin, Vector size, Vector tile_count)
+void SpriteManager::DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count)
 {
 	for (int i = 0; i < tile_count.x; i++)
 	{
@@ -281,7 +281,7 @@ void SpriteManager::DrawTileSprite(std::string& sprite_name, Vector orgin, Vecto
 	}
 }
 
-void SpriteManager::DrawTileSprite(std::string& sprite_name, Vector orgin, Vector size, Vector tile_count, SpriteDrawInfo info)
+void SpriteManager::DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count, SpriteDrawInfo info)
 {
 	for (int i = 0; i < tile_count.x; i++)
 	{

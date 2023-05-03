@@ -19,6 +19,7 @@ namespace PE
 
 		public:
 			void SetTag(std::string tag);
+			std::string GetTag() { return tag; };
 
 			virtual void Draw() { std::cout << "Drawing\n"; }
 			virtual void Update() {}

@@ -43,5 +43,30 @@ namespace PE
 			widget->SetTag(tag);
 			widgets.push_back(widget);
 		}
+
+		void UIManager::RemoveWidget(std::string tag)
+		{
+			for (auto it = widgets.begin(); it != widgets.end();)
+			{
+				if ((*it)->GetTag() == tag)
+				{
+					widgets.erase(it);
+				}
+				else
+				{
+					it++;
+				}
+			}
+		}
+
+		void UIManager::ClearWidgets()
+		{
+			for (Widget* widget : widgets)
+			{
+				delete widget;
+			}
+
+			widgets.clear();
+		}
 	}
 }

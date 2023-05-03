@@ -42,8 +42,7 @@ namespace PE
 		time_t t;
 		time(&t);
 
-		// i hate strings in c++, i mean just look at this shit - PT
-		output_string = std::string("[") + std::string(strtok(ctime(&t), "\n")) + std::string("] ") + string + std::string("\n");
+		output_string = string + "\n";
 
 		std::cout << output_string << std::endl;
 		console->Print(output_string);

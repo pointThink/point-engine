@@ -13,3 +13,4 @@
 #include "Input.h"
 #include "Collision.h"
 #include "Console/Console.h"
+#include <Hardware/HardwareInfo.h>
