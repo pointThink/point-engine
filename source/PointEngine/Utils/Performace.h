@@ -7,7 +7,7 @@
 
 namespace PE
 {
-	namespace Performace
+	namespace Performance
 	{
 		class ENGINE_API PerformanceProfiler
 		{

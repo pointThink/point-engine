@@ -10,50 +10,52 @@
 #include <string>
 #include <cstring>
 
-PE::Console::Console(PE::Game* game)
+namespace PE
 {
-	this->game = game;
-	convarManager = new PE::ConVarManager(game);
-}
-
-PE::Console::~Console()
-{
-	delete convarManager;
-}
-
-void PE::Console::RunCommand(std::string command)
-{
-	// split the command into arguments
-	bool inQuotes = false;
-	std::string wipString = "";
-
-	for (int i = 0; i <= command.size(); i++)
+	Console::Console(Game* game)
 	{
-		if (command.c_str()[i] == ' ' && !inQuotes)
-			wipString = wipString + "\n";
-		else if (command[i] == '"')
-			inQuotes = !inQuotes;
-		else
-			wipString = wipString + command[i];
+		this->game = game;
+		convarManager = new ConVarManager(game);
 	}
 
-	std::vector<std::string> args = PE::Utils::SplitString(wipString, "\n");
-
-	if (args[0] == "clear")
+	Console::~Console()
 	{
-		Clear();
+		delete convarManager;
 	}
-	else
-	{
-		ConVar* convar = convarManager->FindConVar(args[0]);
 
-		if (convar != NULL)
+	void Console::RunCommand(std::string command)
+	{
+		// split the command into arguments
+		bool inQuotes = false;
+		std::string wipString = "";
+
+		for (int i = 0; i <= command.size(); i++)
 		{
-			switch (convar->type)
+			if (command.c_str()[i] == ' ' && !inQuotes)
+				wipString = wipString + "\n";
+			else if (command[i] == '"')
+				inQuotes = !inQuotes;
+			else
+				wipString = wipString + command[i];
+		}
+
+		std::vector<std::string> args = Utils::SplitString(wipString, "\n");
+
+		if (args[0] == "clear")
+		{
+			Clear();
+		}
+		else
+		{
+			ConVar* convar = convarManager->FindConVar(args[0]);
+
+			if (convar != NULL)
 			{
+				switch (convar->type)
+				{
 				case CONVAR_BOOL:
 				{
-					bool value = PE::Utils::StringToBool(args[1]); // the value needs to be set as a variable first otherwise it will throw an error - PT
+					bool value = Utils::StringToBool(args[1]); // the value needs to be set as a variable first otherwise it will throw an error - PT
 					convarManager->SetConVar(args[0], &value);
 					break;
 				}
@@ -75,56 +77,58 @@ void PE::Console::RunCommand(std::string command)
 				case CONVAR_STRING:
 					convarManager->SetConVar(args[0], &args[1]);
 					break;
+				}
+			}
+			else
+			{
+				LogWarning("Could not change convar " + args[0] + " because it does not exist");
 			}
 		}
-		else
+	}
+
+	void Console::Draw()
+	{
+		ImGui::Begin("Console", &isOpen);
+
+		// ImGui::SetCursorScreenPos({0, ImGui::GetWindowSize().y - 20});
+
+		bool scrollDown = false;
+
+		//ImGui::PushItemWidth(ImGui::GetWindowWidth() - 15);
+		if (ImGui::InputText("Enter command", command, 255, ImGuiInputTextFlags_EnterReturnsTrue))
 		{
-			PE::LogWarning("Could not change convar " + args[0] + " because it does not exist");
+			contents = contents + "> " + std::string(command) + '\n';
+			RunCommand(std::string(command));
+
+			strcpy(command, "");
+
+			scrollDown = true;
 		}
+
+
+		//ImGui::PopItemWidth();
+		ImGui::BeginChild("text", { ImGui::GetWindowWidth() - 15, ImGui::GetWindowHeight() - 60 }, 2, ImGuiWindowFlags_None);
+
+		ImGui::Text(contents.c_str());
+
+		if (scrollDown)
+		{
+			ImGui::SetScrollY(ImGui::GetScrollMaxY());
+		}
+
+
+		ImGui::EndChild();
+		ImGui::End();
 	}
-}
 
-void PE::Console::Draw()
-{
-	ImGui::Begin("Console", &isOpen);
-
-	// ImGui::SetCursorScreenPos({0, ImGui::GetWindowSize().y - 20});
-
-	bool scrollDown = false;
-
-	//ImGui::PushItemWidth(ImGui::GetWindowWidth() - 15);
-	if (ImGui::InputText("Enter command", command, 255, ImGuiInputTextFlags_EnterReturnsTrue))
+	void Console::Clear()
 	{
-		contents = contents + "> " + std::string(command) + '\n';
-		RunCommand(std::string(command));
-
-		strcpy(command, "");
-
-		scrollDown = true;
+		contents = "";
 	}
 
-
-	//ImGui::PopItemWidth();
-	ImGui::BeginChild("text", {ImGui::GetWindowWidth() - 15, ImGui::GetWindowHeight() - 60}, 2, ImGuiWindowFlags_None);
-
-	ImGui::Text(contents.c_str());
-
-	if (scrollDown)
+	void Console::Print(std::string str)
 	{
-		ImGui::SetScrollY(ImGui::GetScrollMaxY());
+		contents = contents + str;
 	}
 
-
-	ImGui::EndChild();
-	ImGui::End();
-}
-
-void PE::Console::Clear()
-{
-	contents = "";
-}
-
-void PE::Console::Print(std::string str)
-{
-	contents = contents + str;
 }

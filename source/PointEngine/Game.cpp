@@ -34,7 +34,7 @@ namespace PE
 		inputManager = new PE::InputManager;
 		// lightManager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
 		fontManager = new PE::Font::FontManager;
-		performanceProfiler = new PE::Performace::PerformanceProfiler;
+		performanceProfiler = new PE::Performance::PerformanceProfiler;
 		rng = new PE::Random::RNG;
 
 		// load the default font

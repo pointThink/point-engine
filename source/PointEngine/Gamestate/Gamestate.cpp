@@ -1,17 +1,22 @@
 #include "Gamestate/Gamestate.h"
 #include "Game.h"
 
-using namespace PE::GameState;
 
-
-GameState::GameState()
+namespace PE
 {
-	entityManager = new Entity::EntityManager(PE_GAME);
-	uiManager = new UI::UIManager;
-}
+	namespace GameState
+	{
 
-GameState::~GameState()
-{
-	delete entityManager;
-	delete uiManager;
+		GameState::GameState()
+		{
+			entityManager = new Entity::EntityManager(PE_GAME);
+			uiManager = new UI::UIManager;
+		}
+
+		GameState::~GameState()
+		{
+			delete entityManager;
+			delete uiManager;
+		}
+	}
 }

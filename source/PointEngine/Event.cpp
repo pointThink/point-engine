@@ -9,11 +9,12 @@ namespace PE
 			eventHandler(eventType, eventParameters);
 		}
 	}
-};
 
-PE::EventParameters::EventParameters(int ic, int ec, Vector mm)
-{
-	inputCode = ic;
-	exitCode = ec;
-	mouseMovement = mm;
-}
+	EventParameters::EventParameters(int ic, int ec, Vector mm)
+	{
+		inputCode = ic;
+		exitCode = ec;
+		mouseMovement = mm;
+	}
+
+};

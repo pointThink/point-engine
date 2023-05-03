@@ -6,47 +6,50 @@
 #include <ctime>
 #include <cstring>
 
-void PE::LogInit(PE::Console* a_console)
+namespace PE
 {
-	log_file.open("log.txt");
+	void LogInit(Console* a_console)
+	{
+		log_file.open("log.txt");
 
-	console = a_console;
-}
+		console = a_console;
+	}
 
-void PE::LogDeInit()
-{
-	log_file.close();
-}
+	void LogDeInit()
+	{
+		log_file.close();
+	}
 
-void PE::LogError(std::string string)
-{
-	LogGeneric("[ERROR] " + string);
-}
+	void LogError(std::string string)
+	{
+		LogGeneric("[ERROR] " + string);
+	}
 
-void PE::LogWarning(std::string string)
-{
-	LogGeneric("[WARNING] " + string);
-}
+	void LogWarning(std::string string)
+	{
+		LogGeneric("[WARNING] " + string);
+	}
 
-void PE::LogInfo(std::string string)
-{
-	LogGeneric("[INFO] " + string);
-}
+	void LogInfo(std::string string)
+	{
+		LogGeneric("[INFO] " + string);
+	}
 
-void PE::LogGeneric(std::string string)
-{
-	std::string output_string;
+	void LogGeneric(std::string string)
+	{
+		std::string output_string;
 
-	time_t t;
-	time(&t);
+		time_t t;
+		time(&t);
 
-	// i hate strings in c++, i mean just look at this shit - PT
-	output_string = std::string("[") + std::string(strtok(ctime(&t), "\n")) + std::string("] ") + string + std::string("\n");
+		// i hate strings in c++, i mean just look at this shit - PT
+		output_string = std::string("[") + std::string(strtok(ctime(&t), "\n")) + std::string("] ") + string + std::string("\n");
 
-	std::cout << output_string << std::endl;
-	console->Print(output_string);
+		std::cout << output_string << std::endl;
+		console->Print(output_string);
 
-	// write the line to the file
-	log_file << output_string;
+		// write the line to the file
+		log_file << output_string;
+	}
 }
 

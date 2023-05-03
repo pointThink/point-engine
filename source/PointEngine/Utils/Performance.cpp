@@ -1,25 +1,29 @@
 #include "Performace.h"
 
-using namespace PE::Performace;
-
-void PerformanceProfiler::Begin(std::string tag)
+namespace PE
 {
-	current_tag = tag;
-	timer.Reset();
-}
+	namespace Performance
+	{
+		void PerformanceProfiler::Begin(std::string tag)
+		{
+			current_tag = tag;
+			timer.Reset();
+		}
 
-void PerformanceProfiler::End()
-{
-	timings.insert({timer.GetTime().count(), current_tag});
-	current_tag = "";
-}
+		void PerformanceProfiler::End()
+		{
+			timings.insert({ timer.GetTime().count(), current_tag });
+			current_tag = "";
+		}
 
-std::map<double, std::string> PerformanceProfiler::GetTimings()
-{
-	return timings;
-}
+		std::map<double, std::string> PerformanceProfiler::GetTimings()
+		{
+			return timings;
+		}
 
-void PerformanceProfiler::Clear()
-{
-	timings.clear();
+		void PerformanceProfiler::Clear()
+		{
+			timings.clear();
+		}
+	}
 }

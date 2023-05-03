@@ -54,7 +54,7 @@ namespace PE
 		PE::InputManager* inputManager = NULL;
 		PE::Console* console = NULL;
 		PE::Font::FontManager* fontManager = NULL;
-		PE::Performace::PerformanceProfiler* performanceProfiler = NULL;
+		PE::Performance::PerformanceProfiler* performanceProfiler = NULL;
 		PE::Random::RNG* rng = NULL;
 		
 		bool isPaused = false;
