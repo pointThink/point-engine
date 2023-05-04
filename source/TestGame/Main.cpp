@@ -81,6 +81,7 @@ int main()
 
 	paused->uiManager->AddWidget("button2", new UI::Button("default", "Back in the game", { 20, 20 }, { 150, 50 }, &OnPress));
 	paused->uiManager->AddWidget("button", new UI::Button("default", "Exit", { 20, 90 }, { 150, 50 }, &Quit));
+	paused->uiManager->AddWidget("input", new UI::InputBox("default", { 50, 50 }, { 200, 100 }, "Hello"));
 
 	//PE_GAME->window->SetFullscreen(true);
 

@@ -208,6 +208,8 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector 
 
 	if (!PE_GAME->window->ShouldDraw(position, { double(sprite->GetSurface()->w), double(sprite->GetSurface()->h) }))
 	{
+		delete temp_rect;
+
 		return;
 	}
 

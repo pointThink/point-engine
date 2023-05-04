@@ -65,6 +65,12 @@ namespace PE
 			SDL_Surface* text;
 			text = TTF_RenderText_Blended(fonts.find(font_name)->second, string.c_str(), sdlFg);
 
+			if (text == NULL)
+			{
+				LogError("Error drawing font: " + std::string(TTF_GetError()));
+				return;
+			}
+
 			SDL_Texture* textTexture = SDL_CreateTextureFromSurface(PE_GAME->window->GetSDLRenderer(), text);
 
 			SDL_Rect* textRect = new SDL_Rect;

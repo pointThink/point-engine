@@ -25,6 +25,7 @@ namespace PE
 		}
 
 
+
 		Button::Button(std::string font, std::string text, Vector position, Vector size, void (*fptr_OnButtonPress)())
 		{
 			this->font = font;
@@ -75,6 +76,7 @@ namespace PE
 					currentColor = normalColor;
 			}
 		}
+
 
 
 		CheckBox::CheckBox(std::string font, std::string text, Vector position, Vector size)
@@ -144,6 +146,36 @@ namespace PE
 		void CheckBox::SetChecked(bool checked)
 		{
 			isChecked = checked;
+		}
+
+
+		
+		InputBox::InputBox(std::string font, Vector pos, Vector size, std::string prompt)
+		{
+			position = pos;
+			this->font = font;
+			this->size = size;
+			this->prompt = prompt;
+		}
+
+		void InputBox::Draw()
+		{
+			if (isSelected)
+				PE_GAME->window->DrawSquare(position, size, selectedColor);
+			else
+			{
+				PE_GAME->window->DrawSquare(position, size, normalColor);
+
+				// Draw prompt text
+				Vector textPos = position;
+
+				textPos.x += 2;
+				textPos.y += 2;
+
+				PE_GAME->fontManager->DrawString(textPos, font, prompt, {128, 128, 128, 255});
+			}
+
+			
 		}
 	}
 }

@@ -101,5 +101,28 @@ namespace PE
 			bool IsChecked();
 			void SetChecked(bool checked);
 		};
+
+		class ENGINE_API InputBox : public Widget
+		{
+		protected:
+			bool isSelected = false;
+
+			std::string font = "default";
+			std::string prompt = "";
+			std::string text = "";
+
+			Vector size;
+
+		public:
+			Utils::Color normalColor = { 25, 25, 25, 255 };
+			Utils::Color selectedColor = { 60, 60, 60, 255 };
+
+			InputBox(std::string font, Vector pos, Vector size, std::string prompt);
+
+			//void OnClick(int button, Vector mousePos);
+			void OnKeyPress(int keyCode, char character) {}
+
+			void Draw();
+		};
 	}
 }
