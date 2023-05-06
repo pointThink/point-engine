@@ -13,4 +13,13 @@
 #include "Input.h"
 #include "Collision.h"
 #include "Console/Console.h"
-#include <Hardware/HardwareInfo.h>
+#include "Hardware/HardwareInfo.h"
+#include "Error/Error.h"
+
+#if defined(COMP_MSVC)
+	#if defined _WIN64
+		#pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='amd64' publicKeyToken='6595b64144ccf1df' language='*'\"")
+	#else
+		#pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+	#endif
+#endif

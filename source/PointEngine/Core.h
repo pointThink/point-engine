@@ -14,6 +14,8 @@
 
 #if defined(COMP_MSVC)
 	#define COMPILER "MSVC"
+
+
 #elif defined (COMP_GCC)
 	#define COMPILER "GCC"
 #else

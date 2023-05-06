@@ -25,6 +25,15 @@ FILE(GLOB_RECURSE PE_HEADERS source/PointEngine/*.h)
 
 add_compile_definitions(WINDOWS64 ENGINE_BUILD)
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+	message("Using MSVC")
+	add_compile_definitions(COMP_MSVC)
+
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	message("Using GCC")
+	add_compile_definitions(COMP_GCC)
+endif()
+
 # imgui
 
 FILE(GLOB IMGUI_SOURCES vendor/imgui/*.cpp)
@@ -42,6 +51,7 @@ ADD_SUBDIR(PointEngine/Scripting)
 ADD_SUBDIR(PointEngine/UI)
 ADD_SUBDIR(PointEngine/Gamestate)
 ADD_SUBDIR(PointEngine/Hardware)
+ADD_SUBDIR(PointEngine/Error)
 
 #source_group("source" FILES ${PE_SRC})
 #source_group("source" FILES ${PE_HEADERS})
@@ -97,6 +107,15 @@ if (PE_MakeTestGame)
 
 	add_compile_definitions(WINDOWS64)
 	set(CMAKE_CXX_STANDARD 20)
+
+	if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+		message("Using MSVC")
+		add_compile_definitions(COMP_MSVC)
+
+	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+		message("Using GCC")
+		add_compile_definitions(COMP_GCC)
+	endif()
 
 	add_executable(game ${GAME_SOURCES_CPP} ${GAME_HEADERS_CPP})
 	target_link_libraries(game pointengine-core)
