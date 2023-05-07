@@ -117,6 +117,9 @@ namespace PE
 		console->convarManager->RegisterConVar("r_bg_color_b", ConVar(CONVAR_INT, &window->bg_color.b));
 		console->convarManager->RegisterConVar("r_lightingEnabled", ConVar(CONVAR_BOOL, &lightingEnabled));
 
+		// default content path
+		SetContentPath("content");
+
 		PE::CallEventFunction(PE::GAME_INIT, PE::EventParameters(0, 0, { 0, 0 }));
 
 		initialized = true;
@@ -145,6 +148,35 @@ namespace PE
 			PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 5, { 0, 0 }));
 			exit(5);
 		}
+
+		// draw the splash screen
+		// i would make a splash game state but i think that would interfere a little bit with the other game states
+		spriteManager->LoadSprite("../../../engineRes/Logo.png", "splash");
+
+		Vector splashPos;
+
+		Vector screenSize = { window->GetWidth(), window->GetHeight() };
+
+		// hardcoded splash size - good enough for now
+		splashPos = { screenSize.x / 2 - 1123 / 2, screenSize.y / 2 - 420 / 2 };
+		Utils::Color oldBgColor = window->bg_color;
+
+
+		Utils::Timer splashTimer;
+		splashTimer.Reset();
+
+		while (!splashTimer.HasTimeElapsed(2))
+		{
+			window->bg_color = { 32, 32, 32, 255 };
+
+			window->ClearBackground();
+			spriteManager->DrawSprite("splash", splashPos);
+			window->PresentRenderer();
+		}
+
+		spriteManager->RemoveSprite("splash");
+
+		window->bg_color = oldBgColor;
 
 		while (!shouldQuit)
 		{

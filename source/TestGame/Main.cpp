@@ -100,7 +100,7 @@ int main()
 
 	PE_GAME->Run();
 
-	Error::CriticalError("Shits fucked");
+	//Error::CriticalError("Shits fucked");
 
 	return 0;
 }
