@@ -6,6 +6,8 @@
 #include "Logging.h"
 #include "Utils/Utils.h"
 
+#include "imgui.h"
+
 using namespace PE::Entity;
 
 class LessThanKey
@@ -133,6 +135,34 @@ namespace PE::Entity
 			entity->Tick();
 			i++;
 		}
+	}
+
+	void EntityManager::ShowEntityInspector()
+	{
+		ImGui::Begin("Entities");
+
+		int i = 1;
+
+		for (EntityBase* entity : entities)
+		{
+			if (ImGui::TreeNode((std::to_string(i) + " | " + entity->GetEntityName()).c_str()))
+			{
+				std::string entityId = entity->GetUniqueID();
+
+				if (entityId != "")
+					ImGui::Text(("Unique ID: " + entity->GetUniqueID()).c_str());
+				else
+					ImGui::Text("Unique ID: None");
+
+				ImGui::Text((std::to_string(entity->position.x) + " " + std::to_string(entity->position.y)).c_str());
+
+				ImGui::TreePop();
+			}
+			
+			i++;
+		}
+
+		ImGui::End();
 	}
 
 	EntityBase* EntityManager::GetEntityByID(std::string id)

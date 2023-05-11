@@ -201,10 +201,10 @@ namespace PE
 		}
 
 		PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 0, {0, 0}));
-        PE::LogInfo("Quitting");
+		PE::LogInfo("Quitting");
 
 
-        PE::LogInfo("Deinitializing window");
+		PE::LogInfo("Deinitializing window");
 		delete window;
 		PE::LogInfo("Deinitializing sprite manager");
 		delete spriteManager;
@@ -366,6 +366,9 @@ namespace PE
 			}
 
 			ImGui::End();
+
+			// draw entity inspector
+			currentGameState->entityManager->ShowEntityInspector();
 		}
 
 		window->camera_offset = old_cam_offset;

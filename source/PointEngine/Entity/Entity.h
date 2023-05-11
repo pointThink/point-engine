@@ -97,6 +97,8 @@ namespace PE
 			void TickEntities();
 			void DrawEntities();
 
+			void ShowEntityInspector();
+
 			unsigned int GetEntityCount();
 
 			PE::Entity::EntityBase* GetEntityByID(std::string id);

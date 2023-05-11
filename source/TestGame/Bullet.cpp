@@ -5,6 +5,8 @@
 
 void Bullet::Init()
 {
+	entityName = "bullet";
+
 	layer = -1;
 
 	colidable = true;

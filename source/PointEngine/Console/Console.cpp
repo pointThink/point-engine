@@ -43,7 +43,7 @@ namespace PE
 
 		std::cout << args[0] << std::endl;
 
-		if (strcmp(args[0].c_str(), "clear"))
+		if (!strcmp(args[0].c_str(), "clear"))
 		{
 			Clear();
 		}
