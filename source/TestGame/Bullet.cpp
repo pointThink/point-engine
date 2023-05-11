@@ -47,7 +47,7 @@ void Bullet::Tick()
 
 void Bullet::Draw()
 {
-	PE_GAME->window->DrawSquare(position, { 5, 5 }, { 0, 255, 255, 255 });
+	//PE_GAME->window->DrawSquare(position, { 5, 5 }, { 0, 255, 255, 255 });
 }
 
 void CreateBullet(Vector pos, double speed, double direction)

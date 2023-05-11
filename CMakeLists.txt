@@ -52,6 +52,8 @@ ADD_SUBDIR(PointEngine/UI)
 ADD_SUBDIR(PointEngine/Gamestate)
 ADD_SUBDIR(PointEngine/Hardware)
 ADD_SUBDIR(PointEngine/Error)
+ADD_SUBDIR(PointEngine/Rendering/Base)
+ADD_SUBDIR(PointEngine/Rendering/OpenGL)
 
 #source_group("source" FILES ${PE_SRC})
 #source_group("source" FILES ${PE_HEADERS})
@@ -63,10 +65,9 @@ add_library(pointengine-core SHARED ${PE_SRC} ${PE_HEADERS} ${IMGUI_SOURCES} ${I
 # set_target_properties(pointengine PROPERTIES LIBRARY_OUTPUT_DIRECTORY lib)
 set_target_properties(pointengine-core PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PE_OutputPath})
 
-# add required libraries
 # SDL2
 add_subdirectory(vendor/SDL)
-#add_dependencies(pointengine-core SDL)
+add_dependencies(pointengine-core SDL2)
 include_directories(vendor/SDL/include)
 include_directories(vendor/SDL/include)
 target_link_libraries(pointengine-core SDL2)
@@ -81,24 +82,24 @@ set_target_properties (sdl_headers_copy PROPERTIES FOLDER dependencies)
 
 
 #SDL_image
-add_subdirectory(vendor/SDL_image)
+#add_subdirectory(vendor/SDL_image)
 #add_dependencies(pointengine-core SDL_image)
-include_directories(vendor/SDL_image)
-target_link_libraries(pointengine-core SDL2_image)
-set_target_properties(SDL2_image PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
+#include_directories(vendor/SDL_image)
+#target_link_libraries(pointengine-core SDL2_image)
+#set_target_properties(SDL2_image PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
 
-set_target_properties (SDL2_image PROPERTIES FOLDER dependencies)
+#set_target_properties (SDL2_image PROPERTIES FOLDER dependencies)
 
 
 # SDL_ttf
-add_subdirectory(vendor/SDL_ttf)
+#add_subdirectory(vendor/SDL_ttf)
 #add_dependencies(pointengine-core SDL_image)
-include_directories(vendor/SDL2_ttf)
-target_link_libraries(pointengine-core SDL2_ttf)
-set_target_properties(SDL2_ttf PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
+#include_directories(vendor/SDL2_ttf)
+#target_link_libraries(pointengine-core SDL2_ttf)
+#set_target_properties(SDL2_ttf PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
 
-set_target_properties (freetype PROPERTIES FOLDER dependencies)
-set_target_properties (SDL2_ttf PROPERTIES FOLDER dependencies)
+#set_target_properties (freetype PROPERTIES FOLDER dependencies)
+#set_target_properties (SDL2_ttf PROPERTIES FOLDER dependencies)
 
 # make the test game
 if (PE_MakeTestGame)

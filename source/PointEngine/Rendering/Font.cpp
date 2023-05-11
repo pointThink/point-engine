@@ -12,11 +12,13 @@ namespace PE
 	{
 		FontManager::FontManager()
 		{
+			/*
 			if (TTF_Init() == -1)
 			{
 				PE::LogError("Failed to initialize SDL_ttf: " + std::string(TTF_GetError()));
 				exit(7);
 			}
+			*/
 		}
 
 		FontManager::~FontManager()
@@ -26,12 +28,14 @@ namespace PE
 
 		void FontManager::LoadExternalFont(std::string name, std::string file, int size)
 		{
+			/*
 			TTF_Font* new_font = TTF_OpenFont(file.c_str(), size);
 
 			if (new_font == NULL)
 				PE::LogWarning("Could not load font: " + std::string(TTF_GetError()));
 
 			fonts.insert({ name, new_font });
+			*/
 		}
 
 		void FontManager::LoadFont(std::string name, std::string file, int size)
@@ -41,12 +45,15 @@ namespace PE
 
 		void FontManager::UnloadFont(std::string name)
 		{
+			/*
 			TTF_CloseFont(fonts.find(name)->second);
 			fonts.erase(fonts.find(name));
+			*/
 		}
 
 		void FontManager::DrawString(Vector pos, std::string font_name, std::string string, Utils::Color fg)
 		{
+			/*
 			SDL_Color sdlFg;
 
 			sdlFg.r = fg.r;
@@ -86,22 +93,31 @@ namespace PE
 
 			SDL_FreeSurface(text);
 			SDL_DestroyTexture(textTexture);
+			*/
 		}
 
 		int FontManager::GetStringLength(std::string font_name, std::string string)
 		{
+			/*
 			int returnInt = 0;
 			TTF_SizeText(fonts.find(font_name)->second, string.c_str(), &returnInt, NULL);
 
 			return returnInt;
+			*/
+
+			return 0;
 		}
 
 		int FontManager::GetStringHeight(std::string font_name, std::string string)
 		{
+			/*
 			int returnInt = 0;
 			TTF_SizeText(fonts.find(font_name)->second, string.c_str(), NULL, &returnInt);
 
 			return returnInt;
+			*/
+
+			return 0;
 		}
 		void FontManager::Clear()
 		{

@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#include "SDL.h"
 #include "imgui.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_sdlrenderer.h"
@@ -44,8 +43,8 @@ namespace PE
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		ImGui::StyleColorsDark();
-		ImGui_ImplSDL2_InitForSDLRenderer(window->GetSDLWindow(), window->GetSDLRenderer());
-		ImGui_ImplSDLRenderer_Init(window->GetSDLRenderer());
+		//ImGui_ImplSDL2_InitForSDLRenderer(window->GetSDLWindow(), window->GetSDLRenderer());
+		//ImGui_ImplSDLRenderer_Init(window->GetSDLRenderer());
 
 		// imgui style i stole from the internet
 		ImVec4* colors = ImGui::GetStyle().Colors;
@@ -169,9 +168,9 @@ namespace PE
 		{
 			window->bg_color = { 32, 32, 32, 255 };
 
-			window->ClearBackground();
+			//window->ClearBackground();
 			spriteManager->DrawSprite("splash", splashPos);
-			window->PresentRenderer();
+			//window->PresentRenderer();
 		}
 
 		spriteManager->RemoveSprite("splash");
@@ -230,45 +229,46 @@ namespace PE
 		performanceProfiler->Begin("SDL_event_handling");
 		while (SDL_PollEvent(&event) != 0)
 		{
-			ImGui_ImplSDL2_ProcessEvent(&event);
+			//ImGui_ImplSDL2_ProcessEvent(&event);
 
 			switch (event.type)
 			{
-				case SDL_QUIT:
-					shouldQuit = true;
-					break;
+			case SDL_QUIT:
+				shouldQuit = true;
+				break;
 
-				case SDL_KEYDOWN:
-					if (event.key.keysym.scancode == 53) // ~ key is reserved for opening the console - PT
-						console->isOpen = !console->isOpen;
+			case SDL_KEYDOWN:
+				if (event.key.keysym.scancode == 53) // ~ key is reserved for opening the console - PT
+					console->isOpen = !console->isOpen;
 
-					if (!console->isOpen)
-						inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(true);
-					break;
+				if (!console->isOpen)
+					inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(true);
+				break;
 
-				case SDL_KEYUP:
-					if (!console->isOpen)
-						inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(false);
-					break;
+			case SDL_KEYUP:
+				if (!console->isOpen)
+					inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(false);
+				break;
 
-				case SDL_MOUSEBUTTONDOWN:
-					if (!console->isOpen)
-					{
-						inputManager->GetButtonState(event.button.button)->SetDown(true);
-						currentGameState->uiManager->HandleMouseClick(event.button.button, inputManager->GetMousePos());
-					}	
-					break;
+			case SDL_MOUSEBUTTONDOWN:
+				if (!console->isOpen)
+				{
+					inputManager->GetButtonState(event.button.button)->SetDown(true);
+					currentGameState->uiManager->HandleMouseClick(event.button.button, inputManager->GetMousePos());
+				}
+				break;
 
-				case SDL_MOUSEBUTTONUP:
-					if (!console->isOpen)
-						inputManager->GetButtonState(event.button.button)->SetDown(false);
-					break;
+			case SDL_MOUSEBUTTONUP:
+				if (!console->isOpen)
+					inputManager->GetButtonState(event.button.button)->SetDown(false);
+				break;
 
-				case SDL_MOUSEMOTION:
-					if (!console->isOpen)
-						inputManager->SetMousePos(event.motion.x, event.motion.y);
+			case SDL_MOUSEMOTION:
+				if (!console->isOpen)
+					inputManager->SetMousePos(event.motion.x, event.motion.y);
 			}
 		}
+
 
 		if (!isPaused)
 		{
@@ -305,11 +305,11 @@ namespace PE
 	{
 		window->bg_color = { 255, 255, 255, 255 };
 
-		ImGui_ImplSDLRenderer_NewFrame();
-		ImGui_ImplSDL2_NewFrame();
-		ImGui::NewFrame();
+		//ImGui_ImplSDLRenderer_NewFrame();
+		//ImGui_ImplSDL2_NewFrame();
+		//ImGui::NewFrame();
 
-		window->ClearBackground();
+		//window->ClearBackground();
 
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
 
@@ -339,6 +339,7 @@ namespace PE
 
 		currentGameState->uiManager->DrawUI();
 
+		/*
 		if (console->isOpen)
 		{
 			console->Draw();
@@ -370,13 +371,14 @@ namespace PE
 			// draw entity inspector
 			currentGameState->entityManager->ShowEntityInspector();
 		}
+		*/
 
 		window->camera_offset = old_cam_offset;
 
-		ImGui::Render();
-		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
+		//ImGui::Render();
+		//ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
 
-		window->PresentRenderer();
+		//window->PresentRenderer();
 	}
 
 
@@ -407,7 +409,6 @@ namespace PE
 	void Game::SetGameName(std::string name)
 	{
 		gameName = name;
-		SDL_SetWindowTitle(window->GetSDLWindow(), name.c_str());
 	}
 
 	void Game::SetGameVersion(std::string version)

@@ -31,7 +31,7 @@ void RandomSquare::Init()
 
 void RandomSquare::Draw()
 {
-	PE_GAME->window->DrawSquare(position, { 20, 20 }, color);
+	//6PE_GAME->window->DrawSquare(position, { 20, 20 }, color);
 }
 
 void RandomSquare::Update()

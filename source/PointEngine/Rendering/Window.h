@@ -14,7 +14,6 @@ namespace PE
 		{
 			private:
 			SDL_Window* window = NULL;
-			SDL_Renderer* renderer = NULL;
 
 			// Window with and height is currently placeholder value
 			// These values should be set in the game settings or something - PT
@@ -39,19 +38,10 @@ namespace PE
 			Vector GetMonitorRes();
 
 			SDL_Window* GetSDLWindow();
-			SDL_Renderer* GetSDLRenderer();
-
+			
 			void SetSize(Vector size);
 			void SetFullscreen(bool fullscreen);
 			void SetTitle(std::string title);
-
-			void ClearBackground();
-			void PresentRenderer();
-
-			void DrawSquare(Vector pos, Vector size, Utils::Color color);
-			void DrawCircle(Vector pos, float radius, Utils::Color color);
-			//void DrawSquareRound(Vector pos, Vector size, float roundness, Utils::Color color);
-			//void DrawTriangle(Vector pos1, Vector pos2, Vector pos3, Utils::Color color)
 
 			// check if a an object is out of range and if it should be draw
 			bool ShouldDraw(Vector pos, Vector size);

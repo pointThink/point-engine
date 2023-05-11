@@ -54,7 +54,7 @@ namespace PE
 		void Button::Draw()
 		{
 			//LogInfo("Drawing");
-			PE_GAME->window->DrawSquare(position, size, currentColor);
+			//PE_GAME->window->DrawSquare(position, size, currentColor);
 
 			// draw the text
 			Vector drawPos = position;
@@ -92,7 +92,7 @@ namespace PE
 
 		void CheckBox::Draw()
 		{
-			PE_GAME->window->DrawSquare(position, size, currentColor);
+			//PE_GAME->window->DrawSquare(position, size, currentColor);
 
 			if (isChecked)
 			{
@@ -105,7 +105,7 @@ namespace PE
 				smallerRectPos.x = position.x + (size.x / 4);
 				smallerRectPos.y = position.y + (size.y / 4);
 
-				PE_GAME->window->DrawSquare(smallerRectPos, smallerRectSize, checkColor);
+				//PE_GAME->window->DrawSquare(smallerRectPos, smallerRectSize, checkColor);
 			}
 
 			// draw the checkbox text
@@ -161,10 +161,13 @@ namespace PE
 		void InputBox::Draw()
 		{
 			if (isSelected)
-				PE_GAME->window->DrawSquare(position, size, selectedColor);
+				//PE_GAME->window->DrawSquare(position, size, selectedColor);
+			{
+
+			}
 			else
 			{
-				PE_GAME->window->DrawSquare(position, size, normalColor);
+				//PE_GAME->window->DrawSquare(position, size, normalColor);
 
 				// Draw prompt text
 				Vector textPos = position;

@@ -3,8 +3,6 @@
 #include <unordered_map>
 #include <string>
 
-#include <SDL_ttf.h>
-
 #include "Core.h"
 
 #include "Utils/Utils.h"
@@ -16,7 +14,7 @@ namespace PE
 	{
 		class ENGINE_API FontManager
 		{
-			std::unordered_map<std::string, TTF_Font*> fonts;
+			//std::unordered_map<std::string, TTF_Font*> fonts;
 
 			public:
 			FontManager();

@@ -13,7 +13,6 @@
 #include "Event.h"
 #include "Input.h"
 #include "Console/Console.h"
-#include "Lighting.h"
 #include "Rendering/Font.h"
 #include "Utils/Performace.h"
 #include "Utils/RNG.h"

@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-#include <SDL_image.h>
+//#include <SDL_image.h>
 
 #include "Logging.h"
 #include "Utils/Utils.h"
@@ -21,7 +21,7 @@ Sprite::Sprite(SDL_Surface* surface)
 	this->size.y = surface->h;
 
 	// convert the surface into a tetxture
-	this->texture = SDL_CreateTextureFromSurface(Game::GetInstance()->window->GetSDLRenderer(), surface);
+	//this->texture = SDL_CreateTextureFromSurface(Game::GetInstance()->window->GetSDLRenderer(), surface);
 }
 
 Sprite::~Sprite()
@@ -49,7 +49,7 @@ SpriteManager::~SpriteManager()
 
 void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
 {
-	SDL_Surface* image_unoptimized = IMG_Load((PE_GAME->gameContentPath + "/sprites/images/" + file_path).c_str());
+	/*SDL_Surface* image_unoptimized = IMG_Load((PE_GAME->gameContentPath + "/sprites/images/" + file_path).c_str());
 
 	if (image_unoptimized == NULL)
     {
@@ -63,6 +63,7 @@ void SpriteManager::LoadSprite(std::string file_path, std::string sprite_name)
 	Sprite* sprite = new Sprite(image);
 
 	sprite_bank.insert({sprite_name, sprite});
+	*/
 }
 
 void SpriteManager::LoadSpritePack(std::string pack_file)
@@ -148,8 +149,9 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 			PE::LogWarning("Failed to load sprite from memory: " + std::string(SDL_GetError()));
 		}
 
-		SDL_Surface* surface = IMG_LoadTyped_RW(io, 1, format.c_str());
+		//SDL_Surface* surface = IMG_LoadTyped_RW(io, 1, format.c_str());
 
+		/*
 		if (surface == NULL)
 		{
 			PE::LogWarning("Could not load sprite " + name + ": " + std::string(IMG_GetError()));
@@ -163,6 +165,7 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 		}
 
 		SDL_FreeRW(io);
+		*/ 
 
 		delete[] segment;
 		delete[] data;
@@ -178,8 +181,10 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 
 void SpriteManager::RemoveSprite(std::string sprite_name)
 {
+	/*
 	delete (sprite_bank.find(sprite_name)->second);
 	sprite_bank.erase(sprite_bank.find(sprite_name));
+	*/
 }
 
 
@@ -232,7 +237,7 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector 
 	else
 		rf = SDL_FLIP_NONE;
 
-	SDL_RenderCopyEx(Game::GetInstance()->window->GetSDLRenderer(), texture, NULL, temp_rect, info.rotation, NULL, rf);
+	//SDL_RenderCopyEx(Game::GetInstance()->window->GetSDLRenderer(), texture, NULL, temp_rect, info.rotation, NULL, rf);
 
 	delete temp_rect;
 }
@@ -267,7 +272,7 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position)
 	temp_rect->w = sprite->GetSize().x;
 	temp_rect->h = sprite->GetSize().y;
 
-	SDL_RenderCopy(game_window->GetSDLRenderer(), texture, NULL, temp_rect);
+	//SDL_RenderCopy(game_window->GetSDLRenderer(), texture, NULL, temp_rect);
 
 	delete temp_rect;
 }
