@@ -2,23 +2,29 @@
 
 #include <string>
 
-class Texture
+namespace PE
 {
-private:
-	unsigned int textureMap;
+	namespace Rendering
+	{
+		class Texture
+		{
+		private:
+			unsigned int textureMap;
 
-	std::string filePath;
+			std::string filePath;
 
-	unsigned char* buffer;
-	int width, height, bitsPerPixel;
+			unsigned char* buffer;
+			int width, height, bitsPerPixel;
 
-public:
-	Texture(std::string path);
-	~Texture();
+		public:
+			Texture(std::string path);
+			~Texture();
 
-	void Bind(unsigned int slot = 0);
-	void Unbind();
+			void Bind(unsigned int slot = 0);
+			void Unbind();
 
-	inline int GetWidth() { return width; };
-	inline int GetHeight() { return height; };
-};
+			inline int GetWidth() { return width; };
+			inline int GetHeight() { return height; };
+		};
+	}
+}

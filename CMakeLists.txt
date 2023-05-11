@@ -39,8 +39,21 @@ endif()
 FILE(GLOB IMGUI_SOURCES vendor/imgui/*.cpp)
 set(IMGUI_BACKEND vendor/imgui/backends/imgui_impl_sdl2.cpp vendor/imgui/backends/imgui_impl_sdlrenderer.cpp)
 
-source_group("imgui" FILES ${IMGUI_SOURCES} ${IMGUI_BACKEND})
+source_group("vendor/imgui" FILES ${IMGUI_SOURCES} ${IMGUI_BACKEND})
 include_directories(vendor/imgui)
+
+# glad
+set(GLAD_FILE vendor/glad/src/glad.c)
+include_directories(vendor/glad/include)
+
+source_group("vendor/glad" FILES ${GLAD_FILE})
+
+# stb_image
+set(STBI_FILE vendor/stb_image/stb_image.cpp)
+include_directories(vendor/stb_image/)
+
+source_group("vendor/stb_image" FILES ${STBI_FILE})
+
 
 ADD_SUBDIR(PointEngine)
 ADD_SUBDIR(PointEngine/Rendering)
@@ -52,7 +65,6 @@ ADD_SUBDIR(PointEngine/UI)
 ADD_SUBDIR(PointEngine/Gamestate)
 ADD_SUBDIR(PointEngine/Hardware)
 ADD_SUBDIR(PointEngine/Error)
-ADD_SUBDIR(PointEngine/Rendering/Base)
 ADD_SUBDIR(PointEngine/Rendering/OpenGL)
 
 #source_group("source" FILES ${PE_SRC})
@@ -60,7 +72,7 @@ ADD_SUBDIR(PointEngine/Rendering/OpenGL)
 
 include_directories(source/PointEngine)
 
-add_library(pointengine-core SHARED ${PE_SRC} ${PE_HEADERS} ${IMGUI_SOURCES} ${IMGUI_BACKEND})
+add_library(pointengine-core SHARED ${PE_SRC} ${PE_HEADERS} ${IMGUI_SOURCES} ${IMGUI_BACKEND} ${GLAD_FILE} ${STBI_FILE})
 
 # set_target_properties(pointengine PROPERTIES LIBRARY_OUTPUT_DIRECTORY lib)
 set_target_properties(pointengine-core PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PE_OutputPath})
