@@ -1,9 +1,10 @@
 #include "Renderer.h"
 
+#include "GLFW/glfw3.h"
 #include "Utils/Utils.h"
+#include "Error/Error.h"
 
-#include <glad/glad.h>
-
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -72,16 +73,31 @@ namespace PE
 			currentShader = programId;
 		}
 
-		GLRenderer::GLRenderer(int screenWidth, int screenHeight)
+		GLRenderer::GLRenderer(Window* window)
 		{
-			this->screenWidth = screenWidth;
-			this->screenHeight = screenHeight;
+			this->screenWidth = window->GetWidth();
+			this->screenHeight = window->GetHeight();
+
+      gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
 			glGenBuffers(1, &vertexBuffer);
 			glGenBuffers(1, &indexBuffer);
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glEnable(GL_BLEND);
+
+			// load in the default shaders
+			unsigned int program = CreateShaderProgram();
+
+			unsigned int vertexShader = CompileShader("engineRes/shaders/vertex.glsl", SHADER_VERTEX);
+			unsigned int fragmentShader = CompileShader("engineRes/shaders/fragment.glsl", SHADER_FRAGMENT);
+
+			LinkShaderToProgram(program, vertexShader);
+			LinkShaderToProgram(program, fragmentShader);
+
+			UseShaderProgram(program);
+
+			this->window = window;
 		}
 
 		double GLRenderer::ScreenCordsToGLCords(double pos, int size)
@@ -95,6 +111,11 @@ namespace PE
 		{
 			glClearColor(float(color.r) / 255, float(color.g) / 255, float(color.b) / 255, float(color.a / 255));
 			glClear(GL_COLOR_BUFFER_BIT);
+		}
+
+		void GLRenderer::PresentRenderer()
+		{
+      glfwSwapBuffers(window->GetGLFWWindow());
 		}
 
 		void GLRenderer::DrawQuad(Vector pos, Vector size, Utils::Color color)

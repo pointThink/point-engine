@@ -11,21 +11,16 @@ namespace PE
 	{
 		Window::Window(std::string title, int width, int height, bool fullscreen)
 		{
-			// Initialize SDL2 - PT
-			if (SDL_Init(SDL_INIT_VIDEO))
-			{
-				PE::LogError("Error initializing SDL2: " + std::string(SDL_GetError()));
-				PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 1, { 0, 0 }));
-				exit(1);
-			}
-
-			PE::LogInfo("SDL Initialized");
-
 			// Initialize window - PT
 			PE::LogInfo("Initializing window");
+
+			glfwInit();
+
+			window = glfwCreateWindow(800, 600, "PointEngine window", NULL, NULL);
+			glfwMakeContextCurrent(window);
+
 			PE::LogInfo("Window size is " + std::to_string(width) + " " + std::to_string(height));
 
-			window = SDL_CreateWindow(title.c_str(), 30, 50, width, height, SDL_WINDOW_ALLOW_HIGHDPI);
 
 			this->fullscreen = fullscreen;
 
@@ -34,7 +29,11 @@ namespace PE
 
 			if (window == NULL)
 			{
-				PE::LogError("Error initializing window: " + std::string(SDL_GetError()));
+				const char* error;
+				glfwGetError(&error);
+
+				LogError(std::string(error));
+
 				PE::CallEventFunction(PE::GAME_CLOSED, PE::EventParameters(0, 2, { 0, 0 }));
 				exit(2);
 			}
@@ -44,7 +43,6 @@ namespace PE
 			// Set the window to fullscreen - PT
 			if (fullscreen)
 			{
-				SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 				PE::LogInfo("Window fullscreen");
 			}
 			else
@@ -55,7 +53,6 @@ namespace PE
 
 		Window::~Window()
 		{
-			SDL_DestroyWindow(window);
 		}
 
 		int Window::GetHeight() { return height; }
@@ -64,34 +61,31 @@ namespace PE
 
 		Vector Window::GetMonitorRes()
 		{
-			SDL_DisplayMode mode;
 
-			SDL_GetCurrentDisplayMode(0, &mode);
+			return {0, 0};
 
-			return { double(mode.w), double(mode.h) };
 		}
 
-		SDL_Window* Window::GetSDLWindow() { return window; }
-		
+		GLFWwindow* Window::GetGLFWWindow() { return window; }
+	
+		void Window::SwapBuffers()
+		{
+			glfwSwapBuffers(window);
+		}
+
 		void Window::SetSize(Vector size)
 		{
 			width = size.x;
 			height = size.y;
 
-			SDL_SetWindowSize(window, size.x, size.y);
 		}
 
 		void Window::SetFullscreen(bool fullscreen)
 		{
-			if (fullscreen)
-				SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-			else
-				SDL_SetWindowBordered(window, SDL_TRUE);
 		}
 
 		void Window::SetTitle(std::string title)
 		{
-			SDL_SetWindowTitle(window, title.c_str());
 		}
 
 		bool Window::ShouldDraw(Vector pos, Vector size)

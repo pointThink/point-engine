@@ -2,6 +2,6 @@
 	path = vendor/imgui
 	url = https://github.com/ocornut/imgui
 	branch = docking
-[submodule "vendor/SDL"]
-	path = vendor/SDL
-	url = https://github.com/libsdl-org/SDL
+[submodule "vendor/glfw"]
+	path = vendor/glfw
+	url = https://github.com/glfw/glfw

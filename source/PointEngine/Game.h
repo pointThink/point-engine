@@ -4,9 +4,9 @@
 #define PE_GAME_STATE PE::Game::GetInstance()->GetCurrentGameState()
 
 #include <string>
-
 #include "Core.h"
 #include "Rendering/Window.h"
+#include "Rendering/OpenGL/Renderer.h"
 #include "Rendering/Sprite.h"
 #include "Entity/Entity.h"
 #include "Utils/Utils.h"
@@ -49,6 +49,8 @@ namespace PE
 
 		// PE::Lighting::LightingManager* lightManager = NULL;
 		PE::Rendering::Window* window = NULL;
+		PE::Rendering::GLRenderer* renderer = NULL;
+
 		PE::Rendering::SpriteManager* spriteManager = NULL;
 		PE::InputManager* inputManager = NULL;
 		PE::Console* console = NULL;

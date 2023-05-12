@@ -5,6 +5,8 @@ projects/codeblocks/obj
 .vscode/
 .xmake/
 .idea/
+.cache/
+build_vs
 projects/vs2022/PointEngine/PointEngine/x64
 projects/vs2022/PointEngine/x64
 projects/vs2022/PointEngine/.vs

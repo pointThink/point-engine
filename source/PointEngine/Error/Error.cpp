@@ -9,6 +9,7 @@ namespace PE
 		void CriticalError(std::string message)
 		{
 			MessageBox(MB_OK, message.c_str(), "PointEngine Error", MB_ICONSTOP);
+			exit(1);
 		}
 	}
 }

@@ -1,8 +1,8 @@
 #include "Game.h"
 
 #include "imgui.h"
-#include "backends/imgui_impl_sdl2.h"
-#include "backends/imgui_impl_sdlrenderer.h"
+// #include "backends/imgui_impl_sdl2.h"
+// #include "backends/imgui_impl_sdlrenderer.h"
 #include "Logging.h"
 #include "Event.h"
 #include "Input.h"
@@ -29,6 +29,8 @@ namespace PE
 		LogInfo("Game version " + gameVersion + " running on PointEngine version " + PE_VERSION);
 
 		window = new PE::Rendering::Window("PointEngine game", 800, 600, false);
+		renderer = new PE::Rendering::GLRenderer(window);
+
 		spriteManager = new PE::Rendering::SpriteManager(window);
 		inputManager = new PE::InputManager;
 		// lightManager = new PE::Lighting::LightingManager(5, Vector(window->GetWidth(), window->GetHeight()));
@@ -154,7 +156,7 @@ namespace PE
 
 		Vector splashPos;
 
-		Vector screenSize = { window->GetWidth(), window->GetHeight() };
+		Vector screenSize = { double(window->GetWidth()), double(window->GetHeight()) };
 
 		// hardcoded splash size - good enough for now
 		splashPos = { screenSize.x / 2 - 1123 / 2, screenSize.y / 2 - 420 / 2 };
@@ -223,57 +225,11 @@ namespace PE
 
 	void Game::Update()
 	{
-		// Handle some SDL events - PT
-		SDL_Event event;
-
-		performanceProfiler->Begin("SDL_event_handling");
-		while (SDL_PollEvent(&event) != 0)
-		{
-			//ImGui_ImplSDL2_ProcessEvent(&event);
-
-			switch (event.type)
-			{
-			case SDL_QUIT:
-				shouldQuit = true;
-				break;
-
-			case SDL_KEYDOWN:
-				if (event.key.keysym.scancode == 53) // ~ key is reserved for opening the console - PT
-					console->isOpen = !console->isOpen;
-
-				if (!console->isOpen)
-					inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(true);
-				break;
-
-			case SDL_KEYUP:
-				if (!console->isOpen)
-					inputManager->GetKeyState(event.key.keysym.scancode)->SetDown(false);
-				break;
-
-			case SDL_MOUSEBUTTONDOWN:
-				if (!console->isOpen)
-				{
-					inputManager->GetButtonState(event.button.button)->SetDown(true);
-					currentGameState->uiManager->HandleMouseClick(event.button.button, inputManager->GetMousePos());
-				}
-				break;
-
-			case SDL_MOUSEBUTTONUP:
-				if (!console->isOpen)
-					inputManager->GetButtonState(event.button.button)->SetDown(false);
-				break;
-
-			case SDL_MOUSEMOTION:
-				if (!console->isOpen)
-					inputManager->SetMousePos(event.motion.x, event.motion.y);
-			}
-		}
-
+		// handle window events
+		glfwPollEvents();
 
 		if (!isPaused)
 		{
-			performanceProfiler->End();
-
 			performanceProfiler->Begin("input_last_frame_state_update");
 			inputManager->UpdateLastFrameStates();
 			performanceProfiler->End();
@@ -303,13 +259,13 @@ namespace PE
 
 	void Game::Draw()
 	{
-		window->bg_color = { 255, 255, 255, 255 };
+		//window->bg_color = { 0, 0, 0, 255 };
 
 		//ImGui_ImplSDLRenderer_NewFrame();
 		//ImGui_ImplSDL2_NewFrame();
 		//ImGui::NewFrame();
 
-		//window->ClearBackground();
+		renderer->Clear(window->bg_color);
 
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
 
@@ -317,6 +273,8 @@ namespace PE
 		performanceProfiler->Begin("entity_drawing");
 		currentGameState->entityManager->DrawEntities();
 		performanceProfiler->End();
+
+		//renderer->DrawQuad({ 20, 20 }, { 20, 20 }, { 255, 0, 255, 255 });
 
 		// lightManager->CastLightRay({50, 50}, Utils::Color(255, 255, 255, 255), 1000, 100);
 
@@ -378,7 +336,8 @@ namespace PE
 		//ImGui::Render();
 		//ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
 
-		//window->PresentRenderer();
+		//renderer->PresentRenderer();
+		window->SwapBuffers();
 	}
 
 

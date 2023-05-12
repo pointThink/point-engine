@@ -12,6 +12,8 @@ endmacro()
 
 project(PointEngine-Core)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 if (NOT DEFINED PE_OutputPath)
 	set(PE_OutputPath bin)
 endif()
@@ -37,7 +39,7 @@ endif()
 # imgui
 
 FILE(GLOB IMGUI_SOURCES vendor/imgui/*.cpp)
-set(IMGUI_BACKEND vendor/imgui/backends/imgui_impl_sdl2.cpp vendor/imgui/backends/imgui_impl_sdlrenderer.cpp)
+# set(IMGUI_BACKEND vendor/imgui/backends/imgui_impl_sdl2.cpp vendor/imgui/backends/imgui_impl_sdlrenderer.cpp)
 
 source_group("vendor/imgui" FILES ${IMGUI_SOURCES} ${IMGUI_BACKEND})
 include_directories(vendor/imgui)
@@ -77,41 +79,17 @@ add_library(pointengine-core SHARED ${PE_SRC} ${PE_HEADERS} ${IMGUI_SOURCES} ${I
 # set_target_properties(pointengine PROPERTIES LIBRARY_OUTPUT_DIRECTORY lib)
 set_target_properties(pointengine-core PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PE_OutputPath})
 
-# SDL2
-add_subdirectory(vendor/SDL)
-add_dependencies(pointengine-core SDL2)
-include_directories(vendor/SDL/include)
-include_directories(vendor/SDL/include)
-target_link_libraries(pointengine-core SDL2)
-set_target_properties(SDL2 PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
+# glfw
+add_subdirectory(vendor/glfw)
 
-set_target_properties (SDL2 PROPERTIES FOLDER dependencies)
-set_target_properties (SDL2main PROPERTIES FOLDER dependencies)
-set_target_properties (SDL2-static PROPERTIES FOLDER dependencies)
-set_target_properties (SDL2_test PROPERTIES FOLDER dependencies)
-
-set_target_properties (sdl_headers_copy PROPERTIES FOLDER dependencies)
+add_dependencies(pointengine-core glfw)
+include_directories(vendor/glfw/include)
+target_link_libraries(pointengine-core glfw)
+set_target_properties(glfw PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
 
 
-#SDL_image
-#add_subdirectory(vendor/SDL_image)
-#add_dependencies(pointengine-core SDL_image)
-#include_directories(vendor/SDL_image)
-#target_link_libraries(pointengine-core SDL2_image)
-#set_target_properties(SDL2_image PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
 
-#set_target_properties (SDL2_image PROPERTIES FOLDER dependencies)
-
-
-# SDL_ttf
-#add_subdirectory(vendor/SDL_ttf)
-#add_dependencies(pointengine-core SDL_image)
-#include_directories(vendor/SDL2_ttf)
-#target_link_libraries(pointengine-core SDL2_ttf)
-#set_target_properties(SDL2_ttf PROPERTIES RUNTIME_OUTPUT_DIRECTORY ../../${PE_OutputPath})
-
-#set_target_properties (freetype PROPERTIES FOLDER dependencies)
-#set_target_properties (SDL2_ttf PROPERTIES FOLDER dependencies)
+set_target_properties(glfw PROPERTIES FOLDER dependencies)
 
 # make the test game
 if (PE_MakeTestGame)

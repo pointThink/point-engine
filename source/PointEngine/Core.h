@@ -22,4 +22,5 @@
 	#define COMPILER "UNKNOWN"
 #endif
 
+#define GLFW_INCLUDE_NONE
 #define PE_VERSION "alpha 0.7"

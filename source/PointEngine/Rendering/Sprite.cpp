@@ -13,27 +13,32 @@
 
 using namespace PE::Rendering;
 
-Sprite::Sprite(SDL_Surface* surface)
+/*Sprite::Sprite()
 {
+  
 	this->surface = surface;
 
 	this->size.x = surface->w;
 	this->size.y = surface->h;
+  
 
 	// convert the surface into a tetxture
 	//this->texture = SDL_CreateTextureFromSurface(Game::GetInstance()->window->GetSDLRenderer(), surface);
 }
+*/
 
 Sprite::~Sprite()
 {
-	SDL_FreeSurface(surface);
-	SDL_DestroyTexture(texture);
+	//SDL_FreeSurface(surface);
+	//SDL_DestroyTexture(texture);
 }
 
 PE::Vector Sprite::GetSize() { return size; }
 
-SDL_Surface* Sprite::GetSurface() { return surface; }
-SDL_Texture* Sprite::GetTexture() { return texture; }
+/*
+void Sprite::GetSurface() { return surface; }
+void Sprite::GetTexture() { return texture; }
+*/
 
 // SpriteManager
 SpriteManager::SpriteManager(Window* game_window)
@@ -142,12 +147,14 @@ void SpriteManager::LoadSpritePack(std::string pack_file)
 		//ws.close();
 
 		//SDL_RWops * io = SDL_RWFromFile("temp.bin", "r");
-		SDL_RWops* io = SDL_RWFromMem(data, data_length);
+		//SDL_RWops* io = SDL_RWFromMem(data, data_length);
 
+    /*
 		if (io == NULL)
 		{
 			PE::LogWarning("Failed to load sprite from memory: " + std::string(SDL_GetError()));
 		}
+    */
 
 		//SDL_Surface* surface = IMG_LoadTyped_RW(io, 1, format.c_str());
 
@@ -201,31 +208,35 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector 
 {
 	if (!sprite_bank.count(sprite_name))
 	{
-		PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
+		//PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
 		return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
 	}
 
 	Sprite* sprite = sprite_bank.find(sprite_name)->second;
-	SDL_Texture* texture = sprite->GetTexture();
+	//SDL_Texture* texture = sprite->GetTexture();
 
 	// Temporary rect to define position of drawn sprite - PT
-	SDL_Rect* temp_rect = new SDL_Rect();
+	//SDL_Rect* temp_rect = new SDL_Rect();
 
+  /*
 	if (!PE_GAME->window->ShouldDraw(position, { double(sprite->GetSurface()->w), double(sprite->GetSurface()->h) }))
 	{
 		delete temp_rect;
 
 		return;
 	}
+  */
 
 	position.x = position.x + PE_GAME->window->camera_offset.x;
 	position.y = position.y + PE_GAME->window->camera_offset.y;
 
+  /*
 	temp_rect->x = position.x;
 	temp_rect->y = position.y;
 	temp_rect->w = size.x;
 	temp_rect->h = size.y;
-
+*/
+  /*
 	SDL_RendererFlip rf;
 
 	if (info.flip_horizontally)
@@ -236,10 +247,11 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position, Vector 
 		rf = (SDL_RendererFlip)(SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
 	else
 		rf = SDL_FLIP_NONE;
-
+  */
+  
 	//SDL_RenderCopyEx(Game::GetInstance()->window->GetSDLRenderer(), texture, NULL, temp_rect, info.rotation, NULL, rf);
 
-	delete temp_rect;
+	// delete temp_rect;
 }
 
 
@@ -249,32 +261,34 @@ void SpriteManager::DrawSprite(std::string sprite_name, Vector position)
 
     if (!sprite_bank.count(sprite_name))
     {
-        PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
+        //PE::LogWarning("Could not draw sprite " + sprite_name + " because it does not exist");
         return; // exit the function because attempting to draw a missing sprite crashes the engine - PT
     }
 
-    Sprite* sprite = sprite_bank.find(sprite_name)->second;
-	SDL_Texture* texture = sprite->GetTexture();
+  Sprite* sprite = sprite_bank.find(sprite_name)->second;
+//	SDL_Texture* texture = sprite->GetTexture();
 
+  /*
 	if (!game->window->ShouldDraw(position, { double(sprite->GetSurface()->w), double(sprite->GetSurface()->h) }))
 	{
 		return;
 	}
+  */
 
 	position.x = position.x + game->window->camera_offset.x;
 	position.y = position.y + game->window->camera_offset.y;
 
 	// Temporary rect to define position of drawn sprite - PT
-	SDL_Rect* temp_rect = new SDL_Rect();
-
+	//SDL_Rect* temp_rect = new SDL_Rect();
+/*
 	temp_rect->x = position.x;
 	temp_rect->y = position.y;
 	temp_rect->w = sprite->GetSize().x;
 	temp_rect->h = sprite->GetSize().y;
-
+*/
 	//SDL_RenderCopy(game_window->GetSDLRenderer(), texture, NULL, temp_rect);
 
-	delete temp_rect;
+	//delete temp_rect;
 }
 
 void SpriteManager::DrawTileSprite(std::string sprite_name, Vector orgin, Vector size, Vector tile_count)

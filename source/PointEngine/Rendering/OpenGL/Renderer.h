@@ -2,11 +2,13 @@
 
 #include <string>
 
+#include <glad/glad.h>
+
+#include "Rendering/Window.h"
 #include "Utils/Utils.h"
 #include "Texture.h"
 #include "Vector.h"
-
-#include <glad/glad.h>
+#include "Core.h"
 
 #define SHADER_VERTEX GL_VERTEX_SHADER
 #define SHADER_FRAGMENT GL_FRAGMENT_SHADER
@@ -15,8 +17,10 @@ namespace PE
 {
 	namespace Rendering
 	{
-		class GLRenderer
+class ENGINE_API GLRenderer
 		{
+			Window* window;
+
 			unsigned int vertexBuffer;
 			unsigned int indexBuffer;
 
@@ -28,7 +32,7 @@ namespace PE
 		public:
 			unsigned int currentShader;
 
-			GLRenderer(int screenWidth, int screenHeight);
+			GLRenderer(Window* window);
 
 			unsigned int CreateShaderProgram();
 			void UseShaderProgram(unsigned int programId);
@@ -37,6 +41,7 @@ namespace PE
 			unsigned int CompileShader(std::string path, unsigned int shaderType);
 
 			void Clear(Utils::Color color);
+			void PresentRenderer();
 
 			void DrawQuad(Vector pos, Vector size, Utils::Color color);
 			void DrawQuadTextured(Vector pos, Vector size, Texture* tex, Utils::Color color);

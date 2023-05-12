@@ -2,9 +2,10 @@
 
 #include <string>
 
-#include "SDL.h"
 #include "Vector.h"
 #include "Utils/Utils.h"
+
+#include <GLFW/glfw3.h>
 
 namespace PE
 {
@@ -12,8 +13,8 @@ namespace PE
 	{
 		class ENGINE_API Window
 		{
-			private:
-			SDL_Window* window = NULL;
+		private:
+      GLFWwindow* window = NULL;
 
 			// Window with and height is currently placeholder value
 			// These values should be set in the game settings or something - PT
@@ -22,7 +23,7 @@ namespace PE
 
 			bool fullscreen = 0;
 
-			public:
+		public:
 			Vector camera_offset = {0, 0};
 
 			Utils::Color bg_color;
@@ -37,8 +38,10 @@ namespace PE
 
 			Vector GetMonitorRes();
 
-			SDL_Window* GetSDLWindow();
+			GLFWwindow* GetGLFWWindow();
 			
+			void SwapBuffers();
+
 			void SetSize(Vector size);
 			void SetFullscreen(bool fullscreen);
 			void SetTitle(std::string title);

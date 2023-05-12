@@ -1,7 +1,5 @@
 #pragma once
 
-#include <SDL.h>
-#include <string>
 #include <unordered_map>
 #include <vector>
 #include <array>
@@ -39,19 +37,19 @@ namespace PE
 		private:
 			/* These should be set at sprite creation because conversion from surface to texture
 			or viceversa takes too much time */
-			SDL_Texture* texture;
-			SDL_Surface* surface;
+			//SDL_Texture* texture;
+			//SDL_Surface* surface;
 			
 			Vector size = { 0, 0 };
 
 		public:
-			Sprite(SDL_Surface* surface);
+			//Sprite(SDL_Surface* surface);
 			~Sprite();
 
 			Vector GetSize();
 
-			SDL_Texture* GetTexture();
-			SDL_Surface* GetSurface();
+			//SDL_Texture* GetTexture();
+			//SDL_Surface* GetSurface();
 		};
 
 		class ENGINE_API SpriteManager

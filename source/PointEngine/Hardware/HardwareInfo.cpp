@@ -3,7 +3,7 @@
 #include <thread>
 #include <intrin.h>
 
-#include <SDL.h>
+//#include <SDL.h>
 
 #include "Game.h"
 
@@ -44,7 +44,7 @@ namespace PE
 			}
 
 			info.coreCount = corecount;
-			info.threadCount = SDL_GetCPUCount();			
+			info.threadCount = 0;//SDL_GetCPUCount();			
 
 			return info;
 		}
