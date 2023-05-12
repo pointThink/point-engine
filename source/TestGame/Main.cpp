@@ -69,7 +69,7 @@ int main()
 	
 	running->entityManager->AddEntity(new Player());
 
-	PE_GAME->inputManager->BindKey("move_sprint", PE_KEY_LSHIFT);
+	PE_GAME->inputManager->BindKey("move_sprint", PE_KEY_LEFT_SHIFT);
 	PE_GAME->inputManager->BindKey("move_up", PE_KEY_W);
 	PE_GAME->inputManager->BindKey("move_down", PE_KEY_S);
 	PE_GAME->inputManager->BindKey("move_left", PE_KEY_A);

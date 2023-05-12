@@ -24,9 +24,6 @@ class ENGINE_API GLRenderer
 			unsigned int vertexBuffer;
 			unsigned int indexBuffer;
 
-			int screenWidth;
-			int screenHeight;
-
 			double ScreenCordsToGLCords(double x, int size);
 
 		public:

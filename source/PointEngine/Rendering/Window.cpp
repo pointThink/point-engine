@@ -4,6 +4,7 @@
 
 #include "Logging.h"
 #include "Event.h"
+#include "Input.h"
 
 namespace PE
 {
@@ -21,6 +22,7 @@ namespace PE
 
 			PE::LogInfo("Window size is " + std::to_string(width) + " " + std::to_string(height));
 
+			glfwSetKeyCallback(window, PE::GLFWKeyCallback);
 
 			this->fullscreen = fullscreen;
 
@@ -78,6 +80,8 @@ namespace PE
 			width = size.x;
 			height = size.y;
 
+			glfwSetWindowSize(window, size.x, size.y);
+			glViewport(0, 0, width, height);
 		}
 
 		void Window::SetFullscreen(bool fullscreen)

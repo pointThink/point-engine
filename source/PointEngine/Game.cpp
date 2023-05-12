@@ -228,6 +228,9 @@ namespace PE
 		// handle window events
 		glfwPollEvents();
 
+		if (glfwWindowShouldClose(window->GetGLFWWindow()))
+			QuitApplication();
+
 		if (!isPaused)
 		{
 			performanceProfiler->Begin("input_last_frame_state_update");
@@ -259,12 +262,6 @@ namespace PE
 
 	void Game::Draw()
 	{
-		//window->bg_color = { 0, 0, 0, 255 };
-
-		//ImGui_ImplSDLRenderer_NewFrame();
-		//ImGui_ImplSDL2_NewFrame();
-		//ImGui::NewFrame();
-
 		renderer->Clear(window->bg_color);
 
 		PE::CallEventFunction(PE::GAME_DRAW, PE::EventParameters(0, 0, { 0, 0 }));
@@ -273,22 +270,6 @@ namespace PE
 		performanceProfiler->Begin("entity_drawing");
 		currentGameState->entityManager->DrawEntities();
 		performanceProfiler->End();
-
-		//renderer->DrawQuad({ 20, 20 }, { 20, 20 }, { 255, 0, 255, 255 });
-
-		// lightManager->CastLightRay({50, 50}, Utils::Color(255, 255, 255, 255), 1000, 100);
-
-		if (lightingEnabled)
-		{
-			performanceProfiler->Begin("lighting");
-
-			//SDL_Texture* light_map = lightManager->GenerateLightMap();
-			//SDL_SetTextureBlendMode(light_map, SDL_BLENDMODE_MUL);
-
-			//SDL_RenderCopy(window->GetSDLRenderer(), light_map, NULL, NULL);
-
-			performanceProfiler->End();
-		}
 
 		Vector old_cam_offset = window->camera_offset;
 		window->camera_offset = { 0, 0 };

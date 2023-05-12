@@ -3,6 +3,7 @@
 #include "GLFW/glfw3.h"
 #include "Utils/Utils.h"
 #include "Error/Error.h"
+#include "Game.h"
 
 #include <cstdio>
 #include <iostream>
@@ -22,7 +23,6 @@ namespace PE
 
 			while (std::getline(file_stream, line))
 			{
-				std::cout << line << std::endl;
 				shader_contents = shader_contents + line + '\n';
 			}
 
@@ -75,10 +75,7 @@ namespace PE
 
 		GLRenderer::GLRenderer(Window* window)
 		{
-			this->screenWidth = window->GetWidth();
-			this->screenHeight = window->GetHeight();
-
-      gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+			gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
 			glGenBuffers(1, &vertexBuffer);
 			glGenBuffers(1, &indexBuffer);
@@ -115,14 +112,20 @@ namespace PE
 
 		void GLRenderer::PresentRenderer()
 		{
-      glfwSwapBuffers(window->GetGLFWWindow());
+			//glfwSwapBuffers(window->GetGLFWWindow());
 		}
 
 		void GLRenderer::DrawQuad(Vector pos, Vector size, Utils::Color color)
 		{
+			int screenWidth = window->GetWidth();
+			int screenHeight = window->GetHeight();
+
 			glUniform1i(glGetUniformLocation(currentShader, "u_textured"), 0);
 
 			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+
+			pos.x = pos.x + PE_GAME->window->camera_offset.x;
+			pos.y = pos.y + PE_GAME->window->camera_offset.y;
 
 			// create vertecies
 			float vertecies[] =
@@ -159,11 +162,17 @@ namespace PE
 
 		void GLRenderer::DrawQuadTextured(Vector pos, Vector size, Texture* tex, Utils::Color color)
 		{
+			int screenWidth = window->GetWidth();
+			int screenHeight = window->GetHeight();
+
 			glUniform1i(glGetUniformLocation(currentShader, "u_textured"), 1);
 
 			tex->Bind(1);
 
 			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+
+			pos.x = pos.x + PE_GAME->window->camera_offset.x;
+			pos.y = pos.y + PE_GAME->window->camera_offset.y;
 
 			// create vertecies
 			float vertecies[] =

@@ -89,4 +89,8 @@ namespace PE
 		}
 	}
 
+	void GLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		PE_GAME->inputManager->GetKeyState(key)->SetDown(glfwGetKey(window, key));
+	}
 }
