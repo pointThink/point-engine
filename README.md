@@ -1,3 +1,6 @@
+This is an old project i was working on. It was officially abandoned because the code got stupidly messy so i decided to make the code public. Maybe some one finds this useful
+
+# PointEngine
 PointEngine is a general purpose library for making games in C++.
 Right now it only supports Windows, but Linux support is planned.
 
